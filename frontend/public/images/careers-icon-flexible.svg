@@ -1,0 +1,9 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="i_&#236;&#139;&#156;&#234;&#176;&#132;">
+<circle id="Ellipse 1743" cx="40" cy="40" r="40" fill="var(--fill-0, white)"/>
+<g id="Vector">
+<path d="M15 40C15 53.8071 26.1929 65 40 65C53.8071 65 65 53.8071 65 40C65 26.1929 53.8071 15 40 15C26.1929 15 15 26.1929 15 40Z" fill="var(--fill-0, #C1E0FC)"/>
+<path d="M40 26.1111V40H53.8889M40 65C26.1929 65 15 53.8071 15 40C15 26.1929 26.1929 15 40 15C53.8071 15 65 26.1929 65 40C65 53.8071 53.8071 65 40 65Z" stroke="var(--stroke-0, #101116)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</g>
+</svg>

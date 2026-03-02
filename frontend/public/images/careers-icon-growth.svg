@@ -1,0 +1,17 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 83 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group 1321316368">
+<circle id="Ellipse 1742" cx="40" cy="40" r="40" fill="var(--fill-0, white)"/>
+<path id="Vector" d="M63 58.9998C63 54.4716 58.826 50.6193 53 49.1916M48 59C48 53.2562 41.2843 48.6 33 48.6C24.7157 48.6 18 53.2562 18 59M48 40.8C53.5228 40.8 58 36.1438 58 30.4C58 24.6562 53.5228 20 48 20M33 40.8C27.4772 40.8 23 36.1438 23 30.4C23 24.6562 27.4772 20 33 20C38.5228 20 43 24.6562 43 30.4C43 36.1438 38.5228 40.8 33 40.8Z" stroke="var(--stroke-0, #101116)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+<g id="Group 1321316367">
+<circle id="Vector_2" cx="67.3332" cy="65.0007" r="15" fill="var(--fill-0, #C1E0FC)"/>
+<g id="Mask group">
+<mask id="mask0_2003_1475" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="52" y="50" width="31" height="31">
+<circle id="Vector_3" cx="67.3333" cy="65.0013" r="15" fill="var(--fill-0, #C1E0FC)"/>
+</mask>
+<g mask="url(#mask0_2003_1475)">
+<path id="Vector_4" d="M76.2396 58.4388L66.991 68.4583C66.8249 68.6383 66.741 68.7285 66.6666 68.7994C65.4653 69.9464 63.6488 69.9464 62.4475 68.7995C62.3731 68.7285 62.2885 68.6384 62.1223 68.4583C61.9561 68.2783 61.873 68.1882 61.7986 68.1172C60.5973 66.9703 58.78 66.9703 57.5787 68.1172C57.5045 68.188 57.4217 68.2778 57.2563 68.457L50.9271 75.3138M76.2396 58.4388L76.2389 68.5638M76.2396 58.4388H66.747" stroke="var(--stroke-0, #101116)" stroke-width="2.8125" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</g>
+</g>
+</g>
+</svg>

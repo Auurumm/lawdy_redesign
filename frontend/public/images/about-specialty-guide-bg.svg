@@ -1,0 +1,14 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 81 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group 1321316320">
+<circle id="Ellipse 1742" cx="41" cy="40" r="40" fill="var(--fill-0, #F3F4F7)"/>
+<g id="Filled">
+<path id="Vector" d="M29.5272 62.5C26.9848 62.5 24.9238 60.4853 24.9238 58L24.9238 22C24.9238 19.5147 26.9848 17.5 29.5272 17.5L50.2424 17.5C55.3272 17.5 59.4492 21.5294 59.4492 26.5L59.4492 53.5C59.4492 58.4706 55.3272 62.5 50.2424 62.5L29.5272 62.5Z" fill="var(--fill-0, #00E163)"/>
+<path id="Vector_2" d="M37.1537 25.0231C37.1537 24.149 37.8625 23.4404 38.7369 23.4404H42.6948C43.5692 23.4404 44.278 24.149 44.278 25.0231V28.9797C44.278 29.8538 43.5692 30.5623 42.6948 30.5623H38.7369C37.8625 30.5623 37.1537 29.8538 37.1537 28.9797V25.0231Z" fill="var(--fill-0, #101116)"/>
+<path id="Vector_3" d="M28.7143 62.5C25.5584 62.5 23 60.4853 23 58L23 22C23 19.5147 25.5584 17.5 28.7143 17.5L33 17.5L33 62.5L28.7143 62.5Z" fill="var(--fill-0, #101116)"/>
+</g>
+<rect id="Rectangle 39591561" x="69.23" y="67.4023" width="7.04712" height="10.3036" rx="3.52356" transform="rotate(135.93 69.23 67.4023)" fill="var(--fill-0, #00E163)"/>
+<circle id="Ellipse 1742_2" cx="41" cy="40" r="40" fill="var(--fill-0, white)"/>
+<rect id="Rectangle 39591562" y="16.7217" width="7.99587" height="18.2346" rx="3.99793" transform="rotate(-57.2064 0 16.7217)" fill="var(--fill-0, #00E163)"/>
+<rect id="Rectangle 39591565" x="18" y="8.39648" width="5.8431" height="9.48364" rx="2.92155" transform="rotate(-24.2174 18 8.39648)" fill="var(--fill-0, #0077FF)"/>
+</g>
+</svg>

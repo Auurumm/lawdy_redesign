@@ -1,0 +1,58 @@
+/* ==============================
+   1. Pretendard Font (Korean)
+   ============================== */
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css');
+
+/* ==============================
+   2. Vendor & Template CSS loaded via <link> in layout.tsx
+   ============================== */
+
+/* ==============================
+   5. Tailwind (last = highest priority)
+   ============================== */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==============================
+   6. CSS Variables
+   ============================== */
+:root {
+  --background: #f2f3f8;
+  --foreground: #101116;
+  --primary: #0046ff;
+  --primary-hover: rgba(0, 70, 255, 0.2);
+  --gray-100: #e1e3ea;
+  --gray-200: #d3d6de;
+  --gray-500: #737684;
+  --gray-600: #454855;
+  --gray-900: #101116;
+  /* Template theme color override */
+  --tc-theme-primary: #0046ff;
+}
+
+/* ==============================
+   7. Global Resets (scoped to non-template pages)
+   ============================== */
+body {
+  color: var(--foreground);
+  font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+}
+
+/* ==============================
+   8. Tailwind Utility Extensions
+   ============================== */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Hide scrollbar for horizontal scroll on mobile */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
