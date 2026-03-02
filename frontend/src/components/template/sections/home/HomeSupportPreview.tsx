@@ -29,7 +29,7 @@ export default function HomeSupportPreview() {
                                 <p className="text-muted small mb-3">서비스 이용, 기능 문의 등 궁금한 점을 편하게 보내주세요.</p>
                                 <p className="text-primary fw-medium small mb-4">official.haedeun@gmail.com</p>
                                 <Link href="/support" className="btn btn-outline-primary rounded-3 mt-auto">
-                                    문의하기
+                                    무료 상담하기
                                 </Link>
                             </div>
                         </div>
@@ -45,7 +45,7 @@ export default function HomeSupportPreview() {
                                 <p className="text-muted small mb-3">많은 분들이 궁금해하시는 질문과 답변을 모아두었습니다.</p>
                                 <p className="text-primary fw-medium small mb-4">일반, 기술, 요금 안내</p>
                                 <Link href="/faq" className="btn btn-outline-primary rounded-3 mt-auto">
-                                    FAQ 보기
+                                    궁금한 점 확인하기
                                 </Link>
                             </div>
                         </div>
@@ -61,7 +61,7 @@ export default function HomeSupportPreview() {
                                 <p className="text-muted small mb-3">법률과 기술의 미래를 함께 만들어갈 인재를 찾고 있습니다.</p>
                                 <p className="text-primary fw-medium small mb-4">법률, 개발, 기획 분야</p>
                                 <Link href="/careers" className="btn btn-outline-primary rounded-3 mt-auto">
-                                    채용 보기
+                                    함께할 기회 보기
                                 </Link>
                             </div>
                         </div>

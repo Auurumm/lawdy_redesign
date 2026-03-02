@@ -3,105 +3,65 @@ import Link from "next/link";
 export default function Section1() {
     return (
         <>
-            {/*ai-solutions-blog-details section 1*/}
-            <section className="ai-solutions-blog-details-section-1 position-relative overflow-hidden py-120">
+            <section className="position-relative overflow-hidden py-120">
                 <div className="container">
-                    <div className="row g-4">
-                        <div className="col-lg-4 col-md-6">
-                            <div className="card-contact card rounded-4 position-relative h-100" data-aos="fade-up" data-aos-delay={0}>
-                                <Link href="#" className="card-contact-img position-relative d-block zoom-img rounded-3 rounded-bottom-0 overflow-hidden">
-                                    <img className="w-100" src="/assets/imgs/pages/ai-solutions/page-contact/img-1.png" alt="AstraX" />
-                                </Link>
-                                <div className="card-contact-body p-4 d-flex flex-column">
-                                    <div className="card-contact-info mt-2 mb-auto">
-                                        <Link href="#">
-                                            <h6>New York City</h6>
-                                        </Link>
-                                        <p className="mb-0">123 AI Innovation Drive, Suite 456</p>
-                                        <p className="mb-0">New York, NY 10001</p>
-                                        <p className="mb-0">United States</p>
-                                    </div>
-                                    <div className="d-flex flex-column mt-3 gap-2 mb-4">
-                                        <Link href="#" className="fs-7">
-                                            <i className="ri-mail-open-line text-primary" />
-                                            <span className="@@color-text"> &nbsp; info@astrax.com </span>
-                                        </Link>
-                                        <Link href="telto:(123) 456 789 00" className="fs-7">
-                                            <i className="ri-phone-line text-primary" />
-                                            <span className="@@color-text"> +(123) 456 789 00 </span>
-                                        </Link>
-                                    </div>
-                                    <Link href="#" className="text-decoration-underline text-uppercase">
-                                        View on Google Map
-                                    </Link>
-                                </div>
-                            </div>
+                    <div className="text-center mb-5">
+                        <div className="d-flex align-items-center gap-3 justify-content-center">
+                            <span className="small-line" />
+                            <span className="btn-text text-primary">SUPPORT</span>
+                            <span className="small-line" />
                         </div>
-                        <div className="col-lg-4 col-md-6">
-                            <div className="card-contact card rounded-4 position-relative h-100" data-aos="fade-up" data-aos-delay={200}>
-                                <Link href="#" className="card-contact-img position-relative d-block zoom-img rounded-3 rounded-bottom-0 overflow-hidden">
-                                    <img className="w-100" src="/assets/imgs/pages/ai-solutions/page-contact/img-2.png" alt="AstraX" />
-                                </Link>
-                                <div className="card-contact-body p-4 d-flex flex-column">
-                                    <div className="card-contact-info mt-2 mb-auto">
-                                        <Link href="#">
-                                            <h6>London</h6>
-                                        </Link>
-                                        <p className="mb-0">456 Tech Lane, Floor 7</p>
-                                        <p className="mb-0">London, EC1A 1BB</p>
-                                        <p className="mb-0">United Kingdom</p>
-                                    </div>
-                                    <div className="d-flex flex-column mt-3 gap-2 mb-4">
-                                        <Link href="#" className="fs-7">
-                                            <i className="ri-mail-open-line text-primary" />
-                                            <span className="@@color-text"> &nbsp; info@astrax.com </span>
-                                        </Link>
-                                        <Link href="telto:(123) 456 789 00" className="fs-7">
-                                            <i className="ri-phone-line text-primary" />
-                                            <span className="@@color-text"> +(123) 456 789 00 </span>
-                                        </Link>
-                                    </div>
-                                    <Link href="#" className="text-decoration-underline text-uppercase">
-                                        View on Google Map
-                                    </Link>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-4 col-md-6">
-                            <div className="card-contact card rounded-4 position-relative h-100" data-aos="fade-up" data-aos-delay={400}>
-                                <Link href="#" className="card-img-top position-relative d-block zoom-img rounded-3 rounded-bottom-0 overflow-hidden">
-                                    <img className="w-100" src="/assets/imgs/pages/ai-solutions/page-contact/img-3.png" alt="AstraX" />
-                                </Link>
-                                <div className="card-contact-body p-4 d-flex flex-column">
-                                    <div className="card-contact-info mt-2 mb-auto">
-                                        <Link href="#">
-                                            <h6>Singapore</h6>
-                                        </Link>
-                                        <p className="mb-0">12789 Future Street, #12-34</p>
-                                        <p className="mb-0">Singapore 068987</p>
-                                        <p className="mb-0">Singapore</p>
-                                    </div>
-                                    <div className="d-flex flex-column mt-3 gap-2 mb-4">
-                                        <Link href="#" className="fs-7">
-                                            <i className="ri-mail-open-line text-primary" />
-                                            <span className="@@color-text"> &nbsp; info@astrax.com </span>
-                                        </Link>
-                                        <Link href="telto:(123) 456 789 00" className="fs-7">
-                                            <i className="ri-phone-line text-primary" />
-                                            <span className="@@color-text"> +(123) 456 789 00 </span>
-                                        </Link>
-                                    </div>
-                                    <Link href="#" className="text-decoration-underline text-uppercase">
-                                        View on Google Map
-                                    </Link>
-                                </div>
-                            </div>
-                        </div>
+                        <h2 className="my-3 text-anime-style-2">무엇을 도와드릴까요?</h2>
+                        <p className="text-secondary mx-auto" style={{ maxWidth: '480px' }}>
+                            궁금한 점이 있으시면 언제든 문의해주세요. 전문 상담팀이 24시간 내에 답변드립니다.
+                        </p>
                     </div>
-                </div>
-                <div className="container-fluid wow img-custom-anim-top pt-90">
-                    <div className="contact-map">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d193595.25279991725!2d-74.1444877707482!3d40.697631233381586!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2zVGjDoG5oIHBo4buRIE5ldyBZb3JrLCBUaeG7g3UgYmFuZyBOZXcgWW9yaywgSG9hIEvhu7M!5e0!3m2!1svi!2s!4v1729152035449!5m2!1svi!2s" width={600} height={450} style={{ border: 0 }} loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
+                    <div className="row g-4 justify-content-center">
+                        <div className="col-lg-4 col-md-6">
+                            <div className="card border-0 bg-dark text-white rounded-4 p-4 h-100 hover-up" data-aos="fade-up" data-aos-delay={0}>
+                                <div className="card-body text-center d-flex flex-column">
+                                    <div className="icon-shape icon-lg bg-linear-1 rounded-3 mb-3 mx-auto d-flex align-items-center justify-content-center">
+                                        <i className="bi bi-envelope fs-4 text-white" />
+                                    </div>
+                                    <h5 className="text-white mb-2">이메일 문의</h5>
+                                    <p className="text-white-50 mb-3">서비스, 기능, 요금 등 궁금한 점을 편하게 보내주세요.</p>
+                                    <p className="text-primary fw-semibold mb-3">official.haedeun@gmail.com</p>
+                                    <Link href="mailto:official.haedeun@gmail.com" className="btn btn-outline-light btn-sm rounded-3 mt-auto">
+                                        무료 상담하기
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-lg-4 col-md-6">
+                            <div className="card border-0 bg-dark text-white rounded-4 p-4 h-100 hover-up" data-aos="fade-up" data-aos-delay={200}>
+                                <div className="card-body text-center d-flex flex-column">
+                                    <div className="icon-shape icon-lg bg-linear-1 rounded-3 mb-3 mx-auto d-flex align-items-center justify-content-center">
+                                        <i className="bi bi-question-circle fs-4 text-white" />
+                                    </div>
+                                    <h5 className="text-white mb-2">자주 묻는 질문</h5>
+                                    <p className="text-white-50 mb-3">많은 분들이 궁금해하시는 질문과 답변을 모았습니다.</p>
+                                    <p className="text-primary fw-semibold mb-3">일반, 기술, 요금 안내</p>
+                                    <Link href="/faq" className="btn btn-outline-light btn-sm rounded-3 mt-auto">
+                                        궁금한 점 확인하기
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-lg-4 col-md-6">
+                            <div className="card border-0 bg-dark text-white rounded-4 p-4 h-100 hover-up" data-aos="fade-up" data-aos-delay={400}>
+                                <div className="card-body text-center d-flex flex-column">
+                                    <div className="icon-shape icon-lg bg-linear-1 rounded-3 mb-3 mx-auto d-flex align-items-center justify-content-center">
+                                        <i className="bi bi-clock-history fs-4 text-white" />
+                                    </div>
+                                    <h5 className="text-white mb-2">빠른 응답</h5>
+                                    <p className="text-white-50 mb-3">일반적으로 24시간 이내에 회신드립니다.</p>
+                                    <p className="text-primary fw-semibold mb-3">평일 09:00 ~ 18:00</p>
+                                    <span className="btn btn-outline-light btn-sm rounded-3 mt-auto opacity-75">
+                                        응답 대기 중
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
