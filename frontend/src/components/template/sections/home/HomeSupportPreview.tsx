@@ -60,7 +60,7 @@ export default function HomeSupportPreview() {
                                     <i className="bi bi-briefcase fs-4 text-primary" />
                                 </div>
                                 <h5 className="fw-bold text-dark mb-2">함께할 사람</h5>
-                                <p className="text-muted small mb-3">법률과 기술의 미래를 함께 만들어갈 인재를 찾고 있습니다.</p>
+                                <p className="text-muted small mb-3">법률과 기술의 미래를<br />함께 만들어갈 인재를 찾고 있습니다.</p>
                                 <p className="text-primary fw-medium small mb-4">법률, 개발, 기획 분야</p>
                                 <Link href="/careers" className="btn btn-outline-primary rounded-3 mt-auto">
                                     함께할 기회 보기
