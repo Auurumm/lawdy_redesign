@@ -28,7 +28,7 @@ export default function Section1() {
                                 <input type="text" className="py-3 form-control generate rounded-start-4 border-end-0 border-primary" name="name" placeholder="어떤 계약서가 필요하신가요? (예: 근로계약서)" />
                                 <div className="border border-start-0 border-primary rounded-end-4 bg-white">
                                     <button className="btn btn-linear m-2 fs-7 fw-bold" type="submit" aria-label="generate" data-aos="fade-zoom-in" data-aos-delay={100}>
-                                        시작하기
+                                        무료로 시작하기
                                     </button>
                                 </div>
                             </form>

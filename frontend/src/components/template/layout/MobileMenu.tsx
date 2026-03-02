@@ -86,7 +86,7 @@ export default function MobileMenu({ isMobileMenu, handleMobileMenu }: MobileMen
                             ) : (
                                 <div className="d-flex flex-column gap-2 mb-3">
                                     <Link href="/login" className="btn btn-linear btn-sm">로그인</Link>
-                                    <Link href="/signup" className="btn btn-outline-light btn-sm">회원가입</Link>
+                                    <Link href="/signup" className="btn btn-outline-light btn-sm">무료 가입하기</Link>
                                 </div>
                             )}
                         </div>

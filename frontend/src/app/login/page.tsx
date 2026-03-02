@@ -138,7 +138,7 @@ export default function LoginPage() {
                       className="fw-bold text-decoration-none fs-7"
                       style={{ color: 'var(--tc-theme-primary)' }}
                     >
-                      회원가입 <i className="bi bi-arrow-right" />
+                      무료로 가입하기 <i className="bi bi-arrow-right" />
                     </Link>
                   </div>
                 </div>

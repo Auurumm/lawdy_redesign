@@ -120,7 +120,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 onClick={onClose}
                 className="flex-1 py-3 text-sm font-medium text-center text-white bg-primary rounded-lg hover:bg-blue-700 transition-colors"
               >
-                가입하기
+                무료 가입하기
               </Link>
             </div>
           )}

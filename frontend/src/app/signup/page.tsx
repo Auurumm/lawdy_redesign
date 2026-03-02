@@ -62,7 +62,7 @@ export default function SignupPage() {
             <div className="col-md-6 col-lg-5">
               {/* Header */}
               <div className="text-center mb-5">
-                <h2 className="fw-bold mb-2">계정 생성</h2>
+                <h2 className="fw-bold mb-2">무료 회원가입</h2>
                 <p className="text-muted fs-6 mb-0">무료로 시작하세요</p>
               </div>
 

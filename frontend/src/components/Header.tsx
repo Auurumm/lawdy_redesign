@@ -111,7 +111,7 @@ export default function Header() {
                   href="/signup"
                   className="px-1.5 md:px-2 py-1 text-xs md:text-sm font-medium text-white bg-primary rounded-full hover:bg-blue-700 transition-colors"
                 >
-                  가입하기
+                  무료 가입하기
                 </Link>
               </>
             )}
