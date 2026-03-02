@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
     // 사용자 조회
     const { data: user, error } = await supabaseAdmin
       .from('users')
-      .select('id, email, name, password_hash')
+      .select('id, email, name, password_hash, email_verified')
       .eq('email', email)
       .single();
 
@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
     }
 
     // 타입 안전성을 위한 캐스팅
-    const userData = user as { id: string; email: string; name: string; password_hash: string };
+    const userData = user as { id: string; email: string; name: string; password_hash: string; email_verified: boolean };
 
     // 비밀번호 검증
     const isValidPassword = await verifyPassword(password, userData.password_hash);
@@ -43,6 +43,18 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { error: '이메일 또는 비밀번호가 올바르지 않습니다.' },
         { status: 401 }
+      );
+    }
+
+    // 이메일 인증 확인
+    if (!userData.email_verified) {
+      return NextResponse.json(
+        {
+          error: '이메일 인증이 완료되지 않았습니다. 이메일을 확인해주세요.',
+          needsVerification: true,
+          email: userData.email,
+        },
+        { status: 403 }
       );
     }
 
@@ -69,9 +81,9 @@ export async function POST(request: NextRequest) {
     // 쿠키 설정
     await setAuthCookies(accessToken, refreshToken);
 
-    // 비밀번호 해시 제외하고 반환
+    // 비밀번호 해시와 email_verified 제외하고 반환
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { password_hash, ...userWithoutPassword } = userData;
+    const { password_hash, email_verified, ...userWithoutPassword } = userData;
 
     return NextResponse.json({ user: userWithoutPassword });
   } catch (error) {

@@ -73,7 +73,7 @@ export default function Section7() {
                                                     <h6 className="text-primary mb-0">
                                                         <span className="text-white">{item.question}</span>
                                                     </h6>
-                                                    <span className="ms-auto arrow" />
+                                                    <i className={`bi ${isOpen ? 'bi-chevron-up' : 'bi-chevron-down'} ms-auto text-primary fs-5`} />
                                                 </button>
                                             </div>
                                             {isOpen && (

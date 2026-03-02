@@ -1,19 +1,25 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { Suspense, useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Layout from '@/components/template/layout/Layout';
 import { useAuth } from '@/contexts/AuthContext';
 
-export default function LoginPage() {
+function LoginContent() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [needsVerification, setNeedsVerification] = useState(false);
+  const [verificationEmail, setVerificationEmail] = useState('');
+  const [resendLoading, setResendLoading] = useState(false);
+  const [resendMessage, setResendMessage] = useState('');
   const { login, user, loading: authLoading } = useAuth();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const verified = searchParams.get('verified');
 
   useEffect(() => {
     if (!authLoading && user) {
@@ -28,15 +34,49 @@ export default function LoginPage() {
     if (!isFormFilled || isLoading) return;
 
     setError('');
+    setNeedsVerification(false);
+    setResendMessage('');
     setIsLoading(true);
 
     try {
       await login(email, password);
       router.push('/mypage');
-    } catch (err) {
-      setError(err instanceof Error ? err.message : '로그인에 실패했습니다.');
+    } catch (err: unknown) {
+      const error = err as Error & { needsVerification?: boolean; email?: string };
+      if (error.needsVerification) {
+        setNeedsVerification(true);
+        setVerificationEmail(error.email || email);
+        setError(error.message);
+      } else {
+        setError(error.message || '로그인에 실패했습니다.');
+      }
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleResendVerification = async () => {
+    if (resendLoading) return;
+    setResendLoading(true);
+    setResendMessage('');
+
+    try {
+      const res = await fetch('/api/auth/resend-verification', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: verificationEmail }),
+      });
+
+      if (res.ok) {
+        setResendMessage('인증 메일이 재전송되었습니다.');
+      } else {
+        const data = await res.json();
+        setResendMessage(data.error || '재전송에 실패했습니다.');
+      }
+    } catch {
+      setResendMessage('재전송에 실패했습니다.');
+    } finally {
+      setResendLoading(false);
     }
   };
 
@@ -52,14 +92,57 @@ export default function LoginPage() {
                 <p className="text-muted fs-6 mb-0">계정에 로그인하여 시작하세요</p>
               </div>
 
+              {/* Verified Banner */}
+              {verified === 'true' && (
+                <div className="alert alert-success rounded-3 py-3 px-4 mb-4 d-flex align-items-center" role="alert">
+                  <i className="bi bi-check-circle-fill me-2" style={{ color: '#4caf50' }} />
+                  <small className="fw-semibold">이메일 인증이 완료되었습니다. 로그인해주세요.</small>
+                </div>
+              )}
+
               {/* Card */}
               <div className="card border-0 shadow-sm rounded-4">
                 <div className="card-body p-4 p-md-5">
                   <form onSubmit={handleSubmit}>
                     {/* Error */}
-                    {error && (
+                    {error && !needsVerification && (
                       <div className="alert alert-danger rounded-3 py-2 px-3 mb-4" role="alert">
                         <small>{error}</small>
+                      </div>
+                    )}
+
+                    {/* Needs Verification Banner */}
+                    {needsVerification && (
+                      <div className="alert alert-warning rounded-3 py-3 px-3 mb-4" role="alert">
+                        <div className="d-flex align-items-start">
+                          <i className="bi bi-exclamation-triangle-fill me-2 mt-1" />
+                          <div>
+                            <small className="fw-semibold d-block mb-2">{error}</small>
+                            <button
+                              type="button"
+                              onClick={handleResendVerification}
+                              disabled={resendLoading}
+                              className="btn btn-sm btn-outline-dark rounded-pill px-3"
+                            >
+                              {resendLoading ? (
+                                <>
+                                  <span className="spinner-border spinner-border-sm me-1" role="status" />
+                                  전송 중...
+                                </>
+                              ) : (
+                                <>
+                                  <i className="bi bi-envelope me-1" />
+                                  인증 메일 재전송
+                                </>
+                              )}
+                            </button>
+                            {resendMessage && (
+                              <small className={`d-block mt-2 ${resendMessage.includes('실패') ? 'text-danger' : 'text-success'}`}>
+                                {resendMessage}
+                              </small>
+                            )}
+                          </div>
+                        </div>
                       </div>
                     )}
 
@@ -148,5 +231,23 @@ export default function LoginPage() {
         </div>
       </section>
     </Layout>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={
+      <Layout>
+        <section className="position-relative overflow-hidden py-120 bg-light" style={{ minHeight: '80vh' }}>
+          <div className="container text-center">
+            <div className="spinner-border" style={{ color: 'var(--tc-theme-primary)' }} role="status">
+              <span className="visually-hidden">로딩 중...</span>
+            </div>
+          </div>
+        </section>
+      </Layout>
+    }>
+      <LoginContent />
+    </Suspense>
   );
 }

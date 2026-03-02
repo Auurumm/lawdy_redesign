@@ -28,7 +28,7 @@ export default function HomeSupportPreview() {
                                     <i className="bi bi-envelope fs-4 text-primary" />
                                 </div>
                                 <h5 className="fw-bold text-dark mb-2">이메일 문의</h5>
-                                <p className="text-muted small mb-3">서비스 이용, 기능 문의 등 궁금한 점을 편하게 보내주세요.</p>
+                                <p className="text-muted small mb-3">서비스 이용, 기능 문의 등<br />궁금한 점을 편하게 보내주세요.</p>
                                 <p className="text-primary fw-medium small mb-4">official.haedeun@gmail.com</p>
                                 <Link href="/support" className="btn btn-outline-primary rounded-3 mt-auto">
                                     무료 상담하기
@@ -44,7 +44,7 @@ export default function HomeSupportPreview() {
                                     <i className="bi bi-question-circle fs-4 text-primary" />
                                 </div>
                                 <h5 className="fw-bold text-dark mb-2">자주 묻는 질문</h5>
-                                <p className="text-muted small mb-3">많은 분들이 궁금해하시는 질문과 답변을 모아두었습니다.</p>
+                                <p className="text-muted small mb-3">많은 분들이 궁금해하시는<br />질문과 답변을 모아두었습니다.</p>
                                 <p className="text-primary fw-medium small mb-4">일반, 기술, 요금 안내</p>
                                 <Link href="/faq" className="btn btn-outline-primary rounded-3 mt-auto">
                                     궁금한 점 확인하기

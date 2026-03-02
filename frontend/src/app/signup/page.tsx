@@ -47,8 +47,12 @@ export default function SignupPage() {
     setIsLoading(true);
 
     try {
-      await signup({ name, email, password, agreeTerms, agreePrivacy });
-      router.push("/mypage");
+      const result = await signup({ name, email, password, agreeTerms, agreePrivacy });
+      if (result.needsVerification) {
+        router.push(`/verify-email?email=${encodeURIComponent(result.email || email)}`);
+      } else {
+        router.push("/mypage");
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "회원가입에 실패했습니다.");
     } finally {

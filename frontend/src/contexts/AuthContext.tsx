@@ -16,11 +16,22 @@ interface SignupData {
   agreePrivacy: boolean;
 }
 
+interface SignupResult {
+  user?: User;
+  needsVerification?: boolean;
+  email?: string;
+}
+
+interface LoginError extends Error {
+  needsVerification?: boolean;
+  email?: string;
+}
+
 interface AuthContextType {
   user: User | null;
   loading: boolean;
   login: (email: string, password: string) => Promise<void>;
-  signup: (data: SignupData) => Promise<void>;
+  signup: (data: SignupData) => Promise<SignupResult>;
   logout: () => Promise<void>;
   checkAuth: () => Promise<void>;
 }
@@ -77,16 +88,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       credentials: 'include',
     });
 
+    const data = await res.json();
+
     if (!res.ok) {
-      const data = await res.json();
-      throw new Error(data.error || '로그인에 실패했습니다.');
+      const error = new Error(data.error || '로그인에 실패했습니다.') as LoginError;
+      if (data.needsVerification) {
+        error.needsVerification = true;
+        error.email = data.email;
+      }
+      throw error;
     }
 
-    const data = await res.json();
     setUser(data.user);
   }
 
-  async function signup(signupData: SignupData) {
+  async function signup(signupData: SignupData): Promise<SignupResult> {
     const res = await fetch('/api/auth/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -94,13 +110,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       credentials: 'include',
     });
 
+    const data = await res.json();
+
     if (!res.ok) {
-      const data = await res.json();
       throw new Error(data.error || '회원가입에 실패했습니다.');
     }
 
-    const data = await res.json();
+    // 이메일 인증이 필요한 경우 user state 미설정
+    if (data.needsVerification) {
+      return { needsVerification: true, email: data.email };
+    }
+
     setUser(data.user);
+    return { user: data.user };
   }
 
   async function logout() {
