@@ -24,16 +24,14 @@ async function sendVerificationEmail(email: string) {
   // 기존 Supabase Auth 사용자 삭제 (이미 confirmed 상태면 signUp이 이메일을 보내지 않으므로)
   await deleteSupabaseAuthUser(email);
 
-  const { data, error } = await supabaseAuthEmail.auth.signUp({
+  const { error } = await supabaseAuthEmail.auth.signUp({
     email,
     password: randomUUID(),
     options: { emailRedirectTo },
   });
 
   if (error) {
-    console.error('Supabase Auth signUp error:', error);
-  } else {
-    console.log('Supabase Auth signUp success, user id:', data?.user?.id);
+    console.error('Supabase Auth signUp error:', error.message);
   }
 }
 
