@@ -44,8 +44,8 @@ export default function Section2() {
         <>
             <section className="position-relative pb-120">
                 <div className="container">
-                    <div className="row align-items-start">
-                        <div className="col-lg-6 pe-lg-5 col-12">
+                    <div className="row justify-content-center">
+                        <div className="col-lg-8 col-12">
                             <span className="btn-text fs-7 text-primary">무료 상담</span>
                             <h2 className="mt-3 fw-semibold text-anime-style-2">1:1 문의하기</h2>
                             <p className="mb-4 text-secondary">궁금한 점이나 도움이 필요하시면 아래 양식을 작성해주세요. 24시간 내에 답변드립니다.</p>
@@ -128,54 +128,6 @@ export default function Section2() {
                                     </div>
                                 )}
                             </form>
-                        </div>
-                        <div className="col-lg-5 ms-lg-auto mt-5 mt-lg-0">
-                            <div className="d-flex flex-column gap-3">
-                                <div className="card border-0 bg-light rounded-4 p-4">
-                                    <div className="d-flex align-items-center gap-3">
-                                        <div className="icon-shape icon-md bg-primary rounded-3 d-flex align-items-center justify-content-center flex-shrink-0">
-                                            <i className="bi bi-envelope text-white" />
-                                        </div>
-                                        <div>
-                                            <h6 className="mb-1">일반 문의</h6>
-                                            <p className="text-secondary mb-0 small">서비스에 대한 일반적인 질문이 있으신가요?</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="card border-0 bg-light rounded-4 p-4">
-                                    <div className="d-flex align-items-center gap-3">
-                                        <div className="icon-shape icon-md bg-primary rounded-3 d-flex align-items-center justify-content-center flex-shrink-0">
-                                            <i className="bi bi-tools text-white" />
-                                        </div>
-                                        <div>
-                                            <h6 className="mb-1">기술 지원</h6>
-                                            <p className="text-secondary mb-0 small">기술적인 문제나 버그를 보고하고 싶으신가요?</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="card border-0 bg-light rounded-4 p-4">
-                                    <div className="d-flex align-items-center gap-3">
-                                        <div className="icon-shape icon-md bg-primary rounded-3 d-flex align-items-center justify-content-center flex-shrink-0">
-                                            <i className="bi bi-chat-dots text-white" />
-                                        </div>
-                                        <div>
-                                            <h6 className="mb-1">기타 요청</h6>
-                                            <p className="text-secondary mb-0 small">기타 요청사항이나 제안이 있으신가요?</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="card border-0 bg-dark text-white rounded-4 p-4">
-                                    <div className="d-flex align-items-center gap-3">
-                                        <div className="icon-shape icon-md bg-linear-1 rounded-3 d-flex align-items-center justify-content-center flex-shrink-0">
-                                            <i className="bi bi-clock text-white" />
-                                        </div>
-                                        <div>
-                                            <h6 className="text-white mb-1">응답 시간</h6>
-                                            <p className="text-white-50 mb-0 small">일반적으로 24시간 이내에 회신드립니다.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>

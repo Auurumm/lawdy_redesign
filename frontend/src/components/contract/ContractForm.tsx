@@ -1,13 +1,77 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { contractTypeConfigs, contractTypeNames, type ContractType, type ContractTypeConfig } from './contractTypes';
 import ChatMode from './ChatMode';
+import { downloadContractAsPDF, downloadContractAsWord, downloadContractAsText } from '@/lib/contractDownload';
 
 interface ContractData {
   type: string;
   content: string;
   generatedAt: string;
+}
+
+// ============================================
+// 타이핑 효과 컴포넌트
+// ============================================
+function TypingEffect({
+  content,
+  speed = 8,
+  onComplete,
+}: {
+  content: string;
+  speed?: number;
+  onComplete?: () => void;
+}) {
+  const [displayedContent, setDisplayedContent] = useState('');
+  const [isComplete, setIsComplete] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const onCompleteRef = useRef(onComplete);
+  onCompleteRef.current = onComplete;
+
+  useEffect(() => {
+    if (currentIndex < content.length) {
+      const timer = setTimeout(() => {
+        const charsToAdd = Math.min(4, content.length - currentIndex);
+        setDisplayedContent(content.slice(0, currentIndex + charsToAdd));
+        setCurrentIndex(currentIndex + charsToAdd);
+        if (containerRef.current) {
+          containerRef.current.scrollTop = containerRef.current.scrollHeight;
+        }
+      }, speed);
+      return () => clearTimeout(timer);
+    } else if (!isComplete) {
+      setIsComplete(true);
+      onCompleteRef.current?.();
+    }
+  }, [currentIndex, content, speed, isComplete]);
+
+  const handleSkip = () => {
+    setDisplayedContent(content);
+    setCurrentIndex(content.length);
+    setIsComplete(true);
+    onCompleteRef.current?.();
+  };
+
+  return (
+    <div className="relative">
+      <div ref={containerRef} className="bg-gray-50 border border-gray-200 rounded-xl p-6 max-h-[500px] overflow-y-auto">
+        <pre className="whitespace-pre-wrap text-sm leading-relaxed font-sans">
+          {displayedContent}
+          {!isComplete && <span className="animate-pulse text-primary font-bold">|</span>}
+        </pre>
+      </div>
+      {!isComplete && (
+        <button
+          onClick={handleSkip}
+          className="absolute bottom-4 right-4 px-3 py-1.5 bg-white/90 border border-gray-200 rounded-lg text-xs font-medium text-gray-600 hover:bg-gray-50 shadow-sm backdrop-blur-sm transition-colors"
+        >
+          건너뛰기 →
+        </button>
+      )}
+    </div>
+  );
 }
 
 // ============================================
@@ -478,7 +542,33 @@ export default function ContractForm() {
   const [selectedClauses, setSelectedClauses] = useState<string[]>([]);
   const [customTerms, setCustomTerms] = useState('');
 
+  const [isDownloading, setIsDownloading] = useState(false);
+  const [typingComplete, setTypingComplete] = useState(false);
+
   const config = selectedType ? contractTypeConfigs[selectedType] : null;
+
+  const handleDownload = async (format: 'pdf' | 'word' | 'text') => {
+    if (!generatedContract) return;
+    setIsDownloading(true);
+    try {
+      const title = contractTypeNames[selectedType as ContractType] || '계약서';
+      switch (format) {
+        case 'pdf':
+          await downloadContractAsPDF(generatedContract.content, title);
+          break;
+        case 'word':
+          await downloadContractAsWord(generatedContract.content, title);
+          break;
+        case 'text':
+          downloadContractAsText(generatedContract.content, title);
+          break;
+      }
+    } catch (err) {
+      alert(err instanceof Error ? err.message : '다운로드에 실패했습니다.');
+    } finally {
+      setIsDownloading(false);
+    }
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -549,6 +639,7 @@ export default function ContractForm() {
       }
 
       setGeneratedContract(result.contract);
+      setTypingComplete(false);
       setStep(3);
     } catch (err) {
       setError(err instanceof Error ? err.message : '계약서 생성 중 오류가 발생했습니다.');
@@ -627,9 +718,9 @@ export default function ContractForm() {
                   onClick={() => handleSelectType(item.type)}
                   className="p-6 border border-gray-200 rounded-xl text-left hover:border-primary hover:shadow-md transition-all group"
                 >
-                  <span className="text-3xl">{item.icon}</span>
-                  <h4 className="mt-3 font-bold text-gray-900 group-hover:text-primary transition-colors">{item.title}</h4>
-                  <p className="mt-1 text-sm text-gray-500">{item.description}</p>
+                  <span className="text-2xl">{item.icon}</span>
+                  <p className="mt-2 font-bold text-gray-900 group-hover:text-primary transition-colors" style={{ fontSize: '15px' }}>{item.title}</p>
+                  <p className="mt-1 text-xs text-gray-500">{item.description}</p>
                 </button>
               ))}
             </div>
@@ -637,8 +728,33 @@ export default function ContractForm() {
         </div>
       )}
 
+      {/* Step 2: 생성 중 (채팅 모드에서 넘어올 때) */}
+      {step === 2 && isGenerating && inputMode === 'chat' && (
+        <div className="w-full max-w-4xl">
+          <div className="bg-white rounded-2xl shadow-sm p-6 md:p-10">
+            <div className="flex flex-col items-center justify-center py-16">
+              <div className="relative mb-8">
+                <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center">
+                  <span className="text-4xl animate-bounce">✍️</span>
+                </div>
+                <div className="absolute inset-0 w-20 h-20 border-4 border-primary/20 border-t-primary rounded-full animate-spin" />
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 mb-2">AI가 계약서를 생성하고 있습니다</h3>
+              <p className="text-gray-500 text-sm text-center max-w-md">
+                대화를 통해 수집된 정보를 바탕으로 맞춤형 계약서를 작성 중입니다. 잠시만 기다려주세요...
+              </p>
+              <div className="flex gap-1 mt-6">
+                <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Step 2: 정보 입력 위자드 */}
-      {step === 2 && config && (
+      {step === 2 && config && !(isGenerating && inputMode === 'chat') && (
         <div className="w-full max-w-4xl">
           <div className="bg-white rounded-2xl shadow-sm p-6 md:p-10">
             {/* 헤더 + 모드 토글 */}
@@ -761,43 +877,61 @@ export default function ContractForm() {
                   <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
                     📄 계약서 미리보기
                   </h3>
-                  <span className="px-3 py-1 bg-green-100 text-green-700 text-sm font-medium rounded-full">생성 완료</span>
+                  <span className={`px-3 py-1 text-sm font-medium rounded-full transition-all ${
+                    typingComplete
+                      ? 'bg-green-100 text-green-700'
+                      : 'bg-primary/10 text-primary'
+                  }`}>
+                    {typingComplete ? '생성 완료' : '작성 중...'}
+                  </span>
                 </div>
-                <div className="bg-gray-50 border border-gray-200 rounded-xl p-6 max-h-[500px] overflow-y-auto">
-                  <div className="whitespace-pre-wrap text-sm leading-relaxed">
-                    {generatedContract.content}
-                  </div>
-                </div>
+                <TypingEffect
+                  content={generatedContract.content}
+                  speed={6}
+                  onComplete={() => setTypingComplete(true)}
+                />
               </div>
             </div>
 
             {/* 액션 패널 */}
             <div className="lg:col-span-2 space-y-4">
-              <div className="bg-white rounded-2xl shadow-sm p-6">
+              <div className={`bg-white rounded-2xl shadow-sm p-6 transition-opacity duration-500 ${typingComplete ? 'opacity-100' : 'opacity-40 pointer-events-none'}`}>
                 <h4 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
                   ⬇️ 다운로드
                 </h4>
                 <div className="space-y-3">
-                  <button className="w-full py-3 bg-primary text-white rounded-lg font-medium hover:bg-primary/90 transition-colors flex items-center justify-center gap-2">
-                    📑 PDF 다운로드
+                  <button
+                    onClick={() => handleDownload('pdf')}
+                    disabled={isDownloading || !typingComplete}
+                    className="w-full py-3 bg-primary text-white rounded-lg font-medium hover:bg-primary/90 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+                  >
+                    📑 {isDownloading ? '처리 중...' : 'PDF 다운로드'}
                   </button>
-                  <button className="w-full py-3 border border-primary text-primary rounded-lg font-medium hover:bg-primary/5 transition-colors flex items-center justify-center gap-2">
+                  <button
+                    onClick={() => handleDownload('word')}
+                    disabled={isDownloading || !typingComplete}
+                    className="w-full py-3 border border-primary text-primary rounded-lg font-medium hover:bg-primary/5 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+                  >
                     📝 Word 다운로드
                   </button>
-                  <button className="w-full py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors flex items-center justify-center gap-2">
+                  <button
+                    onClick={() => handleDownload('text')}
+                    disabled={isDownloading || !typingComplete}
+                    className="w-full py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+                  >
                     📄 텍스트 다운로드
                   </button>
                 </div>
               </div>
 
               {/* 전문가 상담 */}
-              <div className="bg-gradient-to-r from-primary to-primary/80 rounded-2xl p-6 text-white">
+              <div className="rounded-2xl p-6 overflow-hidden" style={{ background: 'linear-gradient(135deg, #1e1b4b 0%, #312e81 40%, #4338ca 100%)' }}>
                 <div className="flex items-start gap-3">
                   <span className="text-2xl">💡</span>
                   <div>
-                    <h4 className="font-bold mb-1">전문가 검토가 필요하신가요?</h4>
-                    <p className="text-sm text-white/80 mb-3">복잡한 계약이라면 법률 전문가의 검토를 받아보세요.</p>
-                    <button className="px-4 py-2 bg-white text-primary rounded-lg text-sm font-medium hover:bg-white/90 transition-colors">
+                    <h4 className="font-bold mb-1" style={{ color: '#ffffff' }}>전문가 검토가 필요하신가요?</h4>
+                    <p className="text-sm mb-3" style={{ color: 'rgba(255,255,255,0.75)' }}>복잡한 계약이라면 법률 전문가의 검토를 받아보세요.</p>
+                    <button className="px-4 py-2 bg-white rounded-lg text-sm font-medium hover:bg-white/90 transition-colors" style={{ color: '#312e81' }}>
                       상담 신청하기
                     </button>
                   </div>
@@ -817,6 +951,7 @@ export default function ContractForm() {
                 setSubStep(0);
                 setSelectedClauses([]);
                 setCustomTerms('');
+                setTypingComplete(false);
               }}
               className="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 transition-colors"
             >

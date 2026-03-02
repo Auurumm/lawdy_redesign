@@ -12,15 +12,17 @@ export default function Header({ scroll, isMobileMenu, handleMobileMenu }: any) 
         <>
             <header>
                 <nav className={`navbar navbar-expand-lg navbar-dark z-5 ${scroll ? "navbar-stick top-0 position-fixed" : ""}`}>
-                    <div className="container mt-3 mb-3">
-                        <Link className="navbar-brand d-flex align-items-center gap-2" href="/">
-                            <Image src="/images/logo-full.png" alt="Lawdy" width={24} height={24} style={{ objectFit: 'contain' }} priority />
-                            <h5 className="mb-0 text-white">Lawdy</h5>
-                        </Link>
+                    <div className="container mt-3 mb-3 d-flex align-items-center">
+                        <div style={{ flex: 1 }}>
+                            <Link className="navbar-brand d-flex align-items-center gap-2 m-0" href="/">
+                                <Image src="/images/logo-full.png" alt="Lawdy" width={24} height={24} style={{ objectFit: 'contain' }} priority />
+                                <h5 className="mb-0 text-white">Lawdy</h5>
+                            </Link>
+                        </div>
                         <div className="d-none d-lg-flex">
                             <MainMenu />
                         </div>
-                        <div className="d-flex align-items-center gap-4">
+                        <div className="d-flex align-items-center gap-4 justify-content-end" style={{ flex: 1 }}>
                             {user ? (
                                 <div className="d-none d-md-flex align-items-center gap-3">
                                     <Link href="/mypage" className="btn btn-linear hover-up">

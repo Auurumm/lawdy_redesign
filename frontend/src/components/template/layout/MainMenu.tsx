@@ -14,27 +14,27 @@ export default function MainMenu() {
                     <span>소개</span>
                 </Link>
             </li>
+            <li className="nav-item">
+                <Link className="nav-link text-uppercase" href="/features">
+                    <span>서비스</span>
+                </Link>
+            </li>
             <li className="nav-item dropdown menu-item-has-children">
                 <Link className="nav-link text-uppercase" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <span>서비스</span>
+                    <span>법률 AI 분석</span>
                 </Link>
                 <ul className="dropdown-menu">
                     <li>
-                        <Link className="dropdown-item text-capitalize" href="/contract">
-                            <span>계약서 작성</span>
+                        <Link className="dropdown-item text-capitalize" href="/mypage">
+                            <span>계약서 분석</span>
                         </Link>
                     </li>
                     <li>
-                        <Link className="dropdown-item text-capitalize" href="/features">
-                            <span>기능소개</span>
+                        <Link className="dropdown-item text-capitalize" href="/mypage/contract">
+                            <span>계약서 작성</span>
                         </Link>
                     </li>
                 </ul>
-            </li>
-            <li className="nav-item">
-                <Link className="nav-link text-uppercase" href="/mypage">
-                    <span>법률 AI 분석</span>
-                </Link>
             </li>
             <li className="nav-item dropdown menu-item-has-children">
                 <Link className="nav-link text-uppercase" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

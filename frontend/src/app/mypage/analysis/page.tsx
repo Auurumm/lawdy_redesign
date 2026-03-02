@@ -6,8 +6,17 @@ import { api } from '@/lib/api';
 import type { DocumentWithAnalysis, ChatMessage } from '@/types/database';
 
 const riskLabels: Record<string, string> = { high: '높음', medium: '중간', low: '낮음' };
-const riskBadgeClass: Record<string, string> = { high: 'bg-danger', medium: 'bg-warning text-dark', low: 'bg-success' };
-const riskColorMap: Record<string, string> = { low: '#198754', medium: '#ffc107', high: '#dc3545' };
+const riskBadgeStyle: Record<string, React.CSSProperties> = {
+  high: { background: 'rgba(220,53,69,0.1)', color: '#dc3545' },
+  medium: { background: 'rgba(255,193,7,0.1)', color: '#cc9a00' },
+  low: { background: 'rgba(25,135,84,0.1)', color: '#198754' },
+};
+const riskColorMap: Record<string, string> = { low: '#10b981', medium: '#f59e0b', high: '#ef4444' };
+const riskGradientMap: Record<string, string> = {
+  low: 'linear-gradient(135deg, #10b981, #34d399)',
+  medium: 'linear-gradient(135deg, #f59e0b, #fbbf24)',
+  high: 'linear-gradient(135deg, #ef4444, #f87171)',
+};
 
 interface AnalysisResult {
   riskLevel: 'low' | 'medium' | 'high';
@@ -196,11 +205,11 @@ export default function AnalysisPage() {
 
   if (isLoading) {
     return (
-      <div className="text-center py-5">
-        <div className="spinner-border text-primary" role="status">
+      <div className="d-flex flex-column align-items-center justify-content-center" style={{ minHeight: 400 }}>
+        <div className="spinner-border text-primary mb-3" role="status">
           <span className="visually-hidden">Loading...</span>
         </div>
-        <p className="mt-3 text-muted fs-7">로딩 중...</p>
+        <p className="text-muted" style={{ fontSize: 14 }}>데이터를 불러오는 중...</p>
       </div>
     );
   }
@@ -208,63 +217,93 @@ export default function AnalysisPage() {
   return (
     <>
       {/* Page Header */}
-      <div className="mb-4">
-        <h2 className="fw-bold mb-1">법률계약서 AI분석</h2>
-        <p className="text-muted fs-6 mb-0">계약서를 업로드하여 AI 분석을 즉시 시작하세요.</p>
+      <div className="d-flex align-items-center justify-content-between mb-4">
+        <div>
+          <h4 className="fw-bold mb-1">AI 계약서 분석</h4>
+          <p className="text-muted mb-0" style={{ fontSize: 14 }}>계약서를 업로드하여 AI 위험 분석을 즉시 시작하세요.</p>
+        </div>
       </div>
 
       {/* Sub-tabs */}
       <div className="d-flex gap-2 mb-4">
-        <button
-          onClick={() => setActiveSubTab('ai')}
-          className={`btn btn-sm rounded-pill fw-semibold ${
-            activeSubTab === 'ai' ? 'btn-dark' : 'btn-outline-dark'
-          }`}
-        >
-          AI리스크 분석
-        </button>
-        <button
-          onClick={() => setActiveSubTab('recent')}
-          className={`btn btn-sm rounded-pill fw-semibold ${
-            activeSubTab === 'recent' ? 'btn-dark' : 'btn-outline-dark'
-          }`}
-        >
-          최근 문서
-        </button>
+        {[
+          { key: 'ai' as const, label: 'AI 리스크 분석', icon: 'bi-shield-check' },
+          { key: 'recent' as const, label: '최근 문서', icon: 'bi-clock-history' },
+        ].map(tab => (
+          <button
+            key={tab.key}
+            onClick={() => setActiveSubTab(tab.key)}
+            className="btn btn-sm rounded-pill fw-semibold d-flex align-items-center gap-1"
+            style={activeSubTab === tab.key ? {
+              background: 'linear-gradient(135deg, #312e81, #4338ca)',
+              color: '#fff',
+              border: 'none',
+            } : {
+              background: '#fff',
+              color: '#64748b',
+              border: '1px solid #e2e8f0',
+            }}
+          >
+            <i className={`bi ${tab.icon}`} style={{ fontSize: 13 }} />
+            {tab.label}
+          </button>
+        ))}
       </div>
 
       {activeSubTab === 'ai' ? (
         <div className="row g-4">
           {/* Main Area */}
           <div className="col-lg-8">
-            <div className="card border-0 shadow-sm rounded-4" style={{ minHeight: 400 }}>
-              <div className="card-body p-4">
+            <div className="rounded-4 overflow-hidden" style={{ minHeight: 400, background: '#fff', boxShadow: '0 2px 12px rgba(0,0,0,0.05)' }}>
+              <div className="p-4">
                 {/* Idle */}
                 {uploadStatus === 'idle' && (
-                  <p className="fs-6 mb-0">
-                    안녕하세요! 법률계약서 분석 AI입니다. 아래에서 문서를 업로드하면<br />
-                    AI가 법적 위험 요소를 자동으로 분석해드립니다.
-                  </p>
+                  <div className="text-center py-4">
+                    <div
+                      className="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3"
+                      style={{ width: 72, height: 72, background: 'rgba(0,70,255,0.06)' }}
+                    >
+                      <i className="bi bi-robot fs-1" style={{ color: 'var(--tc-theme-primary)', opacity: 0.6 }} />
+                    </div>
+                    <h6 className="fw-bold mb-2">AI 리스크 분석</h6>
+                    <p className="text-muted mb-0" style={{ fontSize: 14 }}>
+                      아래에서 계약서 문서를 업로드하면<br />
+                      AI가 법적 위험 요소를 자동으로 분석해드립니다.
+                    </p>
+                  </div>
                 )}
 
                 {/* Uploading / Analyzing */}
                 {(uploadStatus === 'uploading' || uploadStatus === 'analyzing') && (
                   <div className="d-flex flex-column align-items-center justify-content-center" style={{ minHeight: 300 }}>
-                    <div className="spinner-border text-primary mb-3" role="status">
-                      <span className="visually-hidden">Loading...</span>
+                    <div className="position-relative mb-4">
+                      <div className="spinner-border text-primary" style={{ width: 48, height: 48 }} role="status">
+                        <span className="visually-hidden">Loading...</span>
+                      </div>
                     </div>
-                    <p className="fw-semibold fs-6">{uploadProgress}</p>
-                    <p className="text-muted fs-7">잠시만 기다려주세요...</p>
+                    <h6 className="fw-bold mb-1">{uploadProgress}</h6>
+                    <p className="text-muted" style={{ fontSize: 13 }}>잠시만 기다려주세요...</p>
                   </div>
                 )}
 
                 {/* Error */}
                 {uploadStatus === 'error' && (
-                  <div className="alert alert-danger d-flex align-items-center" role="alert">
-                    <i className="bi bi-exclamation-triangle-fill me-2" />
+                  <div className="rounded-3 p-4 d-flex align-items-start gap-3" style={{ background: 'rgba(220,53,69,0.06)' }}>
+                    <div
+                      className="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
+                      style={{ width: 40, height: 40, background: 'rgba(220,53,69,0.1)' }}
+                    >
+                      <i className="bi bi-exclamation-triangle" style={{ color: '#dc3545' }} />
+                    </div>
                     <div>
-                      <p className="mb-1 fw-medium">{errorMessage}</p>
-                      <button onClick={resetUpload} className="btn btn-sm btn-outline-danger">다시 시도</button>
+                      <p className="mb-2 fw-semibold" style={{ color: '#dc3545', fontSize: 14 }}>{errorMessage}</p>
+                      <button
+                        onClick={resetUpload}
+                        className="btn btn-sm rounded-pill px-3"
+                        style={{ background: 'rgba(220,53,69,0.1)', color: '#dc3545', border: 'none', fontSize: 13 }}
+                      >
+                        다시 시도
+                      </button>
                     </div>
                   </div>
                 )}
@@ -273,9 +312,21 @@ export default function AnalysisPage() {
                 {uploadStatus === 'completed' && (
                   <div className="d-flex flex-column" style={{ height: 550 }}>
                     {currentDocumentName && (
-                      <div className="d-flex align-items-center justify-content-between mb-3 pb-3 border-bottom">
-                        <span className="fw-semibold fs-7">{currentDocumentName}</span>
-                        <button onClick={resetUpload} className="btn btn-sm btn-outline-primary rounded-pill">
+                      <div className="d-flex align-items-center justify-content-between mb-3 pb-3" style={{ borderBottom: '1px solid #e2e8f0' }}>
+                        <div className="d-flex align-items-center gap-2">
+                          <div
+                            className="rounded-2 d-flex align-items-center justify-content-center"
+                            style={{ width: 28, height: 28, background: 'rgba(0,70,255,0.08)' }}
+                          >
+                            <i className="bi bi-file-earmark-text" style={{ color: 'var(--tc-theme-primary)', fontSize: 12 }} />
+                          </div>
+                          <span className="fw-semibold" style={{ fontSize: 14 }}>{currentDocumentName}</span>
+                        </div>
+                        <button
+                          onClick={resetUpload}
+                          className="btn btn-sm rounded-pill px-3"
+                          style={{ background: 'rgba(0,70,255,0.08)', color: 'var(--tc-theme-primary)', border: 'none', fontSize: 12, fontWeight: 600 }}
+                        >
                           새 문서 분석
                         </button>
                       </div>
@@ -285,24 +336,41 @@ export default function AnalysisPage() {
                       {/* Analysis Result */}
                       {analysisResult && (
                         <div className="mb-4">
-                          <div className="bg-light rounded-3 p-3 mb-3">
-                            <p className="fw-bold fs-7 mb-1">분석 요약</p>
-                            <p className="fs-7 text-muted mb-0">{analysisResult.summary}</p>
+                          <div className="rounded-3 p-3 mb-3" style={{ background: '#f8f9fc' }}>
+                            <p className="fw-bold mb-1" style={{ fontSize: 13, color: 'var(--tc-theme-primary)' }}>
+                              <i className="bi bi-lightbulb me-1" />
+                              분석 요약
+                            </p>
+                            <p className="text-muted mb-0" style={{ fontSize: 13 }}>{analysisResult.summary}</p>
                           </div>
 
                           {analysisResult.riskItems.length > 0 && (
                             <div className="mb-3">
-                              <p className="fw-bold fs-7 mb-3">발견된 위험 요소 ({analysisResult.riskItems.length}개)</p>
+                              <p className="fw-bold mb-3" style={{ fontSize: 13 }}>
+                                발견된 위험 요소 ({analysisResult.riskItems.length}개)
+                              </p>
                               <div className="d-flex flex-column gap-3">
                                 {analysisResult.riskItems.map((item, index) => (
                                   <div
                                     key={index}
-                                    className="ps-3"
-                                    style={{ borderLeft: `4px solid ${riskColorMap[item.severity]}` }}
+                                    className="rounded-3 p-3"
+                                    style={{
+                                      background: '#fff',
+                                      borderLeft: `3px solid ${riskColorMap[item.severity]}`,
+                                      boxShadow: '0 1px 4px rgba(0,0,0,0.04)',
+                                    }}
                                   >
-                                    <p className="fw-semibold fs-7 mb-1">{index + 1}. {item.title}</p>
-                                    <p className="fs-7 text-muted mb-1">{item.description}</p>
-                                    <p className="fs-7 text-muted mb-0" style={{ opacity: 0.7 }}>권장: {item.recommendation}</p>
+                                    <div className="d-flex align-items-center gap-2 mb-1">
+                                      <span className="badge rounded-pill" style={{ ...riskBadgeStyle[item.severity], fontSize: 10, fontWeight: 600 }}>
+                                        {riskLabels[item.severity]}
+                                      </span>
+                                      <p className="fw-semibold mb-0" style={{ fontSize: 13 }}>{item.title}</p>
+                                    </div>
+                                    <p className="text-muted mb-1" style={{ fontSize: 12 }}>{item.description}</p>
+                                    <p className="mb-0" style={{ fontSize: 12, color: 'var(--tc-theme-primary)', opacity: 0.8 }}>
+                                      <i className="bi bi-check2 me-1" />
+                                      {item.recommendation}
+                                    </p>
                                   </div>
                                 ))}
                               </div>
@@ -310,9 +378,10 @@ export default function AnalysisPage() {
                           )}
 
                           {chatMessages.length === 0 && (
-                            <div className="text-center py-3 border-top">
-                              <p className="fs-7 fw-semibold mb-0" style={{ color: 'var(--tc-theme-primary)' }}>
-                                궁금한 점이 있으시면 아래에서 질문해주세요!
+                            <div className="text-center py-3 rounded-3" style={{ background: '#f8f9fc' }}>
+                              <p className="mb-0 fw-semibold" style={{ color: 'var(--tc-theme-primary)', fontSize: 13 }}>
+                                <i className="bi bi-chat-dots me-1" />
+                                궁금한 점이 있으시면 아래에서 질문해주세요
                               </p>
                             </div>
                           )}
@@ -322,14 +391,23 @@ export default function AnalysisPage() {
                       {/* Chat Messages */}
                       {chatMessages.map((msg) => (
                         <div key={msg.id} className={`d-flex mb-3 ${msg.role === 'user' ? 'justify-content-end' : 'justify-content-start'}`}>
+                          {msg.role === 'assistant' && (
+                            <div
+                              className="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 me-2"
+                              style={{ width: 28, height: 28, background: 'rgba(0,70,255,0.08)', marginTop: 2 }}
+                            >
+                              <i className="bi bi-robot" style={{ color: 'var(--tc-theme-primary)', fontSize: 12 }} />
+                            </div>
+                          )}
                           <div
-                            className={`rounded-3 px-3 py-2 fs-7 ${
-                              msg.role === 'user' ? 'text-white' : 'bg-light'
-                            }`}
+                            className="rounded-3 px-3 py-2"
                             style={{
                               maxWidth: '80%',
                               whiteSpace: 'pre-wrap',
-                              ...(msg.role === 'user' ? { background: 'var(--tc-theme-primary)' } : {}),
+                              fontSize: 13,
+                              ...(msg.role === 'user'
+                                ? { background: 'linear-gradient(135deg, #312e81, #4338ca)', color: '#fff' }
+                                : { background: '#f8f9fc', color: '#334155' }),
                             }}
                           >
                             {msg.content}
@@ -339,7 +417,13 @@ export default function AnalysisPage() {
 
                       {isSending && (
                         <div className="d-flex justify-content-start mb-3">
-                          <div className="bg-light rounded-3 px-3 py-2">
+                          <div
+                            className="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0 me-2"
+                            style={{ width: 28, height: 28, background: 'rgba(0,70,255,0.08)', marginTop: 2 }}
+                          >
+                            <i className="bi bi-robot" style={{ color: 'var(--tc-theme-primary)', fontSize: 12 }} />
+                          </div>
+                          <div className="rounded-3 px-3 py-2" style={{ background: '#f8f9fc' }}>
                             <div className="d-flex gap-1">
                               <div className="spinner-grow spinner-grow-sm text-muted" role="status" />
                               <div className="spinner-grow spinner-grow-sm text-muted" role="status" style={{ animationDelay: '0.15s' }} />
@@ -351,22 +435,30 @@ export default function AnalysisPage() {
                     </div>
 
                     {/* Chat Input */}
-                    <div className="d-flex gap-2 pt-3 border-top">
+                    <div className="d-flex gap-2 pt-3" style={{ borderTop: '1px solid #e2e8f0' }}>
                       <input
                         type="text"
                         value={chatInput}
                         onChange={(e) => setChatInput(e.target.value)}
                         onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && sendMessage()}
                         placeholder="계약서에 대해 질문해보세요..."
-                        className="form-control form-control-sm rounded-3"
+                        className="form-control rounded-pill"
+                        style={{ fontSize: 13, border: '1px solid #e2e8f0', padding: '8px 16px' }}
                         disabled={isSending}
                       />
                       <button
                         onClick={sendMessage}
                         disabled={isSending || !chatInput.trim()}
-                        className="btn btn-sm btn-primary rounded-3 px-3"
-                        style={{ background: 'var(--tc-theme-primary)', borderColor: 'var(--tc-theme-primary)' }}
+                        className="btn rounded-pill px-4 d-flex align-items-center gap-1 flex-shrink-0"
+                        style={{
+                          background: 'linear-gradient(135deg, #312e81, #4338ca)',
+                          color: '#fff',
+                          border: 'none',
+                          fontSize: 13,
+                          opacity: (isSending || !chatInput.trim()) ? 0.5 : 1,
+                        }}
                       >
+                        <i className="bi bi-send" style={{ fontSize: 12 }} />
                         전송
                       </button>
                     </div>
@@ -388,17 +480,23 @@ export default function AnalysisPage() {
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
               onDrop={handleDrop}
-              className={`card rounded-4 p-5 text-center mt-3 ${
+              className={`rounded-4 p-5 text-center mt-3 ${
                 uploadStatus !== 'idle' ? 'opacity-50 pe-none' : ''
               }`}
               style={{
-                border: `2px dashed ${isDragging ? 'var(--tc-theme-primary)' : '#dee2e6'}`,
+                border: `2px dashed ${isDragging ? 'var(--tc-theme-primary)' : '#d1d5db'}`,
                 cursor: uploadStatus === 'idle' ? 'pointer' : 'default',
-                background: isDragging ? 'rgba(0,70,255,0.03)' : 'transparent',
+                background: isDragging ? 'rgba(0,70,255,0.03)' : '#fff',
+                transition: 'all 0.2s ease',
               }}
             >
-              <i className="bi bi-cloud-arrow-up fs-2 text-muted d-block mb-2" />
-              <p className="text-muted fs-7 mb-1">
+              <div
+                className="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3"
+                style={{ width: 56, height: 56, background: isDragging ? 'rgba(0,70,255,0.1)' : '#f1f5f9' }}
+              >
+                <i className="bi bi-cloud-arrow-up fs-3" style={{ color: isDragging ? 'var(--tc-theme-primary)' : '#94a3b8' }} />
+              </div>
+              <p className="mb-1" style={{ fontSize: 14, color: '#475569' }}>
                 파일을 드래그하거나 <span className="fw-semibold" style={{ color: 'var(--tc-theme-primary)' }}>클릭</span>하여 업로드
               </p>
               <p className="text-muted mb-0" style={{ fontSize: 12 }}>PDF, DOCX, DOC, TXT (최대 50MB)</p>
@@ -407,40 +505,67 @@ export default function AnalysisPage() {
 
           {/* Right Sidebar - Analysis Summary */}
           <div className="col-lg-4">
-            <div className="card border-0 shadow-sm rounded-4">
-              <div className="card-body p-4">
-                <h6 className="fw-bold mb-3">분석 요약</h6>
+            <div className="rounded-4 overflow-hidden" style={{ background: '#fff', boxShadow: '0 2px 12px rgba(0,0,0,0.05)' }}>
+              <div className="p-4">
+                <div className="d-flex align-items-center gap-2 mb-3">
+                  <div
+                    className="rounded-2 d-flex align-items-center justify-content-center"
+                    style={{ width: 28, height: 28, background: 'rgba(0,70,255,0.1)' }}
+                  >
+                    <i className="bi bi-bar-chart" style={{ color: 'var(--tc-theme-primary)', fontSize: 12 }} />
+                  </div>
+                  <h6 className="fw-bold mb-0">분석 요약</h6>
+                </div>
 
                 {analysisResult ? (
-                  <>
-                    <span
-                      className={`badge ${riskBadgeClass[analysisResult.riskLevel]} rounded-pill mb-3`}
-                    >
-                      위험 요소: {analysisResult.riskItems.length}개
-                    </span>
-
-                    <p className="fw-bold fs-7 mb-2">위험도 점수</p>
-                    <div className="progress mb-2 rounded-pill" style={{ height: 8 }}>
+                  <div>
+                    {/* Risk Level Badge */}
+                    <div className="text-center mb-4">
                       <div
-                        className="progress-bar rounded-pill"
-                        role="progressbar"
-                        style={{
-                          width: riskScoreWidth,
-                          backgroundColor: riskColorMap[analysisResult.riskLevel],
-                        }}
-                      />
+                        className="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-2"
+                        style={{ width: 72, height: 72, background: riskGradientMap[analysisResult.riskLevel] }}
+                      >
+                        <span className="text-white fw-bold fs-5">{analysisResult.riskScore}</span>
+                      </div>
+                      <span className="badge rounded-pill px-3" style={{ ...riskBadgeStyle[analysisResult.riskLevel], fontWeight: 600 }}>
+                        위험도: {riskLabels[analysisResult.riskLevel]}
+                      </span>
                     </div>
-                    <span
-                      className="badge rounded-pill text-white"
-                      style={{ backgroundColor: riskColorMap[analysisResult.riskLevel] }}
-                    >
-                      {riskLabels[analysisResult.riskLevel]} ({analysisResult.riskScore}점)
-                    </span>
-                  </>
+
+                    {/* Risk Score Bar */}
+                    <div className="mb-4">
+                      <div className="d-flex justify-content-between mb-2">
+                        <span className="text-muted" style={{ fontSize: 12 }}>위험도 점수</span>
+                        <span className="fw-semibold" style={{ fontSize: 12 }}>{analysisResult.riskScore}/100</span>
+                      </div>
+                      <div className="progress rounded-pill" style={{ height: 6, background: '#e2e8f0' }}>
+                        <div
+                          className="progress-bar rounded-pill"
+                          role="progressbar"
+                          style={{ width: riskScoreWidth, background: riskGradientMap[analysisResult.riskLevel] }}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Risk Items Count */}
+                    <div className="rounded-3 p-3" style={{ background: '#f8f9fc' }}>
+                      <div className="d-flex align-items-center justify-content-between">
+                        <span className="text-muted" style={{ fontSize: 13 }}>발견된 위험 요소</span>
+                        <span className="fw-bold" style={{ color: riskColorMap[analysisResult.riskLevel] }}>
+                          {analysisResult.riskItems.length}개
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 ) : (
-                  <div className="text-center py-4">
-                    <i className="bi bi-shield-check fs-1 text-muted d-block mb-2" />
-                    <p className="text-muted fs-7 mb-0">문서를 업로드하면<br />분석 결과가 여기에 표시됩니다.</p>
+                  <div className="text-center py-5">
+                    <div
+                      className="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3"
+                      style={{ width: 64, height: 64, background: '#f1f5f9' }}
+                    >
+                      <i className="bi bi-shield-check fs-2" style={{ color: '#94a3b8' }} />
+                    </div>
+                    <p className="text-muted mb-0" style={{ fontSize: 13 }}>문서를 업로드하면<br />분석 결과가 표시됩니다.</p>
                   </div>
                 )}
               </div>
@@ -451,10 +576,19 @@ export default function AnalysisPage() {
         /* Recent Documents Tab */
         <div className="d-flex flex-column gap-3">
           {documentList.length === 0 ? (
-            <div className="text-center py-5">
-              <i className="bi bi-file-earmark-text fs-1 text-muted d-block mb-3" />
-              <p className="text-muted mb-2">아직 분석한 문서가 없습니다.</p>
-              <button onClick={() => setActiveSubTab('ai')} className="btn btn-sm btn-primary rounded-pill" style={{ background: 'var(--tc-theme-primary)', borderColor: 'var(--tc-theme-primary)' }}>
+            <div className="text-center py-5 rounded-4" style={{ background: '#fff', boxShadow: '0 2px 12px rgba(0,0,0,0.05)' }}>
+              <div
+                className="rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3"
+                style={{ width: 64, height: 64, background: '#f1f5f9' }}
+              >
+                <i className="bi bi-file-earmark-text fs-2" style={{ color: '#94a3b8' }} />
+              </div>
+              <p className="text-muted mb-2" style={{ fontSize: 14 }}>아직 분석한 문서가 없습니다.</p>
+              <button
+                onClick={() => setActiveSubTab('ai')}
+                className="btn btn-sm rounded-pill px-4"
+                style={{ background: 'linear-gradient(135deg, #312e81, #4338ca)', color: '#fff', border: 'none' }}
+              >
                 첫 문서 분석하기
               </button>
             </div>
@@ -463,37 +597,46 @@ export default function AnalysisPage() {
               <div
                 key={doc.id}
                 onClick={() => doc.status === 'completed' && loadDocumentChat(doc.id, doc.name, doc.analysis)}
-                className={`card border-0 shadow-sm rounded-4 ${
-                  doc.status === 'completed' ? 'hover-up' : ''
-                }`}
-                style={{ cursor: doc.status === 'completed' ? 'pointer' : 'default' }}
+                className={`rounded-4 ${doc.status === 'completed' ? 'hover-up' : ''}`}
+                style={{
+                  cursor: doc.status === 'completed' ? 'pointer' : 'default',
+                  background: '#fff',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+                  transition: 'all 0.2s ease',
+                }}
               >
-                <div className="card-body p-3 d-flex align-items-center justify-content-between">
+                <div className="p-3 d-flex align-items-center justify-content-between">
                   <div className="d-flex align-items-center gap-3">
                     <div
                       className="rounded-3 d-flex align-items-center justify-content-center flex-shrink-0"
-                      style={{ width: 40, height: 40, background: 'rgba(0,70,255,0.08)' }}
+                      style={{ width: 40, height: 40, background: 'rgba(0,70,255,0.06)' }}
                     >
-                      <i className="bi bi-file-earmark-text" style={{ color: 'var(--tc-theme-primary)' }} />
+                      <i className="bi bi-file-earmark-text" style={{ color: 'var(--tc-theme-primary)', fontSize: 16 }} />
                     </div>
                     <div>
-                      <p className="mb-0 fw-bold fs-7">{doc.name}</p>
-                      <p className="mb-0 text-muted" style={{ fontSize: 12 }}>
-                        {doc.date} &middot; {doc.time} &middot; {doc.size}
+                      <p className="mb-0 fw-bold" style={{ fontSize: 14 }}>{doc.name}</p>
+                      <div className="d-flex align-items-center gap-2 flex-wrap">
+                        <p className="mb-0 text-muted" style={{ fontSize: 12 }}>
+                          {doc.date} &middot; {doc.time} &middot; {doc.size}
+                        </p>
                         {doc.status === 'completed' && (
-                          <span className={`badge ${riskBadgeClass[doc.risk]} rounded-pill ms-2`} style={{ fontSize: 10 }}>
-                            위험도: {riskLabels[doc.risk]}
+                          <span className="badge rounded-pill" style={{ ...riskBadgeStyle[doc.risk], fontSize: 10, fontWeight: 600 }}>
+                            {riskLabels[doc.risk]}
                           </span>
                         )}
-                      </p>
+                      </div>
                     </div>
                   </div>
-                  <span className={`fs-7 fw-medium ${doc.status === 'completed' ? '' : 'text-muted'}`} style={doc.status === 'completed' ? { color: 'var(--tc-theme-primary)' } : {}}>
-                    {doc.status === 'uploading' && '↻ 업로드중'}
-                    {doc.status === 'parsing' && '↻ 파싱중'}
-                    {doc.status === 'analyzing' && '↻ 분석중'}
-                    {doc.status === 'completed' && '✓ 완료'}
-                    {doc.status === 'failed' && '✕ 실패'}
+                  <span className="fw-semibold" style={{ fontSize: 13, color: doc.status === 'completed' ? 'var(--tc-theme-primary)' : '#94a3b8' }}>
+                    {doc.status === 'uploading' && '업로드중'}
+                    {doc.status === 'parsing' && '파싱중'}
+                    {doc.status === 'analyzing' && '분석중'}
+                    {doc.status === 'completed' && (
+                      <span className="d-flex align-items-center gap-1">
+                        <i className="bi bi-check-circle-fill" style={{ fontSize: 14 }} /> 완료
+                      </span>
+                    )}
+                    {doc.status === 'failed' && '실패'}
                   </span>
                 </div>
               </div>

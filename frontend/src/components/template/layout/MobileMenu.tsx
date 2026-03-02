@@ -49,17 +49,17 @@ export default function MobileMenu({ isMobileMenu, handleMobileMenu }: MobileMen
                                     <ul className="mobile-menu ps-0">
                                         <li><Link href="/">홈</Link></li>
                                         <li><Link href="/about">소개</Link></li>
+                                        <li><Link href="/features">서비스</Link></li>
                                         <li className="has-children">
                                             <span className="menu-expand" onClick={() => handleAccordion(1)}>
                                                 <i className="arrow-small-down" />
                                             </span>
-                                            <Link href="#">서비스</Link>
+                                            <Link href="#">법률 AI 분석</Link>
                                             <ul className="sub-menu" style={{ display: `${isAccordion == 1 ? "block" : "none"}` }}>
-                                                <li><Link href="/contract">계약서 작성</Link></li>
-                                                <li><Link href="/features">기능소개</Link></li>
+                                                <li><Link href="/mypage">계약서 분석</Link></li>
+                                                <li><Link href="/mypage/contract">계약서 작성</Link></li>
                                             </ul>
                                         </li>
-                                        <li><Link href="/mypage">법률 AI 분석</Link></li>
                                         <li className="has-children">
                                             <Link href="#">고객지원</Link>
                                             <span className="menu-expand" onClick={() => handleAccordion(2)}>

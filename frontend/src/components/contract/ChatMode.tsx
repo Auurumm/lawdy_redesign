@@ -258,7 +258,8 @@ export default function ChatMode({ contractType, onComplete, onBack }: ChatModeP
             placeholder={isComplete ? '추가 정보를 입력하거나 계약서를 생성하세요' : '정보를 입력해주세요... (Enter: 전송, Ctrl+Enter: 줄바꿈)'}
             disabled={isLoading}
             rows={1}
-            className="flex-1 px-4 py-2.5 border border-[#e1e3ea] rounded-lg text-sm focus:outline-none focus:border-primary disabled:opacity-50 resize-none overflow-hidden"
+            className="flex-1 pr-4 py-2.5 border border-[#e1e3ea] rounded-lg text-sm focus:outline-none focus:border-primary disabled:opacity-50 resize-none overflow-hidden"
+            style={{ paddingLeft: 40 }}
           />
           <button
             onClick={sendMessage}

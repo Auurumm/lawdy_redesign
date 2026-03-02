@@ -1,3 +1,5 @@
+'use client';
+
 import Link from "next/link";
 
 export default function Section1() {
@@ -17,23 +19,8 @@ export default function Section1() {
                         </p>
                     </div>
                     <div className="row g-4 justify-content-center">
-                        <div className="col-lg-4 col-md-6">
+                        <div className="col-lg-5 col-md-6">
                             <div className="card border-0 bg-dark text-white rounded-4 p-4 h-100 hover-up" data-aos="fade-up" data-aos-delay={0}>
-                                <div className="card-body text-center d-flex flex-column">
-                                    <div className="icon-shape icon-lg bg-linear-1 rounded-3 mb-3 mx-auto d-flex align-items-center justify-content-center">
-                                        <i className="bi bi-envelope fs-4 text-white" />
-                                    </div>
-                                    <h5 className="text-white mb-2">이메일 문의</h5>
-                                    <p className="text-white-50 mb-3">서비스, 기능, 요금 등 궁금한 점을 편하게 보내주세요.</p>
-                                    <p className="text-primary fw-semibold mb-3">official.haedeun@gmail.com</p>
-                                    <Link href="mailto:official.haedeun@gmail.com" className="btn btn-outline-light btn-sm rounded-3 mt-auto">
-                                        무료 상담하기
-                                    </Link>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-lg-4 col-md-6">
-                            <div className="card border-0 bg-dark text-white rounded-4 p-4 h-100 hover-up" data-aos="fade-up" data-aos-delay={200}>
                                 <div className="card-body text-center d-flex flex-column">
                                     <div className="icon-shape icon-lg bg-linear-1 rounded-3 mb-3 mx-auto d-flex align-items-center justify-content-center">
                                         <i className="bi bi-question-circle fs-4 text-white" />
@@ -47,8 +34,8 @@ export default function Section1() {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-4 col-md-6">
-                            <div className="card border-0 bg-dark text-white rounded-4 p-4 h-100 hover-up" data-aos="fade-up" data-aos-delay={400}>
+                        <div className="col-lg-5 col-md-6">
+                            <div className="card border-0 bg-dark text-white rounded-4 p-4 h-100 hover-up" data-aos="fade-up" data-aos-delay={200}>
                                 <div className="card-body text-center d-flex flex-column">
                                     <div className="icon-shape icon-lg bg-linear-1 rounded-3 mb-3 mx-auto d-flex align-items-center justify-content-center">
                                         <i className="bi bi-clock-history fs-4 text-white" />
@@ -56,7 +43,12 @@ export default function Section1() {
                                     <h5 className="text-white mb-2">빠른 응답</h5>
                                     <p className="text-white-50 mb-3">일반적으로 24시간 이내에 회신드립니다.</p>
                                     <p className="text-primary fw-semibold mb-3">평일 09:00 ~ 18:00</p>
-                                    <span className="btn btn-outline-light btn-sm rounded-3 mt-auto opacity-75">
+                                    <span
+                                        className="d-inline-block rounded-3 mt-auto px-3 py-2 small fw-medium text-center"
+                                        style={{ border: '1px solid rgba(255,255,255,0.25)', color: 'rgba(255,255,255,0.5)', cursor: 'default', transition: 'all 0.2s ease' }}
+                                        onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.5)'; e.currentTarget.style.color = 'rgba(255,255,255,0.8)'; }}
+                                        onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.25)'; e.currentTarget.style.color = 'rgba(255,255,255,0.5)'; }}
+                                    >
                                         응답 대기 중
                                     </span>
                                 </div>

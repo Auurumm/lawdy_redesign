@@ -20,7 +20,7 @@ export default function Section5() {
                             첫 계약서는 무료로 제공됩니다.
                         </p>
                         <div className="d-flex align-items-center justify-content-center gap-3 flex-wrap">
-                            <Link href="/contract" className="btn btn-linear btn-lg px-5 py-3 fw-bold">
+                            <Link href="/mypage/contract" className="btn btn-linear btn-lg px-5 py-3 fw-bold">
                                 무료로 시작하기
                             </Link>
                             <Link href="/pricing" className="btn btn-outline-light btn-lg px-5 py-3">
