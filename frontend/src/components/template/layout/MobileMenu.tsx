@@ -33,7 +33,7 @@ export default function MobileMenu({ isMobileMenu, handleMobileMenu }: MobileMen
                 <div className="mobile-header-wrapper-inner">
                     <div className="mobile-header-logo">
                         <Link className="d-flex align-items-center gap-2" href="/">
-                            <Image src="/images/logo-full.png" alt="Lawdy" width={40} height={40} style={{ objectFit: 'contain' }} />
+                            <Image src="/images/logo-full.png" alt="Lawdy" width={24} height={24} style={{ objectFit: 'contain' }} />
                             <h5 className="mb-0">Lawdy</h5>
                         </Link>
                         <div className={`burger-icon burger-icon-white border rounded-circle ${isMobileMenu ? "burger-close" : ""}`} onClick={handleMobileMenu}>
@@ -59,6 +59,7 @@ export default function MobileMenu({ isMobileMenu, handleMobileMenu }: MobileMen
                                                 <li><Link href="/features">기능소개</Link></li>
                                             </ul>
                                         </li>
+                                        <li><Link href="/mypage">법률 AI 분석</Link></li>
                                         <li className="has-children">
                                             <Link href="#">고객지원</Link>
                                             <span className="menu-expand" onClick={() => handleAccordion(2)}>
@@ -69,7 +70,6 @@ export default function MobileMenu({ isMobileMenu, handleMobileMenu }: MobileMen
                                                 <li><Link href="/faq">자주 묻는 질문</Link></li>
                                             </ul>
                                         </li>
-                                        <li><Link href="/mypage">법률 AI 분석</Link></li>
                                     </ul>
                                 </nav>
                             </div>

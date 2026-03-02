@@ -31,6 +31,11 @@ export default function MainMenu() {
                     </li>
                 </ul>
             </li>
+            <li className="nav-item">
+                <Link className="nav-link text-uppercase" href="/mypage">
+                    <span>법률 AI 분석</span>
+                </Link>
+            </li>
             <li className="nav-item dropdown menu-item-has-children">
                 <Link className="nav-link text-uppercase" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <span>고객지원</span>
@@ -47,11 +52,6 @@ export default function MainMenu() {
                         </Link>
                     </li>
                 </ul>
-            </li>
-            <li className="nav-item">
-                <Link className="nav-link text-uppercase" href="/mypage">
-                    <span>법률 AI 분석</span>
-                </Link>
             </li>
         </ul>
     )

@@ -14,7 +14,7 @@ export default function Header({ scroll, isMobileMenu, handleMobileMenu }: any) 
                 <nav className={`navbar navbar-expand-lg navbar-dark z-5 ${scroll ? "navbar-stick top-0 position-fixed" : ""}`}>
                     <div className="container mt-3 mb-3">
                         <Link className="navbar-brand d-flex align-items-center gap-2" href="/">
-                            <Image src="/images/logo-full.png" alt="Lawdy" width={40} height={40} style={{ objectFit: 'contain' }} priority />
+                            <Image src="/images/logo-full.png" alt="Lawdy" width={24} height={24} style={{ objectFit: 'contain' }} priority />
                             <h5 className="mb-0 text-white">Lawdy</h5>
                         </Link>
                         <div className="d-none d-lg-flex">
@@ -58,7 +58,7 @@ export default function Header({ scroll, isMobileMenu, handleMobileMenu }: any) 
                     </div>
                     <div className="offCanvas__logo mb-30">
                         <Link className="d-flex align-items-center gap-2" href="/">
-                            <Image src="/images/logo-full.png" alt="Lawdy" width={40} height={40} style={{ objectFit: 'contain' }} />
+                            <Image src="/images/logo-full.png" alt="Lawdy" width={24} height={24} style={{ objectFit: 'contain' }} />
                             <h5 className="mb-0 text-dark">Lawdy</h5>
                         </Link>
                     </div>
