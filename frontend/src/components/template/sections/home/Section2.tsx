@@ -24,7 +24,8 @@ export default function Section2() {
                                     </div>
                                     <h5 className="mb-3">5분 만에 완성</h5>
                                     <p className="text-muted mb-0">
-                                        몇 가지 질문에 답하면 AI가 자동으로 계약서를 작성합니다.
+                                        몇 가지 질문에 답하면<br />
+                                        AI가 자동으로 계약서를 작성합니다.<br />
                                         복잡한 법률 용어를 몰라도 괜찮아요.
                                     </p>
                                 </div>
@@ -38,8 +39,9 @@ export default function Section2() {
                                     </div>
                                     <h5 className="mb-3">법률 전문가 검증</h5>
                                     <p className="text-muted mb-0">
-                                        모든 템플릿은 변호사가 직접 검토했습니다.
-                                        대한민국 법률에 맞는 정확한 계약서를 제공합니다.
+                                        모든 템플릿은 변호사가 직접 검토했습니다.<br />
+                                        대한민국 법률에 맞는<br />
+                                        정확한 계약서를 제공합니다.
                                     </p>
                                 </div>
                             </div>
@@ -52,7 +54,8 @@ export default function Section2() {
                                     </div>
                                     <h5 className="mb-3">맞춤형 조항 생성</h5>
                                     <p className="text-muted mb-0">
-                                        상황에 맞는 특약 조항을 AI가 추천해드립니다.
+                                        상황에 맞는 특약 조항을<br />
+                                        AI가 추천해드립니다.<br />
                                         필요한 조항을 선택하여 추가할 수 있어요.
                                     </p>
                                 </div>
@@ -66,7 +69,8 @@ export default function Section2() {
                                     </div>
                                     <h5 className="mb-3">다양한 포맷 지원</h5>
                                     <p className="text-muted mb-0">
-                                        PDF, Word, HWP 등 원하는 형식으로 다운로드하세요.
+                                        PDF, Word, HWP 등<br />
+                                        원하는 형식으로 다운로드하세요.<br />
                                         바로 인쇄하여 사용할 수 있습니다.
                                     </p>
                                 </div>
@@ -80,7 +84,8 @@ export default function Section2() {
                                     </div>
                                     <h5 className="mb-3">계약서 관리</h5>
                                     <p className="text-muted mb-0">
-                                        작성한 계약서를 안전하게 보관하고 관리하세요.
+                                        작성한 계약서를<br />
+                                        안전하게 보관하고 관리하세요.<br />
                                         계약 만료일 알림도 받아볼 수 있습니다.
                                     </p>
                                 </div>
@@ -94,8 +99,8 @@ export default function Section2() {
                                     </div>
                                     <h5 className="mb-3">전문가 상담 연결</h5>
                                     <p className="text-muted mb-0">
-                                        복잡한 계약이 필요하시면 법률 전문가와
-                                        바로 상담을 진행할 수 있습니다.
+                                        복잡한 계약이 필요하시면<br />
+                                        법률 전문가와 바로 상담을 진행할 수 있습니다.
                                     </p>
                                 </div>
                             </div>

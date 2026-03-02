@@ -14,7 +14,9 @@ export default function HomeSupportPreview() {
                     </div>
                     <h2 className="text-dark fw-bold mb-3">고객지원</h2>
                     <p className="text-muted mx-auto" style={{ maxWidth: '480px' }}>
-                        Lawdy 이용 중 궁금한 점이 있으시면 언제든 연락해주세요. 전문 상담팀이 신속하게 도와드리겠습니다.
+                        Lawdy 이용 중 궁금한 점이 있으시면<br />
+                        언제든 연락해주세요.<br />
+                        전문 상담팀이 신속하게 도와드리겠습니다.
                     </p>
                 </div>
                 <div className="row g-4 justify-content-center">

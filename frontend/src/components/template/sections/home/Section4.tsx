@@ -23,7 +23,8 @@ export default function Section4() {
                                 <div>
                                     <h5 className="mb-2">계약서 유형 선택</h5>
                                     <p className="text-muted mb-0">
-                                        근로계약서, 용역계약서, NDA 등 필요한 계약서 종류를 선택합니다.
+                                        근로계약서, 용역계약서, NDA 등<br />
+                                        필요한 계약서 종류를 선택합니다.
                                     </p>
                                 </div>
                             </div>
@@ -37,7 +38,9 @@ export default function Section4() {
                                 <div>
                                     <h5 className="mb-2">정보 입력</h5>
                                     <p className="text-muted mb-0">
-                                        계약 당사자, 기간, 금액 등 기본 정보를 입력하면 AI가 조항을 자동 생성합니다.
+                                        계약 당사자, 기간, 금액 등<br />
+                                        기본 정보를 입력하면<br />
+                                        AI가 조항을 자동 생성합니다.
                                     </p>
                                 </div>
                             </div>
@@ -51,7 +54,8 @@ export default function Section4() {
                                 <div>
                                     <h5 className="mb-2">검토 및 다운로드</h5>
                                     <p className="text-muted mb-0">
-                                        생성된 계약서를 검토하고 수정한 뒤, 원하는 형식으로 다운로드하세요.
+                                        생성된 계약서를 검토하고 수정한 뒤,<br />
+                                        원하는 형식으로 다운로드하세요.
                                     </p>
                                 </div>
                             </div>

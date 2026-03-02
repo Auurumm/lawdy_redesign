@@ -16,6 +16,11 @@ export default function MobileMenu({ isMobileMenu, handleMobileMenu }: MobileMen
     const pathname = usePathname()
     const { user, logout } = useAuth()
 
+    const handleLogout = async () => {
+        await logout()
+        window.location.href = '/'
+    }
+
     const handleAccordion = (key: number) => {
         setIsAccordion((prevState) => (prevState === key ? null : key))
     }
@@ -81,7 +86,7 @@ export default function MobileMenu({ isMobileMenu, handleMobileMenu }: MobileMen
                                 <div className="d-flex flex-column gap-2 mb-3">
                                     <span className="fw-medium">{user.name}님 환영합니다</span>
                                     <Link href="/mypage" className="btn btn-linear btn-sm">마이페이지</Link>
-                                    <button onClick={logout} className="btn btn-outline-light btn-sm">로그아웃</button>
+                                    <button onClick={handleLogout} className="btn btn-outline-light btn-sm">로그아웃</button>
                                 </div>
                             ) : (
                                 <div className="d-flex flex-column gap-2 mb-3">

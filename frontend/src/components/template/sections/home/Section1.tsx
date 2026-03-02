@@ -1,6 +1,25 @@
+'use client';
+
+import { useRef } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function Section1() {
+    const { user } = useAuth();
+    const router = useRouter();
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        const query = inputRef.current?.value?.trim() || '';
+        if (user) {
+            router.push(query ? `/mypage/contract?q=${encodeURIComponent(query)}` : '/mypage/contract');
+        } else {
+            router.push('/login');
+        }
+    };
+
     return (
         <>
             {/*lawdy home section 1 - 히어로*/}
@@ -24,8 +43,8 @@ export default function Section1() {
                     </div>
                     <div className="row">
                         <div className="col-lg-6 mx-auto mt-5">
-                            <form className="input-group mb-3 mt-4 position-relative" data-aos="zoom-in" data-aos-delay={100}>
-                                <input type="text" className="py-3 form-control generate rounded-start-4 border-end-0 border-primary" name="name" placeholder="어떤 계약서가 필요하신가요? (예: 근로계약서)" />
+                            <form className="input-group mb-3 mt-4 position-relative" data-aos="zoom-in" data-aos-delay={100} onSubmit={handleSubmit}>
+                                <input ref={inputRef} type="text" className="py-3 form-control generate rounded-start-4 border-end-0 border-primary" name="name" placeholder="어떤 계약서가 필요하신가요? (예: 근로계약서)" />
                                 <div className="border border-start-0 border-primary rounded-end-4 bg-white">
                                     <button className="btn btn-linear m-2 fs-7 fw-bold" type="submit" aria-label="generate" data-aos="fade-zoom-in" data-aos-delay={100}>
                                         무료로 시작하기

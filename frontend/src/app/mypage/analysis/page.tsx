@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback, Suspense } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { api } from '@/lib/api';
 import type { DocumentWithAnalysis, ChatMessage } from '@/types/database';
@@ -32,7 +33,34 @@ interface AnalysisResult {
 }
 
 export default function AnalysisPage() {
-  const [activeSubTab, setActiveSubTab] = useState<'ai' | 'recent'>('ai');
+  return (
+    <Suspense fallback={
+      <div className="d-flex flex-column align-items-center justify-content-center" style={{ minHeight: 400 }}>
+        <div className="spinner-border text-primary mb-3" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+        <p className="text-muted" style={{ fontSize: 14 }}>데이터를 불러오는 중...</p>
+      </div>
+    }>
+      <AnalysisPageContent />
+    </Suspense>
+  );
+}
+
+function AnalysisPageContent() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  const activeSubTab = (searchParams.get('tab') === 'recent' ? 'recent' : 'ai') as 'ai' | 'recent';
+  const docParam = searchParams.get('doc');
+
+  const setActiveSubTab = useCallback((tab: 'ai' | 'recent') => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('tab', tab);
+    if (tab === 'recent') params.delete('doc');
+    router.replace(`/mypage/analysis?${params.toString()}`);
+  }, [searchParams, router]);
+
   const [documents, setDocuments] = useState<DocumentWithAnalysis[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -49,6 +77,7 @@ export default function AnalysisPage() {
   const [chatInput, setChatInput] = useState('');
   const [isSending, setIsSending] = useState(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
+  const docParamHandled = useRef<string | null>(null);
 
   const { user } = useAuth();
 
@@ -61,6 +90,24 @@ export default function AnalysisPage() {
       chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
     }
   }, [chatMessages]);
+
+  // Auto-load document from URL ?doc= parameter
+  useEffect(() => {
+    if (docParam && docParam !== docParamHandled.current && documents.length > 0) {
+      docParamHandled.current = docParam;
+      const doc = documents.find(d => d.id === docParam);
+      if (doc && doc.status === 'completed') {
+        const analysis = doc.analyses?.[0] ? {
+          riskLevel: doc.analyses[0].risk_level as 'low' | 'medium' | 'high',
+          riskScore: doc.analyses[0].risk_score || 0,
+          summary: doc.analyses[0].summary || '',
+          riskItems: (doc.analyses[0].risk_items || []) as AnalysisResult['riskItems'],
+          recommendations: [],
+        } : undefined;
+        loadDocumentChat(doc.id, doc.file_name, analysis);
+      }
+    }
+  }, [docParam, documents]);
 
   async function loadDocuments() {
     try {
@@ -142,7 +189,7 @@ export default function AnalysisPage() {
     setCurrentDocumentName(docName);
     setAnalysisResult(analysis || null);
     setUploadStatus('completed');
-    setActiveSubTab('ai');
+    router.replace(`/mypage/analysis?tab=ai&doc=${docId}`);
     try {
       const res = await api.getChatMessages(docId);
       const formattedMessages = res.messages.map((m: ChatMessage & { created_at?: string }) => ({

@@ -26,7 +26,7 @@ export default function Section3() {
                                 <div className="icon-flip" data-aos="fade-up" data-aos-delay={0}>
                                     <img src="/assets/imgs/pages/ai-solutions/page-home/home-section-3/icon-1.svg" alt="근로계약서" />
                                     <h6 className="mt-5 mb-3 text-white">근로계약서</h6>
-                                    <p className="text-white">정규직, 계약직, 수습 등 다양한 고용 형태에 맞는 표준 근로계약서</p>
+                                    <p className="text-white">정규직, 계약직, 수습 등<br />다양한 고용 형태에 맞는<br />표준 근로계약서</p>
                                 </div>
                             </Link>
                         </div>
@@ -35,7 +35,7 @@ export default function Section3() {
                                 <div className="icon-flip" data-aos="fade-up" data-aos-delay={200}>
                                     <img src="/assets/imgs/pages/ai-solutions/page-home/home-section-3/icon-2.svg" alt="용역계약서" />
                                     <h6 className="mt-5 mb-3 text-white">용역계약서</h6>
-                                    <p className="text-white">프로젝트 기반 외주 용역, IT 개발, 컨설팅 등 서비스 계약</p>
+                                    <p className="text-white">프로젝트 기반 외주 용역,<br />IT 개발, 컨설팅 등 서비스 계약</p>
                                 </div>
                             </Link>
                         </div>
@@ -44,7 +44,7 @@ export default function Section3() {
                                 <div className="icon-flip" data-aos="fade-up" data-aos-delay={400}>
                                     <img src="/assets/imgs/pages/ai-solutions/page-home/home-section-3/icon-3.svg" alt="비밀유지계약서" />
                                     <h6 className="mt-5 mb-3 text-white">비밀유지계약서 (NDA)</h6>
-                                    <p className="text-white">영업비밀, 기술정보 보호를 위한 기밀유지 계약</p>
+                                    <p className="text-white">영업비밀, 기술정보 보호를 위한<br />기밀유지 계약</p>
                                 </div>
                             </Link>
                         </div>
@@ -53,7 +53,7 @@ export default function Section3() {
                                 <div className="icon-flip" data-aos="fade-up" data-aos-delay={600}>
                                     <img src="/assets/imgs/pages/ai-solutions/page-home/home-section-3/icon-4.svg" alt="임대차계약서" />
                                     <h6 className="mt-5 mb-3 text-white">임대차계약서</h6>
-                                    <p className="text-white">주택, 상가, 오피스 등 부동산 임대차 계약</p>
+                                    <p className="text-white">주택, 상가, 오피스 등<br />부동산 임대차 계약</p>
                                 </div>
                             </Link>
                         </div>
@@ -62,7 +62,7 @@ export default function Section3() {
                                 <div className="icon-flip" data-aos="fade-up" data-aos-delay={0}>
                                     <img src="/assets/imgs/pages/ai-solutions/page-home/home-section-3/icon-5.svg" alt="프리랜서계약서" />
                                     <h6 className="mt-5 mb-3 text-white">프리랜서 계약서</h6>
-                                    <p className="text-white">개인 사업자, 프리랜서와의 업무 위탁 계약</p>
+                                    <p className="text-white">개인 사업자, 프리랜서와의<br />업무 위탁 계약</p>
                                 </div>
                             </Link>
                         </div>
@@ -71,7 +71,7 @@ export default function Section3() {
                                 <div className="icon-flip" data-aos="fade-up" data-aos-delay={200}>
                                     <img src="/assets/imgs/pages/ai-solutions/page-home/home-section-3/icon-6.svg" alt="매매계약서" />
                                     <h6 className="mt-5 mb-3 text-white">매매계약서</h6>
-                                    <p className="text-white">동산, 부동산, 지식재산권 등 자산 매매 계약</p>
+                                    <p className="text-white">동산, 부동산, 지식재산권 등<br />자산 매매 계약</p>
                                 </div>
                             </Link>
                         </div>
@@ -80,7 +80,7 @@ export default function Section3() {
                                 <div className="icon-flip" data-aos="fade-up" data-aos-delay={400}>
                                     <img src="/assets/imgs/pages/ai-solutions/page-home/home-section-3/icon-7.svg" alt="투자계약서" />
                                     <h6 className="mt-5 mb-3 text-white">투자계약서</h6>
-                                    <p className="text-white">스타트업 투자, 주주간 계약, SAFE 계약 등</p>
+                                    <p className="text-white">스타트업 투자, 주주간 계약,<br />SAFE 계약 등</p>
                                 </div>
                             </Link>
                         </div>
@@ -89,7 +89,7 @@ export default function Section3() {
                                 <div className="icon-flip" data-aos="fade-up" data-aos-delay={600}>
                                     <img src="/assets/imgs/pages/ai-solutions/page-home/home-section-3/icon-8.svg" alt="동업계약서" />
                                     <h6 className="mt-5 mb-3 text-white">동업계약서</h6>
-                                    <p className="text-white">공동사업, 조합 설립, 이익 분배 등 동업 관련 계약</p>
+                                    <p className="text-white">공동사업, 조합 설립,<br />이익 분배 등 동업 관련 계약</p>
                                 </div>
                             </Link>
                         </div>

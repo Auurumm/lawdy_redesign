@@ -130,7 +130,7 @@ export default function DashboardPage() {
               </div>
               <h6 className="fw-bold mb-0">최근 문서</h6>
             </div>
-            <Link href="/mypage/analysis" className="d-flex align-items-center gap-1 text-decoration-none fw-semibold" style={{ color: 'var(--tc-theme-primary)', fontSize: 13 }}>
+            <Link href="/mypage/analysis?tab=recent" className="d-flex align-items-center gap-1 text-decoration-none fw-semibold" style={{ color: 'var(--tc-theme-primary)', fontSize: 13 }}>
               전체보기 <i className="bi bi-chevron-right" style={{ fontSize: 12 }} />
             </Link>
           </div>
@@ -216,7 +216,7 @@ export default function DashboardPage() {
                         </td>
                         <td className="text-center">
                           <Link
-                            href={`/mypage/analysis?doc=${doc.id}`}
+                            href={`/mypage/analysis?tab=ai&doc=${doc.id}`}
                             className={`btn btn-sm rounded-pill px-3 ${
                               !doc.isCompleted ? 'disabled opacity-50' : ''
                             }`}
