@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import Layout from "@/components/template/layout/Layout"
 import PageHeader from "@/components/template/sections/PageHeader"
 import Link from "next/link"
@@ -59,6 +60,12 @@ const faqData = {
 }
 
 export default function FAQPage() {
+  const [openItem, setOpenItem] = useState<string | null>(null)
+
+  const toggleItem = (id: string) => {
+    setOpenItem(prev => prev === id ? null : id)
+  }
+
   return (
     <Layout>
       <PageHeader title="자주 묻는 질문" current_page="FAQ" />
@@ -67,32 +74,30 @@ export default function FAQPage() {
           {Object.entries(faqData).map(([key, section]) => (
             <div key={key} className="mb-5">
               <h3 className="text-dark mb-4 fw-bold">{section.title}</h3>
-              <div className="accordion" id={`accordion-${key}`}>
-                {section.items.map((item, index) => (
-                  <div className="accordion-item border rounded-3 mb-3" key={index}>
-                    <h2 className="accordion-header">
-                      <button
-                        className="accordion-button collapsed fw-semibold"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target={`#collapse-${key}-${index}`}
-                        aria-expanded="false"
-                        aria-controls={`collapse-${key}-${index}`}
-                      >
-                        {item.question}
-                      </button>
-                    </h2>
-                    <div
-                      id={`collapse-${key}-${index}`}
-                      className="accordion-collapse collapse"
-                      data-bs-parent={`#accordion-${key}`}
-                    >
-                      <div className="accordion-body text-secondary">
-                        {item.answer}
-                      </div>
+              <div className="accordion">
+                {section.items.map((item, index) => {
+                  const itemId = `${key}-${index}`
+                  const isOpen = openItem === itemId
+                  return (
+                    <div className="accordion-item border rounded-3 mb-3" key={index}>
+                      <h2 className="accordion-header">
+                        <button
+                          className={`accordion-button fw-semibold ${isOpen ? '' : 'collapsed'}`}
+                          type="button"
+                          onClick={() => toggleItem(itemId)}
+                          aria-expanded={isOpen}
+                        >
+                          {item.question}
+                        </button>
+                      </h2>
+                      {isOpen && (
+                        <div className="accordion-body text-secondary">
+                          {item.answer}
+                        </div>
+                      )}
                     </div>
-                  </div>
-                ))}
+                  )
+                })}
               </div>
             </div>
           ))}
