@@ -72,7 +72,7 @@ export default function Header({ scroll, isMobileMenu, handleMobileMenu }: any) 
                     <div className="offCanvas__side-info mb-30">
                         <div className="contact-list mb-30">
                             <h4>이메일</h4>
-                            <p>official.haedeun@gmail.com</p>
+                            <p>admin@lawdy.cloud</p>
                         </div>
                     </div>
                 </div>

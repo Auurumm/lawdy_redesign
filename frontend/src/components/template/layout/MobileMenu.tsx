@@ -98,7 +98,7 @@ export default function MobileMenu({ isMobileMenu, handleMobileMenu }: MobileMen
                         <div className="contact-info">
                             <ul className="list-wrap">
                                 <li>
-                                    <span className="opacity-50">이메일:</span> <Link href="mailto:official.haedeun@gmail.com">official.haedeun@gmail.com</Link>
+                                    <span className="opacity-50">이메일:</span> <Link href="mailto:admin@lawdy.cloud">admin@lawdy.cloud</Link>
                                 </li>
                             </ul>
                         </div>

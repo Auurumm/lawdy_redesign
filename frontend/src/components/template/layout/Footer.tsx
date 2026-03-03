@@ -35,7 +35,7 @@ export default function Footer() {
                             <div>
                                 <h3 className="text-primary btn-text pb-3">연락처</h3>
                                 <div className="d-flex flex-column align-items-start">
-                                    <p>official.haedeun@gmail.com</p>
+                                    <p>admin@lawdy.cloud</p>
                                 </div>
                             </div>
                         </div>

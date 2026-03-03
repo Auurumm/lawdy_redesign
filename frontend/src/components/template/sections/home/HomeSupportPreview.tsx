@@ -29,7 +29,7 @@ export default function HomeSupportPreview() {
                                 </div>
                                 <h5 className="fw-bold text-dark mb-2">이메일 문의</h5>
                                 <p className="text-muted small mb-3">서비스 이용, 기능 문의 등<br />궁금한 점을 편하게 보내주세요.</p>
-                                <p className="text-primary fw-medium small mb-4">official.haedeun@gmail.com</p>
+                                <p className="text-primary fw-medium small mb-4">admin@lawdy.cloud</p>
                                 <Link href="/support" className="btn btn-outline-primary rounded-3 mt-auto">
                                     무료 상담하기
                                 </Link>

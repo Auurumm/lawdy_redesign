@@ -120,7 +120,7 @@ export default function CareersPage() {
                           )}
                         </div>
                         <a
-                          href={`mailto:official.haedeun@gmail.com?subject=${encodeURIComponent(`[Lawdy 채용 지원] ${job.title}`)}&body=${encodeURIComponent(`안녕하세요,\n\n${job.title} 포지션에 지원합니다.\n\n[이름]:\n[연락처]:\n[경력 요약]:\n\n감사합니다.`)}`}
+                          href={`mailto:admin@lawdy.cloud?subject=${encodeURIComponent(`[Lawdy 채용 지원] ${job.title}`)}&body=${encodeURIComponent(`안녕하세요,\n\n${job.title} 포지션에 지원합니다.\n\n[이름]:\n[연락처]:\n[경력 요약]:\n\n감사합니다.`)}`}
                           className="btn btn-linear hover-up flex-shrink-0"
                         >
                           <span>지원하기</span>
@@ -142,7 +142,7 @@ export default function CareersPage() {
             <h3 className="text-dark mb-3">적합한 직무가 없으신가요?</h3>
             <p className="text-secondary mb-4">자유로운 형식의 지원서를 보내주세요. 새로운 기회를 함께 만들 수 있습니다.</p>
             <a
-              href={`mailto:official.haedeun@gmail.com?subject=${encodeURIComponent('[Lawdy 자유 지원] 지원서')}&body=${encodeURIComponent('안녕하세요,\n\nLawdy에 자유 형식으로 지원합니다.\n\n[이름]:\n[연락처]:\n[관심 분야]:\n[경력 요약]:\n\n감사합니다.')}`}
+              href={`mailto:admin@lawdy.cloud?subject=${encodeURIComponent('[Lawdy 자유 지원] 지원서')}&body=${encodeURIComponent('안녕하세요,\n\nLawdy에 자유 형식으로 지원합니다.\n\n[이름]:\n[연락처]:\n[관심 분야]:\n[경력 요약]:\n\n감사합니다.')}`}
               className="btn btn-linear hover-up"
             >
               <span>자유롭게 지원하기</span>

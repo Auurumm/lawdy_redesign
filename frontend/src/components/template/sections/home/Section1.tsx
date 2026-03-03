@@ -75,10 +75,10 @@ export default function Section1() {
                 <div className="info-group position-absolute top-50 start-0 translate-middle-y d-none d-md-block">
                     <div className="d-flex align-items-center justify-content-center gap-4 rotate-90">
                         <Link href="#" className="fs-7 text-white">
-                            contact@lawdy.co.kr
+                            admin@lawdy.cloud
                         </Link>
-                        <Link href="telto:02-1234-5678" className="fs-7 text-white">
-                            02-1234-5678
+                        <Link href="tel:02-3477-9650" className="fs-7 text-white">
+                            02-3477-9650
                         </Link>
                     </div>
                 </div>

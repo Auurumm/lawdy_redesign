@@ -310,7 +310,7 @@ export default function PrivacyPage() {
                         <strong>개인정보 보호책임자</strong><br />
                         성명: 임성호<br />
                         직책: 대표 변호사<br />
-                        연락처: 070-8648-0998<br />
+                        연락처: 02-3477-9650<br />
                         ※ 개인정보 보호 담당부서로 연결됩니다.
                       </p>
                     </div>
@@ -379,7 +379,7 @@ export default function PrivacyPage() {
                         <strong>개인정보 열람청구 접수·처리 부서</strong><br />
                         성명: 임성호<br />
                         직책: 대표 변호사<br />
-                        연락처: 070-8648-0998
+                        연락처: 02-3477-9650
                       </p>
                     </div>
                   </div>

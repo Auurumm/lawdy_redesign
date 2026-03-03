@@ -191,7 +191,7 @@ export default function FeaturesPage() {
                       <p className="mb-0 small text-dark">근로계약서를 작성해드릴게요. 회사명이 어떻게 되나요?</p>
                     </div>
                     <div className="rounded-3 p-2 px-3 ms-auto" style={{ backgroundColor: '#7c3aed', maxWidth: '75%' }}>
-                      <p className="mb-0 small text-white">(주)해든입니다</p>
+                      <p className="mb-0 small text-white">로우디입니다</p>
                     </div>
                     <div className="rounded-3 p-2 px-3" style={{ backgroundColor: '#f8f4ff', maxWidth: '85%' }}>
                       <p className="mb-0 small text-dark">감사합니다! 근로자 성함과 직무를 알려주세요.</p>
