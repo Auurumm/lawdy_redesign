@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Lawdy - AI 계약 분석 플랫폼",
     description: "AI로 분석하는 스마트한 계약 파트너, Lawdy. 계약의 법적 위험을 자동으로 식별하고 시각화합니다.",
-    images: [{ url: "/images/about-hero.png", width: 1200, height: 630 }],
+    images: [{ url: "/images/og-image.png", width: 1900, height: 934 }],
     type: "website",
   },
 };
