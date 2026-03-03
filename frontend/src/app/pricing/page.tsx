@@ -5,13 +5,21 @@ import Link from 'next/link'
 import Layout from "@/components/template/layout/Layout"
 import PageHeader from "@/components/template/sections/PageHeader"
 
+const freeFeatures = [
+  'AI 계약 분석 (1일 1건)',
+  '계약서 생성 (1일 1건)',
+  'AI 대화 기반 작성',
+  'PDF 다운로드 (워터마크 포함)',
+  '계약 이력 저장 (최근 5건)',
+]
+
 const proFeatures = [
-  'AI 계약 분석',
-  '계약서 생성',
+  'AI 계약 분석 (무제한)',
+  '계약서 생성 (무제한)',
   'AI 대화 기반 작성',
   '추천 특약 자동 제안',
   'PDF 다운로드 (워터마크 없음)',
-  '계약 이력 저장',
+  '계약 이력 저장 (무제한)',
   '기본 통계 대시보드',
   '이메일 고객지원',
 ]
@@ -27,8 +35,8 @@ const enterpriseExtra = [
 
 const faqItems = [
   {
-    question: '무료 체험이 가능한가요?',
-    answer: '현재 회원가입 후 기본 기능을 무료로 이용하실 수 있습니다. Pro 플랜의 모든 기능을 체험하고 싶으시다면, 별도로 문의해 주시면 체험 기간을 안내해 드립니다.',
+    question: 'Free 플랜으로 어디까지 이용할 수 있나요?',
+    answer: 'Free 플랜은 회원가입만으로 바로 시작할 수 있습니다. AI 계약 분석과 계약서 생성을 각각 하루 1건씩 이용 가능하며, 최근 5건까지 이력이 저장됩니다. 더 많은 기능이 필요하시면 Pro 플랜으로 업그레이드해 주세요.',
   },
   {
     question: '결제 방식은 어떻게 되나요?',
@@ -70,45 +78,42 @@ export default function PricingPage() {
           </div>
 
           <div className="row g-4 justify-content-center">
-            {/* Pro Card */}
-            <div className="col-lg-5 col-md-6">
-              <div className="card border-0 shadow-sm rounded-4 h-100 p-4 p-lg-5">
+            {/* Free Card */}
+            <div className="col-lg-4 col-md-6">
+              <div className="card border-0 shadow-sm rounded-4 h-100 p-4">
                 <div className="card-body d-flex flex-column">
-                  <h5 className="fw-bold text-dark mb-2">Pro</h5>
+                  <h5 className="fw-bold text-dark mb-2">Free</h5>
                   <p className="text-muted small mb-4">
-                    개인 사업자, 프리랜서, 1인 기업을 위한 플랜
+                    서비스를 체험해보고 싶은 개인 사용자
                   </p>
                   <div className="mb-4">
-                    <span className="fs-2 fw-bold text-dark">49,900</span>
-                    <span className="text-muted">원/월</span>
-                    <p className="text-muted small mt-1 mb-0">VAT 별도 | 1계정 고정 구독</p>
+                    <span className="fs-2 fw-bold text-dark">0</span>
+                    <span className="text-muted">원</span>
+                    <p className="text-muted small mt-1 mb-0">회원가입만으로 시작</p>
                   </div>
                   <ul className="list-unstyled mb-4 flex-grow-1">
-                    {proFeatures.map((feature) => (
+                    {freeFeatures.map((feature) => (
                       <li key={feature} className="d-flex align-items-center gap-2 mb-3">
                         <div
                           className="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
-                          style={{ width: '24px', height: '24px', background: 'var(--tc-theme-primary)' }}
+                          style={{ width: '24px', height: '24px', background: '#e0e0e0' }}
                         >
-                          <i className="bi bi-check2 text-white" style={{ fontSize: '12px' }} />
+                          <i className="bi bi-check2 text-dark" style={{ fontSize: '12px' }} />
                         </div>
                         <span className="text-dark">{feature}</span>
                       </li>
                     ))}
                   </ul>
-                  <Link href="/signup" className="btn btn-linear hover-up w-100">
-                    <span>시작하기</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width={16} height={16} viewBox="0 0 16 16" fill="none">
-                      <path d="M15.8167 7.55759C15.8165 7.5574 15.8163 7.55719 15.8161 7.557L12.5504 4.307C12.3057 4.06353 11.91 4.06444 11.6665 4.30912C11.423 4.55378 11.4239 4.9495 11.6686 5.193L13.8612 7.375H0.625C0.279813 7.375 0 7.65481 0 8C0 8.34519 0.279813 8.625 0.625 8.625H13.8612L11.6686 10.807C11.4239 11.0505 11.423 11.4462 11.6665 11.6909C11.91 11.9356 12.3058 11.9364 12.5504 11.693L15.8162 8.443C15.8163 8.44281 15.8165 8.44259 15.8167 8.4424C16.0615 8.19809 16.0607 7.80109 15.8167 7.55759Z" fill="white" />
-                    </svg>
+                  <Link href="/signup" className="btn btn-outline-dark hover-up w-100">
+                    <span>무료로 시작하기</span>
                   </Link>
                 </div>
               </div>
             </div>
 
-            {/* Enterprise Card */}
-            <div className="col-lg-5 col-md-6">
-              <div className="card border-0 rounded-4 h-100 p-4 p-lg-5 bg-dark-1 position-relative overflow-hidden">
+            {/* Pro Card */}
+            <div className="col-lg-4 col-md-6">
+              <div className="card border-0 rounded-4 h-100 p-4 bg-dark-1 position-relative overflow-hidden">
                 <span
                   className="badge position-absolute"
                   style={{
@@ -123,21 +128,21 @@ export default function PricingPage() {
                   추천
                 </span>
                 <div className="card-body d-flex flex-column">
-                  <h5 className="fw-bold text-white mb-2">Enterprise</h5>
+                  <h5 className="fw-bold text-white mb-2">Pro</h5>
                   <p className="text-white opacity-75 small mb-4">
-                    기업, 법무팀, 인사팀을 위한 맞춤 플랜
+                    개인 사업자, 프리랜서, 1인 기업
                   </p>
                   <div className="mb-4">
-                    <span className="fs-2 fw-bold text-white">별도 문의</span>
-                    <p className="text-white opacity-75 small mt-1 mb-0">Per Seat (사용자 수 기반)</p>
+                    <span className="fs-2 fw-bold text-white">49,900</span>
+                    <span className="text-white opacity-75">원/월</span>
+                    <p className="text-white opacity-75 small mt-1 mb-0">VAT 별도 | 1계정 고정 구독</p>
                   </div>
-                  <p className="text-white opacity-75 small fw-medium mb-2">Pro 전체 기능 포함 +</p>
                   <ul className="list-unstyled mb-4 flex-grow-1">
-                    {enterpriseExtra.map((feature) => (
+                    {proFeatures.map((feature) => (
                       <li key={feature} className="d-flex align-items-center gap-2 mb-3">
                         <div
                           className="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
-                          style={{ width: '24px', height: '24px', background: 'rgba(255,255,255,0.2)' }}
+                          style={{ width: '24px', height: '24px', background: 'var(--tc-theme-primary)' }}
                         >
                           <i className="bi bi-check2 text-white" style={{ fontSize: '12px' }} />
                         </div>
@@ -145,7 +150,43 @@ export default function PricingPage() {
                       </li>
                     ))}
                   </ul>
-                  <Link href="/support" className="btn btn-outline-light hover-up w-100">
+                  <Link href="/signup" className="btn btn-linear hover-up w-100">
+                    <span>시작하기</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width={16} height={16} viewBox="0 0 16 16" fill="none">
+                      <path d="M15.8167 7.55759C15.8165 7.5574 15.8163 7.55719 15.8161 7.557L12.5504 4.307C12.3057 4.06353 11.91 4.06444 11.6665 4.30912C11.423 4.55378 11.4239 4.9495 11.6686 5.193L13.8612 7.375H0.625C0.279813 7.375 0 7.65481 0 8C0 8.34519 0.279813 8.625 0.625 8.625H13.8612L11.6686 10.807C11.4239 11.0505 11.423 11.4462 11.6665 11.6909C11.91 11.9356 12.3058 11.9364 12.5504 11.693L15.8162 8.443C15.8163 8.44281 15.8165 8.44259 15.8167 8.4424C16.0615 8.19809 16.0607 7.80109 15.8167 7.55759Z" fill="white" />
+                    </svg>
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            {/* Enterprise Card */}
+            <div className="col-lg-4 col-md-6">
+              <div className="card border-0 shadow-sm rounded-4 h-100 p-4">
+                <div className="card-body d-flex flex-column">
+                  <h5 className="fw-bold text-dark mb-2">Enterprise</h5>
+                  <p className="text-muted small mb-4">
+                    기업, 법무팀, 인사팀을 위한 맞춤 플랜
+                  </p>
+                  <div className="mb-4">
+                    <span className="fs-2 fw-bold text-dark">별도 문의</span>
+                    <p className="text-muted small mt-1 mb-0">Per Seat (사용자 수 기반)</p>
+                  </div>
+                  <p className="text-muted small fw-medium mb-2">Pro 전체 기능 포함 +</p>
+                  <ul className="list-unstyled mb-4 flex-grow-1">
+                    {enterpriseExtra.map((feature) => (
+                      <li key={feature} className="d-flex align-items-center gap-2 mb-3">
+                        <div
+                          className="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
+                          style={{ width: '24px', height: '24px', background: 'var(--tc-theme-primary)' }}
+                        >
+                          <i className="bi bi-check2 text-white" style={{ fontSize: '12px' }} />
+                        </div>
+                        <span className="text-dark">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <Link href="/support" className="btn btn-outline-dark hover-up w-100">
                     <span>문의하기</span>
                   </Link>
                 </div>
