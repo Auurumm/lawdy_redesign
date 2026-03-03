@@ -170,26 +170,26 @@ export default function PricingPage() {
             </p>
           </div>
           <div className="mx-auto" style={{ maxWidth: '720px' }}>
-            <div className="accordion accordion-flush">
+            <div className="accordion">
               {faqItems.map((item, index) => {
                 const isOpen = openFaq === index
                 return (
-                  <div key={index} className="accordion-item border-bottom">
+                  <div key={index} className="accordion-item border rounded-3 mb-3">
                     <h2 className="accordion-header">
                       <button
-                        className={`accordion-button ${isOpen ? '' : 'collapsed'}`}
+                        className={`accordion-button fw-semibold ${isOpen ? '' : 'collapsed'}`}
                         type="button"
                         onClick={() => setOpenFaq(isOpen ? null : index)}
-                        style={{ background: 'transparent', boxShadow: 'none' }}
+                        aria-expanded={isOpen}
                       >
-                        <span className="fw-semibold text-dark">{item.question}</span>
+                        {item.question}
                       </button>
                     </h2>
-                    <div className={`accordion-collapse collapse ${isOpen ? 'show' : ''}`}>
+                    {isOpen && (
                       <div className="accordion-body text-muted" style={{ lineHeight: '1.8' }}>
                         {item.answer}
                       </div>
-                    </div>
+                    )}
                   </div>
                 )
               })}
