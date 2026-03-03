@@ -9,9 +9,9 @@ export default function HomeAboutPreview() {
             <div className="container">
                 <div className="row align-items-center">
                     {/* Image Side */}
-                    <div className="col-lg-6 mb-5 mb-lg-0">
+                    <div className="col-12 col-lg-6 mb-5 mb-lg-0">
                         <div className="position-relative">
-                            <div className="rounded-4 overflow-hidden" style={{ height: '360px' }}>
+                            <div className="rounded-4 overflow-hidden" style={{ height: 'auto', minHeight: '240px', maxHeight: '360px' }}>
                                 <Image
                                     src="/images/about-hero.png"
                                     alt="Lawdy Office"
@@ -21,7 +21,7 @@ export default function HomeAboutPreview() {
                                 />
                                 <div className="position-absolute top-0 start-0 w-100 h-100" style={{ backgroundColor: '#7c3aed', mixBlendMode: 'soft-light' }} />
                             </div>
-                            <div className="position-absolute bg-white rounded-4 p-3 shadow-lg" style={{ bottom: '-24px', left: '20px' }}>
+                            <div className="position-relative position-lg-absolute bg-white rounded-4 p-3 shadow-lg mt-3 mt-lg-0" style={{ bottom: '-24px', left: '20px' }}>
                                 <div className="d-flex align-items-center gap-3">
                                     <Image src="/images/about-icon-law-tech.svg" alt="" width={48} height={48} />
                                     <div>
@@ -33,7 +33,7 @@ export default function HomeAboutPreview() {
                         </div>
                     </div>
                     {/* Text Side */}
-                    <div className="col-lg-5 offset-lg-1">
+                    <div className="col-12 col-lg-5 offset-lg-1">
                         <div className="d-flex align-items-center gap-3 mb-3">
                             <span className="small-line" />
                             <span className="btn-text text-primary">ABOUT US</span>

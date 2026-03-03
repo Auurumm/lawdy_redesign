@@ -48,7 +48,7 @@ export default function CareersPage() {
             <h3 className="text-dark mb-3 fw-bold">Lawdy에서 일하는 이유</h3>
           </div>
           <div className="row g-4 mb-5">
-            <div className="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay={100}>
+            <div className="col-12 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay={0}>
               <div className="card border-0 bg-dark text-white rounded-4 p-4 h-100 hover-up">
                 <div className="card-body text-center">
                   <div className="icon-shape icon-lg bg-linear-1 rounded-3 mb-3 mx-auto d-flex align-items-center justify-content-center">
@@ -59,7 +59,7 @@ export default function CareersPage() {
                 </div>
               </div>
             </div>
-            <div className="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay={200}>
+            <div className="col-12 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay={100}>
               <div className="card border-0 bg-dark text-white rounded-4 p-4 h-100 hover-up">
                 <div className="card-body text-center">
                   <div className="icon-shape icon-lg bg-linear-1 rounded-3 mb-3 mx-auto d-flex align-items-center justify-content-center">
@@ -70,7 +70,7 @@ export default function CareersPage() {
                 </div>
               </div>
             </div>
-            <div className="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay={300}>
+            <div className="col-12 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay={200}>
               <div className="card border-0 bg-dark text-white rounded-4 p-4 h-100 hover-up">
                 <div className="card-body text-center">
                   <div className="icon-shape icon-lg bg-linear-1 rounded-3 mb-3 mx-auto d-flex align-items-center justify-content-center">

@@ -21,8 +21,8 @@ export default function HomeSupportPreview() {
                 </div>
                 <div className="row g-4 justify-content-center">
                     {/* 문의하기 */}
-                    <div className="col-lg-4 col-md-6">
-                        <div className="card border-0 shadow-sm rounded-4 h-100 text-center p-4">
+                    <div className="col-12 col-md-6 col-lg-4">
+                        <div className="card border-0 shadow-sm rounded-4 h-100 text-center p-3 p-md-4">
                             <div className="card-body d-flex flex-column">
                                 <div className="mx-auto mb-3 rounded-circle d-flex align-items-center justify-content-center" style={{ width: '60px', height: '60px', backgroundColor: 'rgba(124, 58, 237, 0.1)' }}>
                                     <i className="bi bi-envelope fs-4 text-primary" />
@@ -37,8 +37,8 @@ export default function HomeSupportPreview() {
                         </div>
                     </div>
                     {/* FAQ */}
-                    <div className="col-lg-4 col-md-6">
-                        <div className="card border-0 shadow-sm rounded-4 h-100 text-center p-4">
+                    <div className="col-12 col-md-6 col-lg-4">
+                        <div className="card border-0 shadow-sm rounded-4 h-100 text-center p-3 p-md-4">
                             <div className="card-body d-flex flex-column">
                                 <div className="mx-auto mb-3 rounded-circle d-flex align-items-center justify-content-center" style={{ width: '60px', height: '60px', backgroundColor: 'rgba(124, 58, 237, 0.1)' }}>
                                     <i className="bi bi-question-circle fs-4 text-primary" />
@@ -53,8 +53,8 @@ export default function HomeSupportPreview() {
                         </div>
                     </div>
                     {/* 채용 */}
-                    <div className="col-lg-4 col-md-6">
-                        <div className="card border-0 shadow-sm rounded-4 h-100 text-center p-4">
+                    <div className="col-12 col-md-6 col-lg-4">
+                        <div className="card border-0 shadow-sm rounded-4 h-100 text-center p-3 p-md-4">
                             <div className="card-body d-flex flex-column">
                                 <div className="mx-auto mb-3 rounded-circle d-flex align-items-center justify-content-center" style={{ width: '60px', height: '60px', backgroundColor: 'rgba(124, 58, 237, 0.1)' }}>
                                     <i className="bi bi-briefcase fs-4 text-primary" />

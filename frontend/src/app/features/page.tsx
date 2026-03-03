@@ -30,7 +30,7 @@ export default function FeaturesPage() {
             </p>
           </div>
           <div className="row g-4 justify-content-center">
-            <div className="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay={0}>
+            <div className="col-12 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay={0}>
               <div className="card border-0 bg-dark text-white rounded-4 p-4 h-100 hover-up">
                 <div className="card-body text-center d-flex flex-column">
                   <div className="icon-shape icon-lg bg-linear-1 rounded-3 mb-3 mx-auto d-flex align-items-center justify-content-center">
@@ -41,7 +41,7 @@ export default function FeaturesPage() {
                 </div>
               </div>
             </div>
-            <div className="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay={200}>
+            <div className="col-12 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay={200}>
               <div className="card border-0 bg-dark text-white rounded-4 p-4 h-100 hover-up">
                 <div className="card-body text-center d-flex flex-column">
                   <div className="icon-shape icon-lg bg-linear-1 rounded-3 mb-3 mx-auto d-flex align-items-center justify-content-center">
@@ -52,7 +52,7 @@ export default function FeaturesPage() {
                 </div>
               </div>
             </div>
-            <div className="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay={400}>
+            <div className="col-12 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay={400}>
               <div className="card border-0 bg-dark text-white rounded-4 p-4 h-100 hover-up">
                 <div className="card-body text-center d-flex flex-column">
                   <div className="icon-shape icon-lg bg-linear-1 rounded-3 mb-3 mx-auto d-flex align-items-center justify-content-center">
@@ -71,7 +71,7 @@ export default function FeaturesPage() {
       <section className="position-relative overflow-hidden bg-dark-1 py-120">
         <div className="container">
           <div className="row align-items-center">
-            <div className="col-lg-6 mb-5 mb-lg-0" data-aos="fade-right">
+            <div className="col-12 col-lg-6 mb-5 mb-lg-0" data-aos="fade-right">
               <div className="d-flex align-items-center gap-3 mb-3">
                 <span className="small-line" />
                 <span className="btn-text text-primary">RISK ANALYSIS</span>
@@ -120,7 +120,7 @@ export default function FeaturesPage() {
               </Link>
             </div>
             {/* 비주얼: 분석 리포트 모크업 */}
-            <div className="col-lg-5 offset-lg-1" data-aos="fade-left">
+            <div className="col-12 col-lg-5 offset-lg-1" data-aos="fade-left">
               <div className="rounded-4 p-4" style={{ backgroundColor: 'rgba(124, 58, 237, 0.08)', border: '1px solid rgba(124, 58, 237, 0.2)' }}>
                 <div className="bg-white rounded-4 p-4 shadow-sm mb-3">
                   <div className="d-flex align-items-center justify-content-between mb-3">
@@ -176,7 +176,7 @@ export default function FeaturesPage() {
         <div className="container">
           <div className="row align-items-center">
             {/* 비주얼: AI 대화 모크업 */}
-            <div className="col-lg-5 mb-5 mb-lg-0 order-lg-1 order-2" data-aos="fade-right">
+            <div className="col-12 col-lg-5 mb-5 mb-lg-0 order-2 order-lg-1" data-aos="fade-right">
               <div className="rounded-4 p-4" style={{ backgroundColor: 'rgba(124, 58, 237, 0.05)', border: '1px solid rgba(124, 58, 237, 0.12)' }}>
                 <div className="bg-white rounded-4 p-4 shadow-sm mb-3">
                   <div className="d-flex align-items-center gap-2 mb-3 pb-3" style={{ borderBottom: '1px solid #f0f0f0' }}>
@@ -215,7 +215,7 @@ export default function FeaturesPage() {
               </div>
             </div>
             {/* 텍스트 */}
-            <div className="col-lg-6 offset-lg-1 order-lg-2 order-1 mb-5 mb-lg-0" data-aos="fade-left">
+            <div className="col-12 col-lg-6 offset-lg-1 order-1 order-lg-2 mb-5 mb-lg-0" data-aos="fade-left">
               <div className="d-flex align-items-center gap-3 mb-3">
                 <span className="small-line" />
                 <span className="btn-text text-primary">CONTRACT CREATION</span>
@@ -282,8 +282,8 @@ export default function FeaturesPage() {
             </h2>
           </div>
           <div className="row g-4">
-            <div className="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay={0}>
-              <div className="card border-0 shadow-sm h-100 p-4 rounded-4 bg-white">
+            <div className="col-12 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay={0}>
+              <div className="card border-0 shadow-sm h-100 p-3 p-md-4 rounded-4 bg-white">
                 <div className="card-body">
                   <div className="icon-shape icon-80 rounded-3 bg-primary bg-opacity-10 d-flex align-items-center justify-content-center mb-4">
                     <i className="bi bi-lightning-charge fs-2 text-primary" />
@@ -296,8 +296,8 @@ export default function FeaturesPage() {
                 </div>
               </div>
             </div>
-            <div className="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay={100}>
-              <div className="card border-0 shadow-sm h-100 p-4 rounded-4 bg-white">
+            <div className="col-12 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay={100}>
+              <div className="card border-0 shadow-sm h-100 p-3 p-md-4 rounded-4 bg-white">
                 <div className="card-body">
                   <div className="icon-shape icon-80 rounded-3 bg-primary bg-opacity-10 d-flex align-items-center justify-content-center mb-4">
                     <i className="bi bi-shield-check fs-2 text-primary" />
@@ -310,8 +310,8 @@ export default function FeaturesPage() {
                 </div>
               </div>
             </div>
-            <div className="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay={200}>
-              <div className="card border-0 shadow-sm h-100 p-4 rounded-4 bg-white">
+            <div className="col-12 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay={200}>
+              <div className="card border-0 shadow-sm h-100 p-3 p-md-4 rounded-4 bg-white">
                 <div className="card-body">
                   <div className="icon-shape icon-80 rounded-3 bg-primary bg-opacity-10 d-flex align-items-center justify-content-center mb-4">
                     <i className="bi bi-sliders fs-2 text-primary" />
@@ -324,8 +324,8 @@ export default function FeaturesPage() {
                 </div>
               </div>
             </div>
-            <div className="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay={300}>
-              <div className="card border-0 shadow-sm h-100 p-4 rounded-4 bg-white">
+            <div className="col-12 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay={300}>
+              <div className="card border-0 shadow-sm h-100 p-3 p-md-4 rounded-4 bg-white">
                 <div className="card-body">
                   <div className="icon-shape icon-80 rounded-3 bg-primary bg-opacity-10 d-flex align-items-center justify-content-center mb-4">
                     <i className="bi bi-file-earmark-word fs-2 text-primary" />
@@ -338,8 +338,8 @@ export default function FeaturesPage() {
                 </div>
               </div>
             </div>
-            <div className="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay={400}>
-              <div className="card border-0 shadow-sm h-100 p-4 rounded-4 bg-white">
+            <div className="col-12 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay={400}>
+              <div className="card border-0 shadow-sm h-100 p-3 p-md-4 rounded-4 bg-white">
                 <div className="card-body">
                   <div className="icon-shape icon-80 rounded-3 bg-primary bg-opacity-10 d-flex align-items-center justify-content-center mb-4">
                     <i className="bi bi-lock fs-2 text-primary" />
@@ -352,8 +352,8 @@ export default function FeaturesPage() {
                 </div>
               </div>
             </div>
-            <div className="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay={500}>
-              <div className="card border-0 shadow-sm h-100 p-4 rounded-4 bg-white">
+            <div className="col-12 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay={500}>
+              <div className="card border-0 shadow-sm h-100 p-3 p-md-4 rounded-4 bg-white">
                 <div className="card-body">
                   <div className="icon-shape icon-80 rounded-3 bg-primary bg-opacity-10 d-flex align-items-center justify-content-center mb-4">
                     <i className="bi bi-collection fs-2 text-primary" />
@@ -387,10 +387,10 @@ export default function FeaturesPage() {
               지금 바로 무료로 체험해보세요.
             </p>
             <div className="d-flex align-items-center justify-content-center gap-3 flex-wrap">
-              <Link href="/mypage/contract" className="btn btn-linear btn-lg px-5 py-3 fw-bold hover-up">
+              <Link href="/mypage/contract" className="btn btn-linear btn-lg px-4 py-2 px-md-5 py-md-3 fw-bold hover-up">
                 무료로 계약서 작성하기
               </Link>
-              <Link href="/mypage" className="btn btn-outline-light btn-lg px-5 py-3 hover-up">
+              <Link href="/mypage" className="btn btn-outline-light btn-lg px-4 py-2 px-md-5 py-md-3 hover-up">
                 계약서 분석하기
               </Link>
             </div>
@@ -398,19 +398,19 @@ export default function FeaturesPage() {
           <div className="row mt-80 justify-content-center">
             <div className="col-lg-10">
               <div className="row g-4 text-center">
-                <div className="col-md-4" data-aos="fade-up">
+                <div className="col-4 col-md-4" data-aos="fade-up">
                   <div className="p-4">
                     <h2 className="text-primary fw-bold mb-2">6종</h2>
                     <p className="text-white opacity-75 mb-0">지원 계약서 유형</p>
                   </div>
                 </div>
-                <div className="col-md-4" data-aos="fade-up" data-aos-delay={200}>
+                <div className="col-4 col-md-4" data-aos="fade-up" data-aos-delay={200}>
                   <div className="p-4">
                     <h2 className="text-primary fw-bold mb-2">95%+</h2>
                     <p className="text-white opacity-75 mb-0">AI 분석 정확도</p>
                   </div>
                 </div>
-                <div className="col-md-4" data-aos="fade-up" data-aos-delay={400}>
+                <div className="col-4 col-md-4" data-aos="fade-up" data-aos-delay={400}>
                   <div className="p-4">
                     <h2 className="text-primary fw-bold mb-2">5분</h2>
                     <p className="text-white opacity-75 mb-0">평균 작성 시간</p>

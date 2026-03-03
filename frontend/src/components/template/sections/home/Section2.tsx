@@ -16,8 +16,8 @@ export default function Section2() {
                         </h2>
                     </div>
                     <div className="row g-4 mt-80">
-                        <div className="col-lg-4 col-md-6">
-                            <div className="card border-0 shadow-sm h-100 p-4 rounded-4" data-aos="fade-up" data-aos-delay={0}>
+                        <div className="col-12 col-md-6 col-lg-4">
+                            <div className="card border-0 shadow-sm h-100 p-3 p-md-4 rounded-4" data-aos="fade-up" data-aos-delay={0}>
                                 <div className="card-body">
                                     <div className="icon-shape icon-80 rounded-3 bg-primary bg-opacity-10 d-flex align-items-center justify-content-center mb-4">
                                         <i className="bi bi-lightning-charge fs-2 text-primary"></i>
@@ -31,8 +31,8 @@ export default function Section2() {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-4 col-md-6">
-                            <div className="card border-0 shadow-sm h-100 p-4 rounded-4" data-aos="fade-up" data-aos-delay={200}>
+                        <div className="col-12 col-md-6 col-lg-4">
+                            <div className="card border-0 shadow-sm h-100 p-3 p-md-4 rounded-4" data-aos="fade-up" data-aos-delay={200}>
                                 <div className="card-body">
                                     <div className="icon-shape icon-80 rounded-3 bg-primary bg-opacity-10 d-flex align-items-center justify-content-center mb-4">
                                         <i className="bi bi-shield-check fs-2 text-primary"></i>
@@ -46,8 +46,8 @@ export default function Section2() {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-4 col-md-6">
-                            <div className="card border-0 shadow-sm h-100 p-4 rounded-4" data-aos="fade-up" data-aos-delay={400}>
+                        <div className="col-12 col-md-6 col-lg-4">
+                            <div className="card border-0 shadow-sm h-100 p-3 p-md-4 rounded-4" data-aos="fade-up" data-aos-delay={400}>
                                 <div className="card-body">
                                     <div className="icon-shape icon-80 rounded-3 bg-primary bg-opacity-10 d-flex align-items-center justify-content-center mb-4">
                                         <i className="bi bi-sliders fs-2 text-primary"></i>
@@ -61,8 +61,8 @@ export default function Section2() {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-4 col-md-6">
-                            <div className="card border-0 shadow-sm h-100 p-4 rounded-4" data-aos="fade-up" data-aos-delay={0}>
+                        <div className="col-12 col-md-6 col-lg-4">
+                            <div className="card border-0 shadow-sm h-100 p-3 p-md-4 rounded-4" data-aos="fade-up" data-aos-delay={0}>
                                 <div className="card-body">
                                     <div className="icon-shape icon-80 rounded-3 bg-primary bg-opacity-10 d-flex align-items-center justify-content-center mb-4">
                                         <i className="bi bi-file-earmark-word fs-2 text-primary"></i>
@@ -76,8 +76,8 @@ export default function Section2() {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-4 col-md-6">
-                            <div className="card border-0 shadow-sm h-100 p-4 rounded-4" data-aos="fade-up" data-aos-delay={200}>
+                        <div className="col-12 col-md-6 col-lg-4">
+                            <div className="card border-0 shadow-sm h-100 p-3 p-md-4 rounded-4" data-aos="fade-up" data-aos-delay={200}>
                                 <div className="card-body">
                                     <div className="icon-shape icon-80 rounded-3 bg-primary bg-opacity-10 d-flex align-items-center justify-content-center mb-4">
                                         <i className="bi bi-clock-history fs-2 text-primary"></i>
@@ -91,8 +91,8 @@ export default function Section2() {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-4 col-md-6">
-                            <div className="card border-0 shadow-sm h-100 p-4 rounded-4" data-aos="fade-up" data-aos-delay={400}>
+                        <div className="col-12 col-md-6 col-lg-4">
+                            <div className="card border-0 shadow-sm h-100 p-3 p-md-4 rounded-4" data-aos="fade-up" data-aos-delay={400}>
                                 <div className="card-body">
                                     <div className="icon-shape icon-80 rounded-3 bg-primary bg-opacity-10 d-flex align-items-center justify-content-center mb-4">
                                         <i className="bi bi-headset fs-2 text-primary"></i>

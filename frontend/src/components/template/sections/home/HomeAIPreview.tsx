@@ -8,7 +8,7 @@ export default function HomeAIPreview() {
             <div className="container">
                 <div className="row align-items-center">
                     {/* Text Side */}
-                    <div className="col-lg-6 mb-5 mb-lg-0">
+                    <div className="col-12 col-lg-6 mb-5 mb-lg-0">
                         <div className="d-flex align-items-center gap-3 mb-3">
                             <span className="small-line" />
                             <span className="btn-text text-primary">AI ANALYSIS</span>
@@ -58,7 +58,7 @@ export default function HomeAIPreview() {
                         </Link>
                     </div>
                     {/* Visual Side */}
-                    <div className="col-lg-5 offset-lg-1">
+                    <div className="col-12 col-lg-5 offset-lg-1">
                         <div className="rounded-4 p-4 p-lg-5" style={{ backgroundColor: 'rgba(124, 58, 237, 0.08)', border: '1px solid rgba(124, 58, 237, 0.2)' }}>
                             {/* Mock Analysis Card */}
                             <div className="bg-white rounded-4 p-4 shadow-sm mb-3">

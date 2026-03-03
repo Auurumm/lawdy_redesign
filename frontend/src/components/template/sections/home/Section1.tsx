@@ -42,7 +42,7 @@ export default function Section1() {
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-lg-6 mx-auto mt-5">
+                        <div className="col-lg-6 col-md-8 mx-auto mt-5">
                             <form className="input-group mb-3 mt-4 position-relative" data-aos="zoom-in" data-aos-delay={100} onSubmit={handleSubmit}>
                                 <input ref={inputRef} type="text" className="py-3 form-control generate rounded-start-4 border-end-0 border-primary" name="name" placeholder="어떤 계약서가 필요하신가요? (예: 근로계약서)" />
                                 <div className="border border-start-0 border-primary rounded-end-4 bg-white">
@@ -55,18 +55,18 @@ export default function Section1() {
                     </div>
                     <div className="row">
                         <div className="col-lg-8 mx-auto mt-3">
-                            <div className="d-flex align-items-center justify-content-center gap-4 flex-wrap">
-                                <span className="badge bg-white bg-opacity-10 text-white px-3 py-2 rounded-pill">
-                                    <i className="bi bi-check-circle me-2"></i>근로계약서
+                            <div className="d-flex align-items-center justify-content-center gap-2 gap-md-4 flex-wrap">
+                                <span className="badge bg-white bg-opacity-10 text-white px-2 py-1 px-md-3 py-md-2 rounded-pill" style={{ fontSize: '0.8rem' }}>
+                                    <i className="bi bi-check-circle me-1 me-md-2"></i>근로계약서
                                 </span>
-                                <span className="badge bg-white bg-opacity-10 text-white px-3 py-2 rounded-pill">
-                                    <i className="bi bi-check-circle me-2"></i>용역계약서
+                                <span className="badge bg-white bg-opacity-10 text-white px-2 py-1 px-md-3 py-md-2 rounded-pill" style={{ fontSize: '0.8rem' }}>
+                                    <i className="bi bi-check-circle me-1 me-md-2"></i>용역계약서
                                 </span>
-                                <span className="badge bg-white bg-opacity-10 text-white px-3 py-2 rounded-pill">
-                                    <i className="bi bi-check-circle me-2"></i>비밀유지계약서
+                                <span className="badge bg-white bg-opacity-10 text-white px-2 py-1 px-md-3 py-md-2 rounded-pill" style={{ fontSize: '0.8rem' }}>
+                                    <i className="bi bi-check-circle me-1 me-md-2"></i>비밀유지계약서
                                 </span>
-                                <span className="badge bg-white bg-opacity-10 text-white px-3 py-2 rounded-pill">
-                                    <i className="bi bi-check-circle me-2"></i>임대차계약서
+                                <span className="badge bg-white bg-opacity-10 text-white px-2 py-1 px-md-3 py-md-2 rounded-pill" style={{ fontSize: '0.8rem' }}>
+                                    <i className="bi bi-check-circle me-1 me-md-2"></i>임대차계약서
                                 </span>
                             </div>
                         </div>

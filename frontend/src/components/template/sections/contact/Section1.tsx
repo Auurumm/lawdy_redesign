@@ -20,7 +20,7 @@ export default function Section1() {
                         </p>
                     </div>
                     <div className="row g-4 justify-content-center">
-                        <div className="col-lg-5 col-md-6">
+                        <div className="col-12 col-md-6 col-lg-5">
                             <div className="card border-0 bg-dark text-white rounded-4 p-4 h-100 hover-up" data-aos="fade-up" data-aos-delay={0}>
                                 <div className="card-body text-center d-flex flex-column">
                                     <div className="icon-shape icon-lg bg-linear-1 rounded-3 mb-3 mx-auto d-flex align-items-center justify-content-center">
@@ -35,7 +35,7 @@ export default function Section1() {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-5 col-md-6">
+                        <div className="col-12 col-md-6 col-lg-5">
                             <div className="card border-0 bg-dark text-white rounded-4 p-4 h-100 hover-up" data-aos="fade-up" data-aos-delay={200}>
                                 <div className="card-body text-center d-flex flex-column">
                                     <div className="icon-shape icon-lg bg-linear-1 rounded-3 mb-3 mx-auto d-flex align-items-center justify-content-center">
