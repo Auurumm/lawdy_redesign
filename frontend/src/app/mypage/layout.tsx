@@ -56,7 +56,7 @@ export default function MyPageLayout({
         <div className="container">
           {/* Mobile Navigation Pills */}
           <div className="d-lg-none mb-4">
-            <div className="d-flex gap-2 flex-wrap">
+            <div className="d-flex gap-2 flex-wrap justify-content-center">
               {sidebarItems.map((item) => (
                 <Link
                   key={item.href}

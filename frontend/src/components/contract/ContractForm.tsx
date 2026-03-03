@@ -162,27 +162,29 @@ function SubStepIndicator({ config, currentSubStep, onStepClick }: {
   onStepClick: (step: number) => void;
 }) {
   return (
-    <div className="flex items-center gap-1.5 overflow-x-auto pb-2 mb-6 justify-center sm:justify-start">
-      {config.subSteps.map((step, index) => (
-        <div key={step.id} className="flex items-center shrink-0">
-          <button
-            onClick={() => index <= currentSubStep ? onStepClick(index) : undefined}
-            className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
-              index === currentSubStep
-                ? 'bg-primary text-white shadow-sm'
-                : index < currentSubStep
-                ? 'bg-primary/10 text-primary cursor-pointer hover:bg-primary/20'
-                : 'bg-gray-100 text-gray-400'
-            }`}
-          >
-            <span>{step.icon}</span>
-            <span>{step.title}</span>
-          </button>
-          {index < config.subSteps.length - 1 && (
-            <div className={`w-3 sm:w-4 h-0.5 mx-0.5 ${index < currentSubStep ? 'bg-primary' : 'bg-gray-200'}`} />
-          )}
-        </div>
-      ))}
+    <div className="overflow-x-auto pb-2 mb-6">
+      <div className="flex items-center gap-1.5 w-fit mx-auto">
+        {config.subSteps.map((step, index) => (
+          <div key={step.id} className="flex items-center shrink-0">
+            <button
+              onClick={() => index <= currentSubStep ? onStepClick(index) : undefined}
+              className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
+                index === currentSubStep
+                  ? 'bg-primary text-white shadow-sm'
+                  : index < currentSubStep
+                  ? 'bg-primary/10 text-primary cursor-pointer hover:bg-primary/20'
+                  : 'bg-gray-100 text-gray-400'
+              }`}
+            >
+              <span>{step.icon}</span>
+              <span>{step.title}</span>
+            </button>
+            {index < config.subSteps.length - 1 && (
+              <div className={`w-3 sm:w-4 h-0.5 mx-0.5 ${index < currentSubStep ? 'bg-primary' : 'bg-gray-200'}`} />
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
