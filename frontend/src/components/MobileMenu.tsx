@@ -20,7 +20,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   };
 
   const navLinks = [
-    { href: '/features', label: '기능소개' },
+    { href: '/features', label: '서비스' },
     { href: '/about', label: '회사소개' },
     { href: '/mypage', label: '법률 AI 분석' },
     { href: '/support', label: '고객지원' },

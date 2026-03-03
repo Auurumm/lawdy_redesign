@@ -7,7 +7,7 @@ import PageHeader from "@/components/template/sections/PageHeader"
 export default function FeaturesPage() {
   return (
     <Layout>
-      <PageHeader title="기능 소개" current_page="기능소개" />
+      <PageHeader title="서비스" current_page="서비스" />
 
       {/* Section 1 - 핵심 기능 요약 */}
       <section className="position-relative overflow-hidden py-120">

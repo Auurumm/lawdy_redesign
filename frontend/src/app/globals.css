@@ -70,6 +70,11 @@ body {
   .mt-80 { margin-top: 40px !important; }
   .fs-5 { font-size: 1rem !important; }
 
+  /* 모바일 제목 폰트 축소 */
+  h1 { font-size: 1.75rem !important; }
+  h2 { font-size: 1.5rem !important; }
+  h3 { font-size: 1.25rem !important; }
+
   /* Footer 모바일 텍스트 줄바꿈 방지 */
   .footer-links-grid p {
     white-space: nowrap;

@@ -13,7 +13,7 @@ export default function Footer() {
                                     <h3 className="text-primary btn-text pb-3">서비스</h3>
                                     <div className="d-flex flex-column align-items-start">
                                         <Link href="/mypage/contract"><p>계약서 작성</p></Link>
-                                        <Link href="/features"><p>기능소개</p></Link>
+                                        <Link href="/features"><p>서비스</p></Link>
                                         <Link href="/mypage"><p>법률 AI 분석</p></Link>
                                     </div>
                                 </div>
