@@ -55,6 +55,7 @@ export default function MobileMenu({ isMobileMenu, handleMobileMenu }: MobileMen
                                         <li><Link href="/">홈</Link></li>
                                         <li><Link href="/about">소개</Link></li>
                                         <li><Link href="/features">서비스</Link></li>
+                                        <li><Link href="/pricing">요금제</Link></li>
                                         <li className="has-children">
                                             <span className="menu-expand" onClick={() => handleAccordion(1)}>
                                                 <i className="arrow-small-down" />
