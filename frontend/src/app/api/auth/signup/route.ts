@@ -18,7 +18,7 @@ async function deleteSupabaseAuthUser(email: string) {
 
 // Supabase Auth signUp으로 인증 이메일 발송
 async function sendVerificationEmail(email: string) {
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://lawdy.vercel.app';
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://lawdy.cloud';
   const emailRedirectTo = `${appUrl}/auth/callback`;
 
   // 기존 Supabase Auth 사용자 삭제 (이미 confirmed 상태면 signUp이 이메일을 보내지 않으므로)
