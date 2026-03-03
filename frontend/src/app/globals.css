@@ -37,6 +37,8 @@
 body {
   color: var(--foreground);
   font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 /* ==============================
@@ -68,10 +70,8 @@ body {
   .mt-80 { margin-top: 40px !important; }
   .fs-5 { font-size: 1rem !important; }
 
-  /* Footer 모바일 2x2 그리드 */
-  .footer-links-grid {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
+  /* Footer 모바일 텍스트 줄바꿈 방지 */
+  .footer-links-grid p {
+    white-space: nowrap;
   }
 }

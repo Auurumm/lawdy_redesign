@@ -36,7 +36,7 @@ export default function Footer() {
                                 <div className="col-6 col-lg-3">
                                     <h3 className="text-primary btn-text pb-3">연락처</h3>
                                     <div className="d-flex flex-column align-items-start">
-                                        <p>admin@lawdy.cloud</p>
+                                        <p style={{ fontSize: '0.85rem' }}>admin@lawdy.cloud</p>
                                     </div>
                                 </div>
                             </div>
