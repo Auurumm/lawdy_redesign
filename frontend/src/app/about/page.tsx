@@ -27,10 +27,10 @@ export default function AboutPage() {
               </p>
               <p className="text-muted mb-4" style={{ lineHeight: '1.8' }}>
                 복잡한 법률 문서 속에서 핵심을 정확히 짚어내고,<br />
-                고객이 보다 안전하고 유리한 계약을<br />
+                고객이 보다 안전하고 유리한 계약을{' '}<br />
                 체결할 수 있도록 돕는 것이 Lawdy의 미션입니다.<br />
                 AI 기술과 법률 전문성의 결합으로,<br />
-                누구나 쉽게 계약의 위험을 파악하고<br />
+                누구나 쉽게 계약의 위험을 파악하고{' '}<br />
                 대비할 수 있는 세상을 만들어갑니다.
               </p>
               <ul className="list-unstyled">
@@ -119,7 +119,7 @@ export default function AboutPage() {
             </div>
             <h2 className="text-dark fw-bold mb-3">전문 분야</h2>
             <p className="text-muted mx-auto" style={{ maxWidth: '560px' }}>
-              Lawdy는 AI와 법률 전문성을 결합하여<br />
+              Lawdy는 AI와 법률 전문성을 결합하여{' '}<br />
               계약의 모든 단계에서 고객을 지원합니다.
             </p>
           </div>
@@ -138,7 +138,7 @@ export default function AboutPage() {
                   </div>
                   <h5 className="fw-bold text-dark mb-3">AI 기반 계약서 분석</h5>
                   <p className="text-muted mb-0" style={{ lineHeight: '1.7' }}>
-                    Lawdy는 AI 기술을 활용하여<br />
+                    Lawdy는 AI 기술을 활용하여{' '}<br />
                     계약서의 핵심 조항을 자동으로 분석합니다.<br />
                     복잡한 법률 문서를 빠르고 정확하게 검토하여,<br />
                     놓치기 쉬운 조항까지 꼼꼼히 확인합니다.
@@ -157,10 +157,10 @@ export default function AboutPage() {
                   </div>
                   <h5 className="fw-bold text-dark mb-3">위험도 분석</h5>
                   <p className="text-muted mb-0" style={{ lineHeight: '1.7' }}>
-                    계약서의 잠재적 위험 요소를<br />
+                    계약서의 잠재적 위험 요소를{' '}<br />
                     체계적으로 식별하고,<br />
                     각 항목의 위험 수준을 직관적으로 시각화합니다.<br />
-                    리스크를 사전에 파악하여<br />
+                    리스크를 사전에 파악하여{' '}<br />
                     보다 안전한 의사결정을 지원합니다.
                   </p>
                 </div>
@@ -180,7 +180,7 @@ export default function AboutPage() {
                   </div>
                   <h5 className="fw-bold text-dark mb-3">계약 검토 및 개선 가이드</h5>
                   <p className="text-muted mb-0" style={{ lineHeight: '1.7' }}>
-                    Lawdy는 계약 리스크를 줄이기 위한<br />
+                    Lawdy는 계약 리스크를 줄이기 위한{' '}<br />
                     실질적인 개선 방향을 제시합니다.<br />
                     수정이 필요한 조항과 주의해야 할 포인트를 안내하여,<br />
                     보다 안전하고 균형 잡힌 계약 체결을 지원합니다.
@@ -204,11 +204,11 @@ export default function AboutPage() {
               <h2 className="text-dark fw-bold mb-3">회사 소개</h2>
               <p className="text-muted" style={{ lineHeight: '1.8' }}>
                 저희는 단순한 법률 자문을 넘어,<br />
-                고객의 상황과 입장을 깊이 이해하는 것을<br />
+                고객의 상황과 입장을 깊이 이해하는 것을{' '}<br />
                 가장 중요하게 생각합니다.<br />
                 사안별 특성과 고객의 니즈를 면밀히 분석하여,{' '}
-                <span className="fw-semibold" style={{ color: 'var(--tc-theme-primary)' }}>현실적이고 맞춤화된<br />
-                법률 솔루션을 제공</span>함으로써<br />
+                <span className="fw-semibold" style={{ color: 'var(--tc-theme-primary)' }}>현실적이고 맞춤화된{' '}<br />
+                법률 솔루션을 제공</span>함으로써{' '}<br />
                 더 나은 결과를 만들어가고자 합니다.
               </p>
             </div>

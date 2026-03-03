@@ -162,12 +162,12 @@ function SubStepIndicator({ config, currentSubStep, onStepClick }: {
   onStepClick: (step: number) => void;
 }) {
   return (
-    <div className="flex items-center gap-1 overflow-x-auto pb-2 mb-6">
+    <div className="flex items-center gap-1.5 overflow-x-auto pb-2 mb-6 justify-center sm:justify-start">
       {config.subSteps.map((step, index) => (
-        <div key={step.id} className="flex items-center">
+        <div key={step.id} className="flex items-center shrink-0">
           <button
             onClick={() => index <= currentSubStep ? onStepClick(index) : undefined}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
+            className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
               index === currentSubStep
                 ? 'bg-primary text-white shadow-sm'
                 : index < currentSubStep
@@ -179,7 +179,7 @@ function SubStepIndicator({ config, currentSubStep, onStepClick }: {
             <span>{step.title}</span>
           </button>
           {index < config.subSteps.length - 1 && (
-            <div className={`w-4 h-0.5 mx-0.5 ${index < currentSubStep ? 'bg-primary' : 'bg-gray-200'}`} />
+            <div className={`w-3 sm:w-4 h-0.5 mx-0.5 ${index < currentSubStep ? 'bg-primary' : 'bg-gray-200'}`} />
           )}
         </div>
       ))}
@@ -668,7 +668,7 @@ export default function ContractForm() {
   const currentSubStepId = config ? config.subSteps[subStep]?.id : '';
 
   return (
-    <section className="flex flex-col items-center pt-8 md:pt-10 px-5 md:px-0 pb-20">
+    <section className="flex flex-col items-center pt-8 md:pt-10 px-3 sm:px-5 md:px-0 pb-20">
       {/* 헤더 영역 */}
       <div className="flex flex-col items-center w-full md:w-[742px] mb-8">
         <p className="text-sm md:text-base font-bold leading-[22px]">
@@ -707,20 +707,20 @@ export default function ContractForm() {
       {/* Step 1: 계약서 유형 선택 */}
       {step === 1 && (
         <div className="w-full max-w-4xl">
-          <div className="bg-white rounded-2xl shadow-sm p-6 md:p-10">
-            <h3 className="text-xl font-bold text-gray-900 mb-2">어떤 계약서가 필요하신가요?</h3>
-            <p className="text-gray-500 mb-8">작성하실 계약서 유형을 선택해주세요.</p>
+          <div className="bg-white rounded-2xl shadow-sm p-4 sm:p-6 md:p-10">
+            <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">어떤 계약서가 필요하신가요?</h3>
+            <p className="text-sm sm:text-base text-gray-500 mb-6 sm:mb-8">작성하실 계약서 유형을 선택해주세요.</p>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
               {Object.values(contractTypeConfigs).map((item) => (
                 <button
                   key={item.type}
                   onClick={() => handleSelectType(item.type)}
-                  className="p-6 border border-gray-200 rounded-xl text-left hover:border-primary hover:shadow-md transition-all group"
+                  className="p-4 sm:p-6 border border-gray-200 rounded-xl text-left hover:border-primary hover:shadow-md transition-all group"
                 >
-                  <span className="text-2xl">{item.icon}</span>
-                  <p className="mt-2 font-bold text-gray-900 group-hover:text-primary transition-colors" style={{ fontSize: '15px' }}>{item.title}</p>
-                  <p className="mt-1 text-xs text-gray-500">{item.description}</p>
+                  <span className="text-xl sm:text-2xl">{item.icon}</span>
+                  <p className="mt-2 font-bold text-gray-900 group-hover:text-primary transition-colors text-xs sm:text-[15px]">{item.title}</p>
+                  <p className="mt-1 text-xs text-gray-500 hidden sm:block">{item.description}</p>
                 </button>
               ))}
             </div>
@@ -756,11 +756,11 @@ export default function ContractForm() {
       {/* Step 2: 정보 입력 위자드 */}
       {step === 2 && config && !(isGenerating && inputMode === 'chat') && (
         <div className="w-full max-w-4xl">
-          <div className="bg-white rounded-2xl shadow-sm p-6 md:p-10">
+          <div className="bg-white rounded-2xl shadow-sm p-4 sm:p-6 md:p-10 overflow-hidden">
             {/* 헤더 + 모드 토글 */}
-            <div className="flex items-center justify-between mb-2">
-              <h3 className="text-xl font-bold text-gray-900">계약 정보를 입력해주세요</h3>
-              <div className="flex bg-gray-100 rounded-lg p-1">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
+              <h3 className="text-lg sm:text-xl font-bold text-gray-900">계약 정보를 입력해주세요</h3>
+              <div className="flex bg-gray-100 rounded-lg p-1 self-start sm:self-auto">
                 <button
                   onClick={() => setInputMode('form')}
                   className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-all ${
@@ -775,11 +775,11 @@ export default function ContractForm() {
                     inputMode === 'chat' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500'
                   }`}
                 >
-                  💬 AI 대화
+                  <span className="hidden sm:inline">💬 </span>AI 대화
                 </button>
               </div>
             </div>
-            <p className="text-gray-500 mb-6">정확한 정보를 입력하시면 AI가 맞춤형 계약서를 생성합니다.</p>
+            <p className="text-sm sm:text-base text-gray-500 mb-6">정확한 정보를 입력하시면 AI가 맞춤형 계약서를 생성합니다.</p>
 
             {inputMode === 'form' ? (
               <>
@@ -816,20 +816,20 @@ export default function ContractForm() {
                   )}
 
                   {/* 버튼 */}
-                  <div className="flex justify-between pt-4">
+                  <div className="flex justify-between pt-4 gap-2">
                     <button
                       type="button"
                       onClick={subStep === 0 ? () => setStep(1) : handlePrevSubStep}
-                      className="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 transition-colors"
+                      className="px-4 sm:px-6 py-2.5 sm:py-3 border border-gray-300 rounded-lg text-sm sm:text-base text-gray-700 font-medium hover:bg-gray-50 transition-colors shrink-0"
                     >
-                      ← {subStep === 0 ? '이전' : '이전'}
+                      ← 이전
                     </button>
                     {isLastSubStep ? (
                       <button
                         type="button"
                         onClick={() => handleGenerateContract()}
                         disabled={isGenerating || !formData.partyAName || !formData.partyBName}
-                        className="px-8 py-3 bg-primary text-white rounded-lg font-medium hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                        className="px-4 sm:px-8 py-2.5 sm:py-3 bg-primary text-white rounded-lg text-sm sm:text-base font-medium hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 shrink-0"
                       >
                         {isGenerating ? (
                           <>
@@ -837,17 +837,21 @@ export default function ContractForm() {
                               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                             </svg>
-                            AI가 계약서를 생성 중입니다...
+                            <span className="hidden sm:inline">AI가 계약서를 생성 중입니다...</span>
+                            <span className="sm:hidden">생성 중...</span>
                           </>
                         ) : (
-                          '계약서 생성하기 →'
+                          <>
+                            <span className="hidden sm:inline">계약서 생성하기 →</span>
+                            <span className="sm:hidden">생성하기 →</span>
+                          </>
                         )}
                       </button>
                     ) : (
                       <button
                         type="button"
                         onClick={handleNextSubStep}
-                        className="px-8 py-3 bg-primary text-white rounded-lg font-medium hover:bg-primary/90 transition-colors"
+                        className="px-6 sm:px-8 py-2.5 sm:py-3 bg-primary text-white rounded-lg text-sm sm:text-base font-medium hover:bg-primary/90 transition-colors shrink-0"
                       >
                         다음 →
                       </button>
@@ -872,7 +876,7 @@ export default function ContractForm() {
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
             {/* 미리보기 영역 */}
             <div className="lg:col-span-3">
-              <div className="bg-white rounded-2xl shadow-sm p-6">
+              <div className="bg-white rounded-2xl shadow-sm p-4 sm:p-6">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
                     📄 계약서 미리보기

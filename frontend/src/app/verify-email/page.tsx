@@ -63,7 +63,7 @@ function VerifyEmailContent() {
                   )}
 
                   <p className="text-muted fs-7 mb-4">
-                    이메일에 포함된 인증 링크를 클릭하면<br />
+                    이메일에 포함된 인증 링크를 클릭하면{' '}<br />
                     회원가입이 완료됩니다.
                   </p>
 

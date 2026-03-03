@@ -141,7 +141,7 @@ export default function ChatMode({ contractType, onComplete, onBack }: ChatModeP
   };
 
   return (
-    <div className="flex flex-col h-[600px]">
+    <div className="flex flex-col h-[480px] sm:h-[600px]">
       {/* 진행률 바 */}
       <div className="mb-4">
         <div className="flex items-center justify-between mb-1">
@@ -161,7 +161,7 @@ export default function ChatMode({ contractType, onComplete, onBack }: ChatModeP
         {/* 안내 메시지 */}
         <div className="text-center">
           <span className="inline-block px-3 py-1 bg-primary/10 text-primary text-xs font-medium rounded-full">
-            💬 AI 대화 모드 - {contractTypeNames[contractType]}
+            <span className="hidden sm:inline">💬 </span>AI 대화 모드 - {contractTypeNames[contractType]}
           </span>
         </div>
 
@@ -171,7 +171,7 @@ export default function ChatMode({ contractType, onComplete, onBack }: ChatModeP
             className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
           >
             <div
-              className={`max-w-[80%] px-4 py-3 rounded-2xl text-sm leading-relaxed ${
+              className={`max-w-[85%] sm:max-w-[80%] px-3 sm:px-4 py-2.5 sm:py-3 rounded-2xl text-sm leading-relaxed ${
                 msg.role === 'user'
                   ? 'bg-primary text-white rounded-br-md'
                   : 'bg-[#f2f3f8] text-gray-900 rounded-bl-md'
@@ -242,29 +242,28 @@ export default function ChatMode({ contractType, onComplete, onBack }: ChatModeP
       )}
 
       {/* 입력 영역 */}
-      <div className="flex gap-2">
+      <div className="flex gap-2 min-w-0">
         <button
           onClick={onBack}
-          className="px-3 py-2 border border-[#e1e3ea] rounded-lg text-sm text-gray-500 hover:bg-gray-50 whitespace-nowrap"
+          className="px-2.5 sm:px-3 py-2 border border-[#e1e3ea] rounded-lg text-xs sm:text-sm text-gray-500 hover:bg-gray-50 whitespace-nowrap shrink-0"
         >
           ← 뒤로
         </button>
-        <div className="flex-1 flex gap-2 items-end">
+        <div className="flex-1 flex gap-1.5 sm:gap-2 items-end min-w-0">
           <textarea
             ref={textareaRef}
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder={isComplete ? '추가 정보를 입력하거나 계약서를 생성하세요' : '정보를 입력해주세요... (Enter: 전송, Ctrl+Enter: 줄바꿈)'}
+            placeholder={isComplete ? '추가 정보를 입력하세요' : '정보를 입력해주세요...'}
             disabled={isLoading}
             rows={1}
-            className="flex-1 pr-4 py-2.5 border border-[#e1e3ea] rounded-lg text-sm focus:outline-none focus:border-primary disabled:opacity-50 resize-none overflow-hidden"
-            style={{ paddingLeft: 40 }}
+            className="flex-1 min-w-0 pl-3 sm:pl-10 pr-3 sm:pr-4 py-2.5 border border-[#e1e3ea] rounded-lg text-sm focus:outline-none focus:border-primary disabled:opacity-50 resize-none overflow-hidden"
           />
           <button
             onClick={sendMessage}
             disabled={!input.trim() || isLoading}
-            className="px-4 py-2.5 bg-primary text-white rounded-lg text-sm font-semibold hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
+            className="px-3 sm:px-4 py-2.5 bg-primary text-white rounded-lg text-xs sm:text-sm font-semibold hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap shrink-0"
           >
             전송
           </button>

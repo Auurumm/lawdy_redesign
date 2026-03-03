@@ -19,13 +19,13 @@ export default function FeaturesPage() {
               <span className="small-line" />
             </div>
             <h2 className="text-dark my-3 text-anime-style-3">
-              AI와 대화하며 완성하는<br />
+              AI와 대화하며 완성하는{' '}<br />
               계약서의 모든 것
             </h2>
             <p className="text-secondary mx-auto" style={{ maxWidth: '560px' }}>
               Lawdy는 계약서 작성부터 리스크 분석까지,<br />
               AI 대화 한 번으로 해결합니다.<br />
-              복잡한 법률 지식 없이도<br />
+              복잡한 법률 지식 없이도{' '}<br />
               전문가 수준의 결과를 얻으세요.
             </p>
           </div>
@@ -78,7 +78,7 @@ export default function FeaturesPage() {
               </div>
               <h2 className="text-white fw-bold mb-3">계약서의 숨겨진 위험,<br />AI가 찾아드립니다</h2>
               <p className="text-white opacity-75 mb-4" style={{ lineHeight: '1.8' }}>
-                계약서를 업로드하면<br />
+                계약서를 업로드하면{' '}<br />
                 AI가 조항별 위험도를 자동으로 분석합니다.<br />
                 위험 항목, 누락된 조항, 불리한 조건을 한눈에 파악하고,<br />
                 AI와 대화하며 궁금한 점을 바로 질문할 수 있습니다.
@@ -220,11 +220,11 @@ export default function FeaturesPage() {
                 <span className="small-line" />
                 <span className="btn-text text-primary">CONTRACT CREATION</span>
               </div>
-              <h2 className="text-dark fw-bold mb-3">AI와 대화하며<br />계약서를 작성하세요</h2>
+              <h2 className="text-dark fw-bold mb-3">AI와 대화하며{' '}<br />계약서를 작성하세요</h2>
               <p className="text-secondary mb-4" style={{ lineHeight: '1.8' }}>
                 복잡한 양식을 채울 필요 없이,<br />
                 AI에게 상황을 설명하면 됩니다.<br />
-                근로계약서, 용역계약서, NDA 등<br />
+                근로계약서, 용역계약서, NDA 등{' '}<br />
                 6종의 계약서를 대화만으로 완성할 수 있습니다.
               </p>
               <div className="d-flex flex-column gap-3 mb-4">
@@ -277,7 +277,7 @@ export default function FeaturesPage() {
               <span className="small-line" />
             </div>
             <h2 className="text-dark my-3 text-anime-style-2">
-              Lawdy가 제공하는<br />
+              Lawdy가 제공하는{' '}<br />
               모든 기능
             </h2>
           </div>

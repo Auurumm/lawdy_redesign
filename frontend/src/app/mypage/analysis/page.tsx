@@ -314,7 +314,7 @@ function AnalysisPageContent() {
                     </div>
                     <h6 className="fw-bold mb-2">AI 리스크 분석</h6>
                     <p className="text-muted mb-0" style={{ fontSize: 14 }}>
-                      아래에서 계약서 문서를 업로드하면<br />
+                      아래에서 계약서 문서를 업로드하면{' '}<br />
                       AI가 법적 위험 요소를 자동으로 분석해드립니다.
                     </p>
                   </div>
@@ -612,7 +612,7 @@ function AnalysisPageContent() {
                     >
                       <i className="bi bi-shield-check fs-2" style={{ color: '#94a3b8' }} />
                     </div>
-                    <p className="text-muted mb-0" style={{ fontSize: 13 }}>문서를 업로드하면<br />분석 결과가 표시됩니다.</p>
+                    <p className="text-muted mb-0" style={{ fontSize: 13 }}>문서를 업로드하면{' '}<br />분석 결과가 표시됩니다.</p>
                   </div>
                 )}
               </div>

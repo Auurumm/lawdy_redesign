@@ -27,7 +27,7 @@ export default function Section1() {
                                         <i className="bi bi-question-circle fs-4 text-white" />
                                     </div>
                                     <h5 className="text-white mb-2">자주 묻는 질문</h5>
-                                    <p className="text-white-50 mb-3">많은 분들이 궁금해하시는<br />질문과 답변을 모았습니다.</p>
+                                    <p className="text-white-50 mb-3">많은 분들이 궁금해하시는{' '}<br />질문과 답변을 모았습니다.</p>
                                     <p className="text-primary fw-semibold mb-3">일반, 기술, 요금 안내</p>
                                     <Link href="/faq" className="btn btn-outline-light btn-sm rounded-3 mt-auto">
                                         궁금한 점 확인하기
@@ -42,7 +42,7 @@ export default function Section1() {
                                         <i className="bi bi-clock-history fs-4 text-white" />
                                     </div>
                                     <h5 className="text-white mb-2">빠른 응답</h5>
-                                    <p className="text-white-50 mb-3">일반적으로 24시간 이내에<br />회신드립니다.</p>
+                                    <p className="text-white-50 mb-3">일반적으로 24시간 이내에{' '}<br />회신드립니다.</p>
                                     <p className="text-primary fw-semibold mb-3">평일 09:00 ~ 18:00</p>
                                     <span
                                         className="btn btn-outline-light btn-sm rounded-3 mt-auto"

@@ -15,10 +15,10 @@ export default function HomeAIPreview() {
                         </div>
                         <h2 className="text-white fw-bold mb-3">법률 AI 분석</h2>
                         <p className="text-white opacity-75 mb-4" style={{ lineHeight: '1.8' }}>
-                            계약서를 업로드하면 AI가 자동으로<br />
+                            계약서를 업로드하면 AI가 자동으로{' '}<br />
                             핵심 조항을 분석하고,<br />
                             잠재적 위험 요소를 식별합니다.<br />
-                            복잡한 법률 문서도 수 분 내에<br />
+                            복잡한 법률 문서도 수 분 내에{' '}<br />
                             명확한 리포트로 변환됩니다.
                         </p>
                         <div className="d-flex flex-column gap-3 mb-4">

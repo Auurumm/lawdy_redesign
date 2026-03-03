@@ -40,10 +40,10 @@ export default function HomeAboutPreview() {
                         </div>
                         <h2 className="text-dark fw-bold mb-3">Lawdy를 소개합니다</h2>
                         <p className="text-muted mb-4" style={{ lineHeight: '1.8' }}>
-                            <span className="text-primary fw-semibold">Lawdy</span>는 지혜로운 눈으로<br />
+                            <span className="text-primary fw-semibold">Lawdy</span>는 지혜로운 눈으로{' '}<br />
                             계약을 바라봅니다.<br />
                             복잡한 법률 문서 속에서 핵심을 정확히 짚어내고,<br />
-                            고객이 보다 안전하고 유리한 계약을<br />
+                            고객이 보다 안전하고 유리한 계약을{' '}<br />
                             체결할 수 있도록 돕는 것이 우리의 미션입니다.
                         </p>
                         <div className="row g-3 mb-4">
