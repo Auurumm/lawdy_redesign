@@ -146,19 +146,22 @@ export async function POST(request: NextRequest) {
 
     try {
       const body: ContractGenerateRequest = await req.json();
-      const { contractType, partyA, partyB, terms, additionalClauses } = body;
+      const { contractType, terms, additionalClauses } = body;
+
+      // 당사자명이 없으면 기본값 설정 (채팅 모드에서 부분 수집 후 생성 시)
+      const partyA = {
+        ...body.partyA,
+        name: body.partyA?.name || body.partyA?.representative || terms?.partyAName || '(갑)',
+      };
+      const partyB = {
+        ...body.partyB,
+        name: body.partyB?.name || terms?.partyBName || '(을)',
+      };
 
       // 유효성 검사
       if (!contractType || !CONTRACT_PROMPTS[contractType]) {
         return NextResponse.json(
           { error: '유효하지 않은 계약서 유형입니다.' },
-          { status: 400 }
-        );
-      }
-
-      if (!partyA?.name || !partyB?.name) {
-        return NextResponse.json(
-          { error: '계약 당사자 정보가 필요합니다.' },
           { status: 400 }
         );
       }

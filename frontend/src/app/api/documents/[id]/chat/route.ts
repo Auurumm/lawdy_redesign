@@ -34,7 +34,10 @@ export async function GET(
         .eq('user_id', userId)
         .order('created_at', { ascending: true });
 
-      if (error) throw error;
+      if (error) {
+        console.warn('chat_messages query failed (table may not exist):', error.message);
+        return NextResponse.json({ messages: [] });
+      }
 
       return NextResponse.json({ messages: messages || [] });
     } catch (error) {
@@ -61,6 +64,13 @@ export async function POST(
         return NextResponse.json(
           { error: '메시지를 입력해주세요.' },
           { status: 400 }
+        );
+      }
+
+      if (!UPSTAGE_API_KEY) {
+        return NextResponse.json(
+          { error: 'AI 서비스가 설정되지 않았습니다.' },
+          { status: 500 }
         );
       }
 
@@ -91,22 +101,36 @@ export async function POST(
         .eq('document_id', id)
         .single();
 
-      const { data: previousMessages } = await supabaseAdmin
-        .from('chat_messages')
-        .select('role, content')
-        .eq('document_id', id)
-        .eq('user_id', userId)
-        .order('created_at', { ascending: true })
-        .limit(20);
+      // chat_messages 테이블이 없을 수 있으므로 에러 무시
+      let previousMessages: { role: string; content: string }[] = [];
+      try {
+        const { data, error } = await supabaseAdmin
+          .from('chat_messages')
+          .select('role, content')
+          .eq('document_id', id)
+          .eq('user_id', userId)
+          .order('created_at', { ascending: true })
+          .limit(20);
+        if (!error && data) {
+          previousMessages = data;
+        }
+      } catch {
+        // 테이블 미존재시 무시
+      }
 
-      await supabaseAdmin
-        .from('chat_messages')
-        .insert({
-          document_id: id,
-          user_id: userId,
-          role: 'user',
-          content: message,
-        });
+      // 사용자 메시지 저장 (테이블 없으면 무시)
+      try {
+        await supabaseAdmin
+          .from('chat_messages')
+          .insert({
+            document_id: id,
+            user_id: userId,
+            role: 'user',
+            content: message,
+          });
+      } catch {
+        // 테이블 미존재시 무시
+      }
 
       const systemPrompt = `당신은 계약서 분석 전문가입니다. 사용자가 업로드한 계약서에 대해 질문에 답변해주세요.
 
@@ -158,25 +182,33 @@ ${(analysis.recommendations || []).map((rec: string) => `- ${rec}`).join('\n')}
       const result = await response.json();
       const assistantMessage = result.choices[0]?.message?.content || '응답을 생성할 수 없습니다.';
 
-      const { data: savedMessage, error: saveError } = await supabaseAdmin
-        .from('chat_messages')
-        .insert({
-          document_id: id,
-          user_id: userId,
-          role: 'assistant',
-          content: assistantMessage,
-        })
-        .select('id, role, content, created_at')
-        .single();
+      // AI 응답 저장 (테이블 없으면 무시하고 응답은 반환)
+      let savedMessage = null;
+      try {
+        const { data, error: saveError } = await supabaseAdmin
+          .from('chat_messages')
+          .insert({
+            document_id: id,
+            user_id: userId,
+            role: 'assistant',
+            content: assistantMessage,
+          })
+          .select('id, role, content, created_at')
+          .single();
 
-      if (saveError) throw saveError;
+        if (!saveError) {
+          savedMessage = data;
+        }
+      } catch {
+        // 테이블 미존재시 무시
+      }
 
       return NextResponse.json({
         message: {
-          id: savedMessage.id,
-          role: savedMessage.role,
-          content: savedMessage.content,
-          createdAt: savedMessage.created_at,
+          id: savedMessage?.id || crypto.randomUUID(),
+          role: 'assistant',
+          content: assistantMessage,
+          createdAt: savedMessage?.created_at || new Date().toISOString(),
         },
       });
     } catch (error) {

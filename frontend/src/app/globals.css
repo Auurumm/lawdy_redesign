@@ -60,7 +60,44 @@ body {
 }
 
 /* ==============================
-   9. Mobile Responsive (767px 이하)
+   9. Markdown Body (AI 응답 렌더링)
+   ============================== */
+.markdown-body p { margin: 0 0 0.5em; }
+.markdown-body p:last-child { margin-bottom: 0; }
+.markdown-body h1, .markdown-body h2, .markdown-body h3 {
+  font-size: 1em;
+  font-weight: 700;
+  margin: 0.8em 0 0.3em;
+}
+.markdown-body h1:first-child, .markdown-body h2:first-child, .markdown-body h3:first-child {
+  margin-top: 0;
+}
+.markdown-body ul, .markdown-body ol {
+  margin: 0.3em 0;
+  padding-left: 1.4em;
+}
+.markdown-body li { margin-bottom: 0.15em; }
+.markdown-body strong { font-weight: 700; }
+.markdown-body code {
+  background: rgba(0,0,0,0.05);
+  padding: 0.15em 0.35em;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+.markdown-body blockquote {
+  border-left: 3px solid #d1d5db;
+  margin: 0.5em 0;
+  padding: 0.25em 0.75em;
+  color: #6b7280;
+}
+.markdown-body hr {
+  border: none;
+  border-top: 1px solid #e5e7eb;
+  margin: 0.75em 0;
+}
+
+/* ==============================
+   10. Mobile Responsive (767px 이하)
    ============================== */
 @media (max-width: 767.98px) {
   .fs-120 { font-size: 48px !important; }

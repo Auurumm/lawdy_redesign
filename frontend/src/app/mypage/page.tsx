@@ -267,8 +267,8 @@ export default function DashboardPage() {
                   <i className="bi bi-file-earmark-plus fs-5" />
                 </div>
                 <div>
-                  <p className="fw-bold mb-0" style={{ fontSize: 15 }}>새 문서 분석</p>
-                  <p className="mb-0 opacity-75" style={{ fontSize: 12 }}>AI 리스크 분석 시작하기</p>
+                  <p className="fw-bold mb-0 text-white" style={{ fontSize: 15 }}>새 문서 분석</p>
+                  <p className="mb-0 text-white opacity-75" style={{ fontSize: 12 }}>AI 리스크 분석 시작하기</p>
                 </div>
               </div>
               <i className="bi bi-arrow-right fs-5 opacity-75" />

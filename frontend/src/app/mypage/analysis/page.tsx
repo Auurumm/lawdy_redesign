@@ -5,6 +5,8 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { api } from '@/lib/api';
 import type { DocumentWithAnalysis, ChatMessage } from '@/types/database';
+import { downloadContractAsPDF, downloadContractAsWord, downloadContractAsText } from '@/lib/contractDownload';
+import ReactMarkdown from 'react-markdown';
 
 const riskLabels: Record<string, string> = { high: '높음', medium: '중간', low: '낮음' };
 const riskBadgeStyle: Record<string, React.CSSProperties> = {
@@ -78,6 +80,10 @@ function AnalysisPageContent() {
   const [isSending, setIsSending] = useState(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const docParamHandled = useRef<string | null>(null);
+
+  const [contractGenerating, setContractGenerating] = useState(false);
+  const [generatedContract, setGeneratedContract] = useState<string | null>(null);
+  const [contractTitle, setContractTitle] = useState('');
 
   const { user } = useAuth();
 
@@ -181,6 +187,9 @@ function AnalysisPageContent() {
     setCurrentDocumentName('');
     setChatMessages([]);
     setChatInput('');
+    setGeneratedContract(null);
+    setContractTitle('');
+    setContractGenerating(false);
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
@@ -227,6 +236,23 @@ function AnalysisPageContent() {
       }]);
     } finally {
       setIsSending(false);
+    }
+  };
+
+  const handleGenerateContract = async () => {
+    if (!currentDocumentId || contractGenerating) return;
+    setContractGenerating(true);
+    setGeneratedContract(null);
+    try {
+      const res = await api.generateContractFromAnalysis(currentDocumentId);
+      setGeneratedContract(res.contract.content);
+      setContractTitle(res.contract.title);
+    } catch (error) {
+      console.error('Contract generation failed:', error);
+      setGeneratedContract(null);
+      alert(error instanceof Error ? error.message : '계약서 생성에 실패했습니다.');
+    } finally {
+      setContractGenerating(false);
     }
   };
 
@@ -357,7 +383,7 @@ function AnalysisPageContent() {
 
                 {/* Completed - Results + Chat */}
                 {uploadStatus === 'completed' && (
-                  <div className="d-flex flex-column" style={{ height: 550 }}>
+                  <div className="d-flex flex-column" style={{ height: generatedContract ? 700 : 550 }}>
                     {currentDocumentName && (
                       <div className="d-flex align-items-center justify-content-between mb-3 pb-3" style={{ borderBottom: '1px solid #e2e8f0' }}>
                         <div className="d-flex align-items-center gap-2">
@@ -388,7 +414,9 @@ function AnalysisPageContent() {
                               <i className="bi bi-lightbulb me-1" />
                               분석 요약
                             </p>
-                            <p className="text-muted mb-0" style={{ fontSize: 13 }}>{analysisResult.summary}</p>
+                            <div className="text-muted mb-0 markdown-body" style={{ fontSize: 13 }}>
+                              <ReactMarkdown>{analysisResult.summary}</ReactMarkdown>
+                            </div>
                           </div>
 
                           {analysisResult.riskItems.length > 0 && (
@@ -424,6 +452,92 @@ function AnalysisPageContent() {
                             </div>
                           )}
 
+                          {/* 리스크 반영 계약서 생성 */}
+                          <div className="mb-3">
+                            {!generatedContract && !contractGenerating && (
+                              <button
+                                onClick={handleGenerateContract}
+                                className="btn w-100 rounded-3 py-2 d-flex align-items-center justify-content-center gap-2"
+                                style={{
+                                  background: 'linear-gradient(135deg, #059669, #10b981)',
+                                  color: '#fff',
+                                  border: 'none',
+                                  fontSize: 14,
+                                  fontWeight: 600,
+                                }}
+                              >
+                                <i className="bi bi-file-earmark-plus" />
+                                리스크 반영 계약서 생성
+                              </button>
+                            )}
+
+                            {contractGenerating && (
+                              <div className="text-center py-4 rounded-3" style={{ background: '#f0fdf4', border: '1px solid #bbf7d0' }}>
+                                <div className="spinner-border text-success mb-2" style={{ width: 32, height: 32 }} role="status">
+                                  <span className="visually-hidden">Loading...</span>
+                                </div>
+                                <p className="fw-semibold mb-1" style={{ fontSize: 14, color: '#059669' }}>
+                                  AI가 개선된 계약서를 작성 중...
+                                </p>
+                                <p className="text-muted mb-0" style={{ fontSize: 12 }}>
+                                  위험 요소를 반영하여 계약서를 재작성합니다
+                                </p>
+                              </div>
+                            )}
+
+                            {generatedContract && (
+                              <div className="rounded-3 overflow-hidden" style={{ border: '1px solid #bbf7d0' }}>
+                                <div className="d-flex align-items-center justify-content-between px-3 py-2" style={{ background: '#f0fdf4' }}>
+                                  <div className="d-flex align-items-center gap-2">
+                                    <i className="bi bi-check-circle-fill" style={{ color: '#059669', fontSize: 14 }} />
+                                    <span className="fw-semibold" style={{ fontSize: 13, color: '#059669' }}>
+                                      개선 계약서 생성 완료
+                                    </span>
+                                  </div>
+                                  <div className="d-flex gap-1">
+                                    <button
+                                      onClick={() => downloadContractAsPDF(generatedContract, contractTitle || '리스크_반영_계약서')}
+                                      className="btn btn-sm rounded-pill px-2 py-1 d-flex align-items-center gap-1"
+                                      style={{ background: '#fff', border: '1px solid #d1d5db', fontSize: 11, color: '#374151' }}
+                                    >
+                                      <i className="bi bi-filetype-pdf" style={{ fontSize: 11 }} />
+                                      PDF
+                                    </button>
+                                    <button
+                                      onClick={() => downloadContractAsWord(generatedContract, contractTitle || '리스크_반영_계약서')}
+                                      className="btn btn-sm rounded-pill px-2 py-1 d-flex align-items-center gap-1"
+                                      style={{ background: '#fff', border: '1px solid #d1d5db', fontSize: 11, color: '#374151' }}
+                                    >
+                                      <i className="bi bi-filetype-docx" style={{ fontSize: 11 }} />
+                                      Word
+                                    </button>
+                                    <button
+                                      onClick={() => downloadContractAsText(generatedContract, contractTitle || '리스크_반영_계약서')}
+                                      className="btn btn-sm rounded-pill px-2 py-1 d-flex align-items-center gap-1"
+                                      style={{ background: '#fff', border: '1px solid #d1d5db', fontSize: 11, color: '#374151' }}
+                                    >
+                                      <i className="bi bi-filetype-txt" style={{ fontSize: 11 }} />
+                                      TXT
+                                    </button>
+                                  </div>
+                                </div>
+                                <div
+                                  className="p-3 markdown-body"
+                                  style={{
+                                    maxHeight: 300,
+                                    overflowY: 'auto',
+                                    fontSize: 13,
+                                    lineHeight: 1.7,
+                                    color: '#334155',
+                                    background: '#fff',
+                                  }}
+                                >
+                                  <ReactMarkdown>{generatedContract}</ReactMarkdown>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+
                           {chatMessages.length === 0 && (
                             <div className="text-center py-3 rounded-3" style={{ background: '#f8f9fc' }}>
                               <p className="mb-0 fw-semibold" style={{ color: 'var(--tc-theme-primary)', fontSize: 13 }}>
@@ -447,17 +561,18 @@ function AnalysisPageContent() {
                             </div>
                           )}
                           <div
-                            className="rounded-3 px-3 py-2"
+                            className={`rounded-3 px-3 py-2 ${msg.role === 'assistant' ? 'markdown-body' : ''}`}
                             style={{
                               maxWidth: '80%',
-                              whiteSpace: 'pre-wrap',
                               fontSize: 13,
                               ...(msg.role === 'user'
-                                ? { background: 'linear-gradient(135deg, #312e81, #4338ca)', color: '#fff' }
+                                ? { background: 'linear-gradient(135deg, #312e81, #4338ca)', color: '#fff', whiteSpace: 'pre-wrap' }
                                 : { background: '#f8f9fc', color: '#334155' }),
                             }}
                           >
-                            {msg.content}
+                            {msg.role === 'assistant' ? (
+                              <ReactMarkdown>{msg.content}</ReactMarkdown>
+                            ) : msg.content}
                           </div>
                         </div>
                       ))}

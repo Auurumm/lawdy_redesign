@@ -530,12 +530,28 @@ function FormSubStep({ selectedType, subStepId, formData, onChange, onSelectChan
 // ============================================
 // 메인 ContractForm 컴포넌트
 // ============================================
+interface SavedContract {
+  id: string;
+  contract_type: string;
+  title: string;
+  party_a_name: string;
+  party_b_name: string;
+  content: string;
+  created_at: string;
+}
+
 export default function ContractForm() {
+  const [activeTab, setActiveTab] = useState<'create' | 'list'>('create');
   const [step, setStep] = useState(1);
   const [selectedType, setSelectedType] = useState<ContractType | ''>('');
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedContract, setGeneratedContract] = useState<ContractData | null>(null);
   const [error, setError] = useState<string>('');
+
+  // 저장된 계약서 목록 상태
+  const [savedContracts, setSavedContracts] = useState<SavedContract[]>([]);
+  const [isLoadingContracts, setIsLoadingContracts] = useState(false);
+  const [selectedSavedContract, setSelectedSavedContract] = useState<SavedContract | null>(null);
 
   // 위자드 상태
   const [subStep, setSubStep] = useState(0);
@@ -548,6 +564,45 @@ export default function ContractForm() {
   const [typingComplete, setTypingComplete] = useState(false);
 
   const config = selectedType ? contractTypeConfigs[selectedType] : null;
+
+  const loadContracts = useCallback(async () => {
+    setIsLoadingContracts(true);
+    try {
+      const res = await fetch('/api/contract/generate', { credentials: 'include' });
+      if (res.ok) {
+        const data = await res.json();
+        setSavedContracts(data.data || []);
+      }
+    } catch (err) {
+      console.error('Failed to load contracts:', err);
+    } finally {
+      setIsLoadingContracts(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (activeTab === 'list') {
+      loadContracts();
+    }
+  }, [activeTab, loadContracts]);
+
+  const handleSavedDownload = async (format: 'pdf' | 'word' | 'text', content: string, title: string) => {
+    try {
+      switch (format) {
+        case 'pdf':
+          await downloadContractAsPDF(content, title);
+          break;
+        case 'word':
+          await downloadContractAsWord(content, title);
+          break;
+        case 'text':
+          downloadContractAsText(content, title);
+          break;
+      }
+    } catch (err) {
+      alert(err instanceof Error ? err.message : '다운로드에 실패했습니다.');
+    }
+  };
 
   const handleDownload = async (format: 'pdf' | 'word' | 'text') => {
     if (!generatedContract) return;
@@ -614,6 +669,7 @@ export default function ContractForm() {
     try {
       const response = await fetch('/api/contract/generate', {
         method: 'POST',
+        credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           contractType: selectedType,
@@ -686,6 +742,30 @@ export default function ContractForm() {
         </div>
       </div>
 
+      {/* 탭 전환 */}
+      <div className="w-full max-w-4xl mb-6">
+        <div className="flex gap-2 justify-center">
+          <button
+            onClick={() => { setActiveTab('create'); }}
+            className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-colors ${
+              activeTab === 'create' ? 'bg-gray-900 text-white' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50'
+            }`}
+          >
+            새 계약서 작성
+          </button>
+          <button
+            onClick={() => { setActiveTab('list'); setSelectedSavedContract(null); }}
+            className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-colors ${
+              activeTab === 'list' ? 'bg-gray-900 text-white' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50'
+            }`}
+          >
+            생성한 계약서
+          </button>
+        </div>
+      </div>
+
+      {activeTab === 'create' && (
+      <>
       {/* 진행 상태 표시 */}
       <div className="w-full max-w-3xl mb-8">
         <div className="flex items-center justify-between px-4">
@@ -730,33 +810,8 @@ export default function ContractForm() {
         </div>
       )}
 
-      {/* Step 2: 생성 중 (채팅 모드에서 넘어올 때) */}
-      {step === 2 && isGenerating && inputMode === 'chat' && (
-        <div className="w-full max-w-4xl">
-          <div className="bg-white rounded-2xl shadow-sm p-6 md:p-10">
-            <div className="flex flex-col items-center justify-center py-16">
-              <div className="relative mb-8">
-                <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center">
-                  <span className="text-4xl animate-bounce">✍️</span>
-                </div>
-                <div className="absolute inset-0 w-20 h-20 border-4 border-primary/20 border-t-primary rounded-full animate-spin" />
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">AI가 계약서를 생성하고 있습니다</h3>
-              <p className="text-gray-500 text-sm text-center max-w-md">
-                대화를 통해 수집된 정보를 바탕으로 맞춤형 계약서를 작성 중입니다. 잠시만 기다려주세요...
-              </p>
-              <div className="flex gap-1 mt-6">
-                <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
       {/* Step 2: 정보 입력 위자드 */}
-      {step === 2 && config && !(isGenerating && inputMode === 'chat') && (
+      {step === 2 && config && (
         <div className="w-full max-w-4xl">
           <div className="bg-white rounded-2xl shadow-sm p-4 sm:p-6 md:p-10 overflow-hidden">
             {/* 헤더 + 모드 토글 */}
@@ -862,11 +917,26 @@ export default function ContractForm() {
                 </form>
               </>
             ) : (
-              <ChatMode
-                contractType={selectedType as ContractType}
-                onComplete={handleChatComplete}
-                onBack={() => setStep(1)}
-              />
+              <div className="relative">
+                <ChatMode
+                  contractType={selectedType as ContractType}
+                  onComplete={handleChatComplete}
+                  onBack={() => setStep(1)}
+                />
+                {/* 생성 중 오버레이 - ChatMode 언마운트 방지 */}
+                {isGenerating && (
+                  <div className="absolute inset-0 bg-white/80 backdrop-blur-sm rounded-xl flex flex-col items-center justify-center z-10">
+                    <div className="relative mb-6">
+                      <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
+                        <span className="text-3xl animate-bounce">✍️</span>
+                      </div>
+                      <div className="absolute inset-0 w-16 h-16 border-4 border-primary/20 border-t-primary rounded-full animate-spin" />
+                    </div>
+                    <h3 className="text-base font-bold text-gray-900 mb-1">AI가 계약서를 생성하고 있습니다</h3>
+                    <p className="text-gray-500 text-sm text-center max-w-xs">잠시만 기다려주세요...</p>
+                  </div>
+                )}
+              </div>
             )}
           </div>
         </div>
@@ -937,9 +1007,9 @@ export default function ContractForm() {
                   <div>
                     <h4 className="font-bold mb-1" style={{ color: '#ffffff' }}>전문가 검토가 필요하신가요?</h4>
                     <p className="text-sm mb-3" style={{ color: 'rgba(255,255,255,0.75)' }}>복잡한 계약이라면 법률 전문가의 검토를 받아보세요.</p>
-                    <button className="px-4 py-2 bg-white rounded-lg text-sm font-medium hover:bg-white/90 transition-colors" style={{ color: '#312e81' }}>
+                    <a href="/support" className="inline-block px-4 py-2 bg-white rounded-lg text-sm font-medium hover:bg-white/90 transition-colors" style={{ color: '#312e81' }}>
                       상담 신청하기
-                    </button>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -963,13 +1033,114 @@ export default function ContractForm() {
             >
               새 계약서 작성하기
             </button>
-            <a
-              href="/"
+            <button
+              onClick={() => { setActiveTab('list'); setSelectedSavedContract(null); }}
               className="px-6 py-3 bg-primary text-white rounded-lg font-medium hover:bg-primary/90 transition-colors"
             >
-              홈으로 돌아가기
-            </a>
+              생성한 계약서 보기
+            </button>
           </div>
+        </div>
+      )}
+      </>
+      )}
+
+      {/* 생성한 계약서 목록 탭 */}
+      {activeTab === 'list' && (
+        <div className="w-full max-w-4xl">
+          {isLoadingContracts ? (
+            <div className="text-center py-16">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4" />
+              <p className="text-gray-500">계약서 목록을 불러오는 중...</p>
+            </div>
+          ) : selectedSavedContract ? (
+            /* 계약서 상세 보기 */
+            <div>
+              <button
+                onClick={() => setSelectedSavedContract(null)}
+                className="mb-4 text-sm text-primary font-semibold flex items-center gap-1 hover:underline"
+              >
+                ← 목록으로
+              </button>
+              <div className="bg-white rounded-2xl shadow-sm p-4 sm:p-6">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-900">{selectedSavedContract.title || contractTypeNames[selectedSavedContract.contract_type] || '계약서'}</h3>
+                    <p className="text-sm text-gray-500">
+                      {new Date(selectedSavedContract.created_at).toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' })} 생성
+                      {selectedSavedContract.party_a_name && selectedSavedContract.party_b_name && (
+                        <span> · {selectedSavedContract.party_a_name} ↔ {selectedSavedContract.party_b_name}</span>
+                      )}
+                    </p>
+                  </div>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => handleSavedDownload('pdf', selectedSavedContract.content, selectedSavedContract.title || '계약서')}
+                      className="px-4 py-2 bg-primary text-white rounded-lg text-xs font-semibold hover:bg-primary/90 transition-colors"
+                    >
+                      📑 PDF
+                    </button>
+                    <button
+                      onClick={() => handleSavedDownload('word', selectedSavedContract.content, selectedSavedContract.title || '계약서')}
+                      className="px-4 py-2 border border-primary text-primary rounded-lg text-xs font-semibold hover:bg-primary/5 transition-colors"
+                    >
+                      📝 Word
+                    </button>
+                    <button
+                      onClick={() => handleSavedDownload('text', selectedSavedContract.content, selectedSavedContract.title || '계약서')}
+                      className="px-4 py-2 border border-gray-200 text-gray-700 rounded-lg text-xs font-semibold hover:bg-gray-50 transition-colors"
+                    >
+                      📄 TXT
+                    </button>
+                  </div>
+                </div>
+                <div className="bg-gray-50 border border-gray-200 rounded-xl p-5 max-h-[600px] overflow-y-auto">
+                  <pre className="whitespace-pre-wrap text-sm leading-relaxed font-sans text-gray-800">
+                    {selectedSavedContract.content}
+                  </pre>
+                </div>
+              </div>
+            </div>
+          ) : savedContracts.length === 0 ? (
+            <div className="text-center py-16">
+              <div className="text-5xl mb-4">📋</div>
+              <p className="text-gray-500 mb-4">아직 생성한 계약서가 없습니다.</p>
+              <button
+                onClick={() => setActiveTab('create')}
+                className="px-6 py-3 bg-primary text-white rounded-lg font-medium hover:bg-primary/90 transition-colors"
+              >
+                첫 계약서 작성하기
+              </button>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {savedContracts.map((contract) => (
+                <button
+                  key={contract.id}
+                  onClick={() => setSelectedSavedContract(contract)}
+                  className="w-full bg-white rounded-2xl shadow-sm p-4 sm:p-5 flex items-center justify-between hover:shadow-md hover:border-primary border border-transparent transition-all text-left"
+                >
+                  <div className="flex items-center gap-3 sm:gap-4">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gray-100 rounded-xl flex items-center justify-center text-lg sm:text-xl shrink-0">
+                      {contractTypeConfigs[contract.contract_type as ContractType]?.icon || '📄'}
+                    </div>
+                    <div>
+                      <p className="text-sm sm:text-base font-bold text-gray-900">
+                        {contract.title || contractTypeNames[contract.contract_type] || '계약서'}
+                      </p>
+                      <p className="text-xs sm:text-sm text-gray-500">
+                        {new Date(contract.created_at).toLocaleDateString('ko-KR')}
+                        {contract.party_a_name && contract.party_b_name && (
+                          <span> · {contract.party_a_name} ↔ {contract.party_b_name}</span>
+                        )}
+                      </p>
+                    </div>
+                  </div>
+                  <span className="text-xs sm:text-sm text-primary font-semibold shrink-0">보기 →</span>
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       )}
     </section>

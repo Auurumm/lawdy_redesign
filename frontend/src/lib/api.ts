@@ -58,20 +58,37 @@ export const api = {
   },
 
   async uploadDocument(file: File): Promise<{ document: DocumentWithAnalysis }> {
-    const formData = new FormData();
-    formData.append('file', file);
-
-    const res = await fetch('/api/documents', {
+    // 1단계: signed upload URL + DB 레코드 생성 (작은 JSON 요청)
+    const urlRes = await fetchWithAuth('/api/documents/upload-url', {
       method: 'POST',
-      body: formData,
-      credentials: 'include',
+      body: JSON.stringify({
+        fileName: file.name,
+        fileType: file.type,
+        fileSize: file.size,
+      }),
     });
 
-    if (!res.ok) {
-      const data = await res.json();
-      throw new APIError(res.status, data.error);
+    if (!urlRes.ok) {
+      const data = await urlRes.json();
+      throw new APIError(urlRes.status, data.error);
     }
-    return res.json();
+
+    const { signedUrl, token, document } = await urlRes.json();
+
+    // 2단계: Supabase Storage로 직접 업로드 (Vercel 4.5MB 제한 우회)
+    const uploadRes = await fetch(signedUrl, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': file.type,
+      },
+      body: file,
+    });
+
+    if (!uploadRes.ok) {
+      throw new APIError(uploadRes.status, '파일 업로드에 실패했습니다.');
+    }
+
+    return { document };
   },
 
   async getDocument(id: string): Promise<{ document: DocumentWithAnalysis }> {
@@ -114,6 +131,28 @@ export const api = {
     const res = await fetchWithAuth(`/api/documents/${documentId}/chat`, {
       method: 'POST',
       body: JSON.stringify({ message }),
+    });
+    if (!res.ok) {
+      const data = await res.json();
+      throw new APIError(res.status, data.error);
+    }
+    return res.json();
+  },
+
+  // Contract from Analysis
+  async generateContractFromAnalysis(documentId: string): Promise<{
+    success: boolean;
+    contract: {
+      id: string;
+      content: string;
+      title: string;
+      processingTimeMs: number;
+      generatedAt: string;
+    };
+  }> {
+    const res = await fetchWithAuth('/api/contract/generate-from-analysis', {
+      method: 'POST',
+      body: JSON.stringify({ documentId }),
     });
     if (!res.ok) {
       const data = await res.json();

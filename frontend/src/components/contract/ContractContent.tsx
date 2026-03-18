@@ -595,7 +595,7 @@ export default function ContractPage() {
   const loadContracts = async () => {
     setIsLoading(true);
     try {
-      const res = await fetch('/api/contract/generate');
+      const res = await fetch('/api/contract/generate', { credentials: 'include' });
       if (res.ok) {
         const data = await res.json();
         setContracts(data.data || []);
@@ -651,6 +651,7 @@ export default function ContractPage() {
     try {
       const response = await fetch('/api/contract/generate', {
         method: 'POST',
+        credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           contractType: selectedType,

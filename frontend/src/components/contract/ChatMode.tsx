@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import ReactMarkdown from 'react-markdown';
 import { contractTypeNames, type ContractType } from './contractTypes';
 
 interface ChatMessage {
@@ -36,6 +37,7 @@ export default function ChatMode({ contractType, onComplete, onBack }: ChatModeP
     try {
       const response = await fetch('/api/contract/chat', {
         method: 'POST',
+        credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           contractType,
@@ -76,6 +78,7 @@ export default function ChatMode({ contractType, onComplete, onBack }: ChatModeP
     try {
       const response = await fetch('/api/contract/chat', {
         method: 'POST',
+        credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           contractType,
@@ -183,7 +186,11 @@ export default function ChatMode({ contractType, onComplete, onBack }: ChatModeP
                   <span className="text-xs font-semibold text-primary">Lawdy AI</span>
                 </div>
               )}
-              <div className="whitespace-pre-wrap">{msg.content}</div>
+              <div className={msg.role === 'assistant' ? 'markdown-body' : 'whitespace-pre-wrap'}>
+                {msg.role === 'assistant' ? (
+                  <ReactMarkdown>{msg.content}</ReactMarkdown>
+                ) : msg.content}
+              </div>
             </div>
           </div>
         ))}
@@ -236,6 +243,23 @@ export default function ChatMode({ contractType, onComplete, onBack }: ChatModeP
               className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg text-sm font-semibold hover:bg-gray-50"
             >
               정보 수정하기
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* 진행률이 일정 이상이면 바로 생성 가능 */}
+      {!isComplete && progress >= 30 && messages.length >= 2 && (
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-3">
+          <div className="flex items-center justify-between gap-2">
+            <p className="text-xs text-blue-700">
+              현재까지 수집된 정보({progress}%)로 계약서를 생성할 수 있습니다.
+            </p>
+            <button
+              onClick={handleComplete}
+              className="px-3 py-1.5 bg-primary text-white rounded-lg text-xs font-semibold hover:bg-primary/90 whitespace-nowrap shrink-0"
+            >
+              바로 생성하기 →
             </button>
           </div>
         </div>
