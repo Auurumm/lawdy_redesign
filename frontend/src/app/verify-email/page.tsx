@@ -62,10 +62,18 @@ function VerifyEmailContent() {
                     </p>
                   )}
 
-                  <p className="text-muted fs-7 mb-4">
+                  <p className="text-muted fs-7 mb-3">
                     이메일에 포함된 인증 링크를 클릭하면{' '}<br />
                     회원가입이 완료됩니다.
                   </p>
+
+                  <div className="rounded-3 px-3 py-2 mb-4" style={{ background: '#fff8e1' }}>
+                    <small className="text-muted">
+                      <i className="bi bi-info-circle me-1" style={{ color: '#f9a825' }} />
+                      메일이 보이지 않으면 <strong>스팸함</strong> 또는{' '}
+                      <strong>프로모션 탭</strong>을 확인해주세요.
+                    </small>
+                  </div>
 
                   {/* Resend Button */}
                   <button
