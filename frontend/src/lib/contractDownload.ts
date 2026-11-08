@@ -76,103 +76,100 @@ function stripMarkdown(text: string): string {
 }
 
 // ── PDF 다운로드 (한글 지원) ──
+// Word를 PDF로 인쇄한 것처럼: A4 한 장씩 여백(20mm)을 두고, 문단·조항이 페이지 중간에서 잘리지 않게 나눈다.
+const PAGE_W_MM = 210;
+const PAGE_H_MM = 297;
+const MARGIN_MM = 20;
+const MM_TO_PX = 96 / 25.4;
+const PDF_FONT = `'Pretendard', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif`;
+
 export async function downloadContractAsPDF(content: string, title: string): Promise<void> {
+  const cleanup: HTMLElement[] = [];
   try {
     const [{ default: html2canvas }, { jsPDF }] = await Promise.all([
       import('html2canvas'),
       import('jspdf'),
     ]);
 
-    const container = document.createElement('div');
-    container.style.cssText = `
-      position: fixed;
-      left: -9999px;
-      top: 0;
-      width: 210mm;
-      padding: 20mm;
-      background: white;
-      font-family: 'Pretendard', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
-      font-size: 12px;
-      line-height: 1.8;
-      color: #000;
-    `;
+    const baseStyle = `font-family: ${PDF_FONT}; font-size: 12px; line-height: 1.8; color: #000; background: #fff;`;
 
-    const formattedContent = formatContractToHTML(content, title);
-    container.innerHTML = formattedContent;
-    document.body.appendChild(container);
+    // 1) 내용을 블록(제목·문단·목록 한 줄 등) 단위로 만들고, 각 블록의 높이를 잰다
+    const source = document.createElement('div');
+    source.innerHTML = formatContractToHTML(content, title);
 
-    await new Promise(resolve => setTimeout(resolve, 100));
+    const measurer = document.createElement('div');
+    measurer.style.cssText = `position: fixed; left: -9999px; top: 0; width: ${PAGE_W_MM - MARGIN_MM * 2}mm; ${baseStyle}`;
+    document.body.appendChild(measurer);
+    cleanup.push(measurer);
 
-    const canvas = await html2canvas(container, {
-      scale: 2,
-      useCORS: true,
-      logging: false,
-      backgroundColor: '#ffffff',
+    const blocks = Array.from(source.children).map((el) => {
+      const wrap = document.createElement('div');
+      wrap.style.display = 'flow-root'; // 블록 간 여백이 겹쳐 높이가 어긋나는 것 방지
+      wrap.appendChild(el.cloneNode(true));
+      return wrap;
     });
+    blocks.forEach((b) => measurer.appendChild(b));
 
+    if (document.fonts?.ready) await document.fonts.ready;
+    await new Promise((r) => setTimeout(r, 100));
+
+    const heights = blocks.map((b) => b.getBoundingClientRect().height);
+    const isBlank = (i: number) => !(blocks[i].textContent || '').trim() && !blocks[i].querySelector('hr');
+    // 제목류(굵은 글씨 한 줄)는 다음 블록과 함께 두어, 제목만 페이지 끝에 남는 것을 막는다
+    const keepWithNext = (i: number) => {
+      const el = blocks[i].firstElementChild as HTMLElement | null;
+      return !!el && el.style.fontWeight === 'bold' && (el.textContent || '').length < 80;
+    };
+
+    // 2) 페이지에 차례로 채우기 (블록은 쪼개지 않음)
+    const contentH = (PAGE_H_MM - MARGIN_MM * 2) * MM_TO_PX - 4; // 4px 여유
+    const pages: number[][] = [[]];
+    let used = 0;
+    for (let i = 0; i < blocks.length; i++) {
+      const cur = pages[pages.length - 1];
+      if (cur.length === 0 && isBlank(i)) continue; // 페이지 맨 위 빈 줄 제거
+      const need = heights[i] + (keepWithNext(i) && i + 1 < blocks.length ? heights[i + 1] : 0);
+      if (cur.length > 0 && used + need > contentH) {
+        pages.push([]);
+        used = 0;
+        if (isBlank(i)) continue;
+      }
+      pages[pages.length - 1].push(i);
+      used += heights[i];
+    }
+
+    // 3) 페이지마다 A4 크기 틀을 만들어 이미지로 찍고 PDF에 한 장씩 넣기
     const pdf = new jsPDF('p', 'mm', 'a4');
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = pdf.internal.pageSize.getHeight();
+    for (let p = 0; p < pages.length; p++) {
+      const page = document.createElement('div');
+      page.style.cssText = `position: fixed; left: -9999px; top: 0; width: ${PAGE_W_MM}mm; height: ${PAGE_H_MM}mm; padding: ${MARGIN_MM}mm; box-sizing: border-box; overflow: hidden; ${baseStyle}`;
+      pages[p].forEach((i) => page.appendChild(blocks[i].cloneNode(true)));
 
-    const scale = canvas.width / pdfWidth;
-    const pageCanvasHeight = Math.floor(pdfHeight * scale);
-    const canvasCtx = canvas.getContext('2d')!;
+      const num = document.createElement('div');
+      num.textContent = `${p + 1} / ${pages.length}`;
+      num.style.cssText = `position: absolute; left: 0; right: 0; bottom: 8mm; text-align: center; font-size: 10px; color: #666;`;
+      page.appendChild(num);
 
-    // 특정 y 좌표의 행이 흰색(빈 줄)인지 확인
-    const isWhiteRow = (y: number): boolean => {
-      const rowData = canvasCtx.getImageData(0, y, canvas.width, 1).data;
-      for (let i = 0; i < rowData.length; i += 4) {
-        if (rowData[i] < 250 || rowData[i + 1] < 250 || rowData[i + 2] < 250) {
-          return false;
-        }
-      }
-      return true;
-    };
+      document.body.appendChild(page);
+      cleanup.push(page);
 
-    // 페이지 경계 근처에서 텍스트가 없는 빈 줄을 찾아 그 위치에서 자르기
-    const findSafeBreak = (targetY: number): number => {
-      const searchRange = Math.floor(80 * scale); // ~80mm 범위에서 탐색
-      for (let y = targetY; y > targetY - searchRange && y > 0; y--) {
-        if (isWhiteRow(y)) return y;
-      }
-      return targetY;
-    };
-
-    // 페이지별 슬라이스 위치 계산
-    const breaks: number[] = [0];
-    let currentY = 0;
-    while (currentY + pageCanvasHeight < canvas.height) {
-      const rawBreak = currentY + pageCanvasHeight;
-      const safeBreak = findSafeBreak(rawBreak);
-      breaks.push(safeBreak);
-      currentY = safeBreak;
+      const canvas = await html2canvas(page, {
+        scale: 2,
+        useCORS: true,
+        logging: false,
+        backgroundColor: '#ffffff',
+      });
+      if (p > 0) pdf.addPage();
+      pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, PAGE_W_MM, PAGE_H_MM);
+      document.body.removeChild(page);
     }
 
-    for (let i = 0; i < breaks.length; i++) {
-      if (i > 0) pdf.addPage();
-
-      const srcY = breaks[i];
-      const srcEnd = i + 1 < breaks.length ? breaks[i + 1] : canvas.height;
-      const srcH = srcEnd - srcY;
-
-      const pageCanvas = document.createElement('canvas');
-      pageCanvas.width = canvas.width;
-      pageCanvas.height = srcH;
-      const ctx = pageCanvas.getContext('2d')!;
-      ctx.fillStyle = '#ffffff';
-      ctx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
-      ctx.drawImage(canvas, 0, srcY, canvas.width, srcH, 0, 0, canvas.width, srcH);
-
-      const pageImgData = pageCanvas.toDataURL('image/png');
-      const pageImgHeight = srcH / scale;
-      pdf.addImage(pageImgData, 'PNG', 0, 0, pdfWidth, pageImgHeight);
-    }
-
-    document.body.removeChild(container);
     pdf.save(`${sanitizeFilename(title)}.pdf`);
   } catch (error) {
     console.error('PDF 생성 오류:', error);
     throw new Error('PDF 다운로드에 실패했습니다. 텍스트 다운로드를 이용해주세요.');
+  } finally {
+    cleanup.forEach((el) => el.parentNode?.removeChild(el));
   }
 }
 
