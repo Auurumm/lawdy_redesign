@@ -60,7 +60,7 @@ export async function DELETE(
       // 문서 조회 (권한 확인)
       const { data: document, error: findError } = await supabaseAdmin
         .from('documents')
-        .select('id, file_url')
+        .select('id, file_url, storage_path')
         .eq('id', id)
         .eq('user_id', userId)
         .single();
@@ -73,10 +73,12 @@ export async function DELETE(
       }
 
       // Storage에서 파일 삭제
-      if (document.file_url) {
+      // 업로드는 storage_path에 경로를 저장한다 (file_url은 비어 있음)
+      const filePath = document.storage_path || document.file_url;
+      if (filePath) {
         await supabaseAdmin.storage
           .from('documents')
-          .remove([document.file_url]);
+          .remove([filePath]);
       }
 
       // 문서 삭제 (CASCADE로 analyses도 삭제됨)

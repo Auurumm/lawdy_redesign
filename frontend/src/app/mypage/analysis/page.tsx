@@ -256,6 +256,22 @@ function AnalysisPageContent() {
     }
   };
 
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+
+  async function handleDeleteDocument(id: string, name: string) {
+    if (!window.confirm(`"${name}" 문서를 삭제할까요?\n분석 결과와 업로드한 파일이 함께 삭제되며 되돌릴 수 없습니다.`)) return;
+    setDeletingId(id);
+    try {
+      await api.deleteDocument(id);
+      setDocuments(prev => prev.filter(d => d.id !== id));
+    } catch (error) {
+      console.error('Failed to delete document:', error);
+      window.alert('문서 삭제에 실패했습니다. 잠시 후 다시 시도해주세요.');
+    } finally {
+      setDeletingId(null);
+    }
+  }
+
   const documentList = documents.map(doc => ({
     id: doc.id,
     name: doc.file_name,
@@ -789,17 +805,37 @@ function AnalysisPageContent() {
                       </div>
                     </div>
                   </div>
-                  <span className="fw-semibold" style={{ fontSize: 13, color: doc.status === 'completed' ? 'var(--tc-theme-primary)' : '#94a3b8' }}>
-                    {doc.status === 'uploading' && '업로드중'}
-                    {doc.status === 'parsing' && '파싱중'}
-                    {doc.status === 'analyzing' && '분석중'}
-                    {doc.status === 'completed' && (
-                      <span className="d-flex align-items-center gap-1">
-                        <i className="bi bi-check-circle-fill" style={{ fontSize: 14 }} /> 완료
-                      </span>
-                    )}
-                    {doc.status === 'failed' && '실패'}
-                  </span>
+                  <div className="d-flex align-items-center gap-3">
+                    <span className="fw-semibold" style={{ fontSize: 13, color: doc.status === 'completed' ? 'var(--tc-theme-primary)' : '#94a3b8' }}>
+                      {doc.status === 'uploading' && '업로드중'}
+                      {doc.status === 'parsing' && '파싱중'}
+                      {doc.status === 'analyzing' && '분석중'}
+                      {doc.status === 'completed' && (
+                        <span className="d-flex align-items-center gap-1">
+                          <i className="bi bi-check-circle-fill" style={{ fontSize: 14 }} /> 완료
+                        </span>
+                      )}
+                      {doc.status === 'failed' && '실패'}
+                    </span>
+                    <button
+                      type="button"
+                      aria-label={`${doc.name} 삭제`}
+                      title="삭제"
+                      disabled={deletingId === doc.id}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteDocument(doc.id, doc.name);
+                      }}
+                      className="btn btn-sm p-0 d-flex align-items-center justify-content-center"
+                      style={{ width: 32, height: 32, borderRadius: 8, border: 'none', background: '#f1f5f9', color: '#64748b' }}
+                    >
+                      {deletingId === doc.id ? (
+                        <span className="spinner-border spinner-border-sm" role="status" />
+                      ) : (
+                        <i className="bi bi-trash" style={{ fontSize: 14 }} />
+                      )}
+                    </button>
+                  </div>
                 </div>
               </div>
             ))
