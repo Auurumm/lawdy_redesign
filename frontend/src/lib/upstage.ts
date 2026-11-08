@@ -99,7 +99,7 @@ export async function analyzeContract(parsedContent: string): Promise<ContractAn
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      model: 'solar-pro',
+      model: 'solar-pro4',
       messages: [
         { role: 'system', content: systemPrompt },
         { role: 'user', content: `다음 계약서를 분석해주세요:\n\n${parsedContent}` },

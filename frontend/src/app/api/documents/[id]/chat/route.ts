@@ -167,7 +167,7 @@ ${(analysis.recommendations || []).map((rec: string) => `- ${rec}`).join('\n')}
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          model: 'solar-pro',
+          model: 'solar-pro4',
           messages: chatMessages,
           temperature: 0.7,
           max_tokens: 2048,

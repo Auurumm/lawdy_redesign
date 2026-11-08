@@ -186,7 +186,7 @@ export async function POST(request: NextRequest) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          model: 'solar-pro',
+          model: 'solar-pro4',
           messages: [
             { role: 'system', content: systemPrompt },
             { role: 'user', content: userPrompt },

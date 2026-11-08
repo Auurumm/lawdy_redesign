@@ -277,7 +277,7 @@ isComplete는 모든 필수 항목이 수집되었을 때만 true로 설정하�
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          model: 'solar-pro',
+          model: 'solar-pro4',
           messages: chatMessages,
           temperature: 0.5,
           max_tokens: 1024,
