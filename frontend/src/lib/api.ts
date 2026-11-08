@@ -1,5 +1,16 @@
 import type { DocumentWithAnalysis, StatisticsResponse, PaginatedResponse, ChatMessage } from '@/types/database';
 
+export interface AnalysisContract {
+  id: string;
+  title: string;
+  content: string;
+  createdAt: string;
+  sourceDocumentId: string | null;
+  sourceFileName: string | null;
+  partyA: string | null;
+  partyB: string | null;
+}
+
 class APIError extends Error {
   constructor(public status: number, message: string) {
     super(message);
@@ -154,6 +165,15 @@ export const api = {
       method: 'POST',
       body: JSON.stringify({ documentId }),
     });
+    if (!res.ok) {
+      const data = await res.json();
+      throw new APIError(res.status, data.error);
+    }
+    return res.json();
+  },
+
+  async getAnalysisContracts(limit = 5): Promise<{ contracts: AnalysisContract[] }> {
+    const res = await fetchWithAuth(`/api/contract/from-analysis?limit=${limit}`);
     if (!res.ok) {
       const data = await res.json();
       throw new APIError(res.status, data.error);

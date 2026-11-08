@@ -3,7 +3,9 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
-import { api } from '@/lib/api';
+import ReactMarkdown from 'react-markdown';
+import { api, type AnalysisContract } from '@/lib/api';
+import { downloadContractAsPDF, downloadContractAsWord, downloadContractAsText } from '@/lib/contractDownload';
 import type { DocumentWithAnalysis, StatisticsResponse } from '@/types/database';
 
 const riskBadgeStyle: Record<string, React.CSSProperties> = {
@@ -29,6 +31,8 @@ const statusConfig: Record<string, { label: string; style: React.CSSProperties }
 export default function DashboardPage() {
   const [documents, setDocuments] = useState<DocumentWithAnalysis[]>([]);
   const [statistics, setStatistics] = useState<StatisticsResponse | null>(null);
+  const [contracts, setContracts] = useState<AnalysisContract[]>([]);
+  const [viewing, setViewing] = useState<AnalysisContract | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const { user } = useAuth();
 
@@ -44,6 +48,13 @@ export default function DashboardPage() {
       ]);
       setDocuments(docsRes.data || []);
       setStatistics(statsRes);
+      // 계약서 목록은 실패해도 대시보드 나머지는 보이도록 따로 처리
+      try {
+        const contractsRes = await api.getAnalysisContracts(20);
+        setContracts(contractsRes.contracts || []);
+      } catch (e) {
+        console.warn('Failed to load generated contracts:', e);
+      }
     } catch (error) {
       console.error('Failed to load data:', error);
     } finally {
@@ -117,8 +128,10 @@ export default function DashboardPage() {
         ))}
       </div>
 
+      <div className="row g-4 mb-4">
       {/* Recent Documents */}
-      <div className="rounded-4 mb-4" style={{ background: '#fff', boxShadow: '0 2px 12px rgba(0,0,0,0.05)' }}>
+      <div className="col-xl-6">
+      <div className="rounded-4 h-100" style={{ background: '#fff', boxShadow: '0 2px 12px rgba(0,0,0,0.05)' }}>
         <div className="p-4">
           <div className="d-flex align-items-center justify-content-between mb-4">
             <div className="d-flex align-items-center gap-2">
@@ -128,7 +141,7 @@ export default function DashboardPage() {
               >
                 <i className="bi bi-clock-history" style={{ color: 'var(--tc-theme-primary)', fontSize: 14 }} />
               </div>
-              <h6 className="fw-bold mb-0">최근 문서</h6>
+              <h6 className="fw-bold mb-0">최근 분석한 계약서</h6>
             </div>
             <Link href="/mypage/analysis?tab=recent" className="d-flex align-items-center gap-1 text-decoration-none fw-semibold" style={{ color: 'var(--tc-theme-primary)', fontSize: 13 }}>
               전체보기 <i className="bi bi-chevron-right" style={{ fontSize: 12 }} />
@@ -203,7 +216,7 @@ export default function DashboardPage() {
                             {doc.name}
                           </div>
                         </td>
-                        <td className="text-center text-muted">{doc.date}</td>
+                        <td className="text-center text-muted text-nowrap">{doc.date}</td>
                         <td className="text-center">
                           <span className="badge rounded-pill px-3" style={{ ...riskBadgeStyle[doc.risk], fontSize: 11, fontWeight: 600 }}>
                             {riskLabels[doc.risk]}
@@ -240,6 +253,111 @@ export default function DashboardPage() {
           )}
         </div>
       </div>
+
+      </div>
+
+      {/* Generated Contracts */}
+      <div className="col-xl-6">
+      <div className="rounded-4 h-100" style={{ background: '#fff', boxShadow: '0 2px 12px rgba(0,0,0,0.05)' }}>
+        <div className="p-4">
+          <div className="d-flex align-items-center justify-content-between mb-4">
+            <div className="d-flex align-items-center gap-2">
+              <div
+                className="rounded-2 d-flex align-items-center justify-content-center"
+                style={{ width: 32, height: 32, background: 'rgba(5,150,105,0.1)' }}
+              >
+                <i className="bi bi-file-earmark-check" style={{ color: '#059669', fontSize: 14 }} />
+              </div>
+              <h6 className="fw-bold mb-0">최근 생성한 계약서</h6>
+            </div>
+            <Link href="/mypage/contract?tab=list" className="d-flex align-items-center gap-1 text-decoration-none fw-semibold" style={{ color: 'var(--tc-theme-primary)', fontSize: 13 }}>
+              전체보기 <i className="bi bi-chevron-right" style={{ fontSize: 12 }} />
+            </Link>
+          </div>
+
+          {contracts.length === 0 ? (
+            <p className="text-muted text-center py-4 mb-0" style={{ fontSize: 14 }}>
+              아직 생성한 계약서가 없습니다.
+            </p>
+          ) : (
+            <div className="d-flex flex-column gap-2 pe-1" style={{ maxHeight: 3 * 76 + 2 * 8, overflowY: 'auto' }}>
+              {contracts.map((c) => (
+                <div key={c.id} className="d-flex align-items-center justify-content-between p-3 rounded-3" style={{ background: '#f8f9fc' }}>
+                  <div className="d-flex align-items-center gap-3" style={{ minWidth: 0 }}>
+                    <div
+                      className="rounded-2 d-flex align-items-center justify-content-center flex-shrink-0"
+                      style={{ width: 36, height: 36, background: 'rgba(5,150,105,0.1)' }}
+                    >
+                      <i className="bi bi-file-earmark-text" style={{ color: '#059669', fontSize: 14 }} />
+                    </div>
+                    <div style={{ minWidth: 0 }}>
+                      <p className="mb-0 fw-semibold text-truncate" style={{ fontSize: 13 }}>{c.title}</p>
+                      <p className="mb-0 text-muted text-truncate" style={{ fontSize: 11 }}>
+                        {new Date(c.createdAt).toLocaleDateString('ko-KR')}
+                        {c.sourceFileName
+                          ? ` · 원본: ${c.sourceFileName}`
+                          : c.partyA && c.partyB
+                            ? ` · ${c.partyA} ↔ ${c.partyB}`
+                            : ''}
+                      </p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setViewing(c)}
+                    className="btn btn-sm rounded-pill px-3 flex-shrink-0"
+                    style={{ fontSize: 12, background: 'rgba(0,70,255,0.08)', color: 'var(--tc-theme-primary)', border: 'none', fontWeight: 600 }}
+                  >
+                    보기
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+      </div>
+      </div>
+
+      {/* Contract Viewer */}
+      {viewing && (
+        <div
+          className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center p-3"
+          style={{ background: 'rgba(0,0,0,0.55)', zIndex: 2000 }}
+          onClick={() => setViewing(null)}
+        >
+          <div
+            className="bg-white rounded-4 d-flex flex-column"
+            style={{ width: '100%', maxWidth: 820, maxHeight: '90vh' }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="d-flex align-items-center justify-content-between flex-wrap gap-2 px-4 py-3" style={{ borderBottom: '1px solid #e2e8f0' }}>
+              <h6 className="fw-bold mb-0 text-truncate" style={{ maxWidth: 360 }}>{viewing.title}</h6>
+              <div className="d-flex align-items-center gap-1">
+                {([
+                  ['PDF', downloadContractAsPDF],
+                  ['Word', downloadContractAsWord],
+                  ['TXT', downloadContractAsText],
+                ] as const).map(([label, fn]) => (
+                  <button
+                    key={label}
+                    onClick={() => fn(viewing.content, viewing.title)}
+                    className="btn btn-sm rounded-pill px-3"
+                    style={{ background: '#fff', border: '1px solid #d1d5db', fontSize: 12, color: '#374151' }}
+                  >
+                    {label}
+                  </button>
+                ))}
+                <button onClick={() => setViewing(null)} className="btn btn-sm ms-1" aria-label="닫기">
+                  <i className="bi bi-x-lg" />
+                </button>
+              </div>
+            </div>
+            <div className="p-4 markdown-body overflow-auto" style={{ fontSize: 14, lineHeight: 1.8, color: '#334155' }}>
+              <ReactMarkdown>{viewing.content}</ReactMarkdown>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Quick Actions */}
       <div className="d-flex align-items-center gap-2 mb-3">

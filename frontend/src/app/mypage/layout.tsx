@@ -53,7 +53,7 @@ export default function MyPageLayout({
   return (
     <Layout>
       <section className="position-relative overflow-hidden" style={{ minHeight: '80vh', paddingTop: '120px', paddingBottom: '80px', background: 'linear-gradient(180deg, #f8f9fc 0%, #eef1f6 100%)' }}>
-        <div className="container">
+        <div className="container-fluid px-3 px-md-4 px-xl-5" style={{ maxWidth: 2200 }}>
           {/* Mobile Navigation Pills */}
           <div className="d-lg-none mb-4">
             <div className="d-flex gap-2 flex-wrap justify-content-center">

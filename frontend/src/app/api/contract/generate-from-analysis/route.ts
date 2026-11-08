@@ -104,14 +104,33 @@ ${recommendations.length ? recommendations.map((r) => `- ${r}`).join('\n') : '(�
       }
 
       const baseName = document.file_name.replace(/\.[^.]+$/, '');
+      const title = `${baseName} (개선본)`;
+      const processingTimeMs = Date.now() - startTime;
+
+      // 대시보드 목록에서 다시 볼 수 있도록 저장 (저장 실패해도 생성된 계약서는 반환)
+      const { data: saved, error: saveError } = await supabaseAdmin
+        .from('generated_contracts')
+        .insert({
+          user_id: userId,
+          source_document_id: documentId,
+          title,
+          content,
+          processing_time_ms: processingTimeMs,
+        })
+        .select('id')
+        .single();
+
+      if (saveError) {
+        console.error('Failed to save contract from analysis:', saveError);
+      }
 
       return NextResponse.json({
         success: true,
         contract: {
-          id: crypto.randomUUID(),
+          id: saved?.id || crypto.randomUUID(),
           content,
-          title: `${baseName} (개선본)`,
-          processingTimeMs: Date.now() - startTime,
+          title,
+          processingTimeMs,
           generatedAt: new Date().toISOString(),
         },
       });

@@ -580,6 +580,13 @@ export default function ContractForm() {
     }
   }, []);
 
+  // 대시보드 등에서 /mypage/contract?tab=list 로 들어오면 목록부터 보여준다
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get('tab') === 'list') {
+      setActiveTab('list');
+    }
+  }, []);
+
   useEffect(() => {
     if (activeTab === 'list') {
       loadContracts();
@@ -742,26 +749,23 @@ export default function ContractForm() {
         </div>
       </div>
 
-      {/* 탭 전환 */}
-      <div className="w-full max-w-4xl mb-6">
-        <div className="flex gap-2 justify-center">
-          <button
-            onClick={() => { setActiveTab('create'); }}
-            className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-colors ${
-              activeTab === 'create' ? 'bg-gray-900 text-white' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50'
-            }`}
-          >
-            새 계약서 작성
-          </button>
+      {/* 보조 이동 버튼 (큰 탭 대신) */}
+      <div className="w-full max-w-4xl mb-6 flex justify-center">
+        {activeTab === 'create' ? (
           <button
             onClick={() => { setActiveTab('list'); setSelectedSavedContract(null); }}
-            className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-colors ${
-              activeTab === 'list' ? 'bg-gray-900 text-white' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50'
-            }`}
+            className="px-4 py-2 rounded-full text-sm font-semibold bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 transition-colors"
           >
-            생성한 계약서
+            생성한 계약서 보기 →
           </button>
-        </div>
+        ) : (
+          <button
+            onClick={() => { setActiveTab('create'); }}
+            className="px-4 py-2 rounded-full text-sm font-semibold bg-gray-900 text-white transition-colors"
+          >
+            ← 새 계약서 작성
+          </button>
+        )}
       </div>
 
       {activeTab === 'create' && (
